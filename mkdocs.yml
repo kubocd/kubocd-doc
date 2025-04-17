@@ -1,0 +1,85 @@
+site_name: KuboCD
+
+nav:
+  - Home: index.md
+  - "Getting started":
+      - "Installation on Kind": getting-started/110-kind.md
+      - "Using an existing Cluster": getting-started/120-existing-cluster.md
+  - "Appendix": appendix.md
+  - "tmp": tmp.md
+
+#    - "Preparation": getting-started/110-preparation.md
+#    - "Installation on kind": getting-started/130-kind.md
+#    - "A first deployment": getting-started/140-a-first-deployment.md
+#  - "User guide":
+#    - "The deployment process": guide/210-the-deployment-process.md
+#    - "Improving component": guide/220-improving-component.md
+#    - "Debugging": guide/230-debugging.md
+#    - "The context": guide/240-context.md
+#    - "The KAD CLI": guide/250-kadcli.md
+#    - "OCI and GIT repository sources": guide/260-repository-source.md
+#    - "Dependencies": guide/270-dependencies.md
+#    - "Application stack": guide/280-stack.md
+#    - "Deletion and protection": guide/290-deletion.md
+#    - "Schemas": guide/300-schemas.md
+#    - "Document": guide/310-document.md
+#    - "loaders / multi-repositories": guide/320-loaders.md
+#    - "Air Gap and Credentials": guide/330-air-gap-credentials.md
+#    - "kad-controller configuration": guide/340-configuration.md
+#  - "References":
+#    - "Concepts and entities": reference/510-concepts-overview.md
+#    - "Components": reference/520-components.md
+#    - "ComponentRelease": reference/530-component-release.md
+#    - "Template": reference/540-template.md
+#    - "TemplateRelease": reference/550-template-release.md
+#    - "GitRepository": reference/560-git-repository.md
+#    - "Document": reference/570-document.md
+#    - "loader": reference/580-loader.md
+#    - "KAD CLI": reference/590-kadcli.md
+
+theme:
+#  name: readthedocs
+#  titles_only: false
+#  name: mkdocs
+#  name: windmill-dark
+#  name: gitbook
+  #  name: dracula
+  name: material
+  palette:
+    - scheme: slate
+      primary: black
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.footer
+#    - content.code.copy
+#    - content.code.select
+
+extra_css:
+  - assets/styles/extra.css
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+          - name: mermaid
+            class: mermaid
+            format: !!python/name:pymdownx.superfences.fence_code_format
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
+
+repo_url: https://github.com/kubocd/kubocd

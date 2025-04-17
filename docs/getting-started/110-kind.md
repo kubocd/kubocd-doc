@@ -1,0 +1,177 @@
+# Installing KuboCD on a Local Kind Cluster
+
+This section walks you through setting up a local Kubernetes cluster using Docker and **Kind**,
+then installing **FluxCD** and **KuboCD** on top of it.
+
+> **Already have a Kubernetes cluster?**  
+> You can skip the cluster creation and follow the instructions in [Installation on an existing cluster](120-existing-cluster.md).
+
+---
+
+## Prerequisites
+
+Ensure the following tools are installed on your workstation:
+
+- [Docker](https://www.docker.com/)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/)
+- [Helm](https://helm.sh/)
+- [Kind](https://kind.sigs.k8s.io/)
+- [Flux CLI](https://fluxcd.io/flux/installation/#install-the-flux-cli)
+
+Make sure:
+
+- Docker is running
+- You have an active internet connection
+- Ports **80** and **443** are available on your local machine
+
+---
+
+## Create the Kind Cluster
+
+Create a configuration file with ingress-compatible port mappings:
+
+```{ .bash .copy }
+cat >/tmp/kubodoc-config.yaml <<EOF
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: kubodoc
+nodes:
+- role: control-plane
+  extraPortMappings:
+  - containerPort: 30080
+    hostPort: 80
+    protocol: TCP
+  - containerPort: 30443
+    hostPort: 443
+    protocol: TCP
+EOF
+```
+
+Then create the cluster:
+
+```{ .bash .copy }
+kind create cluster --config /tmp/kubodoc-config.yaml
+```
+
+This will create a single-node cluster acting as both control plane and worker node.
+
+> The `extraPortMappings` allow direct access to services like the ingress controller from your local machine.
+
+Example output:
+
+```bash
+Creating cluster "kubodoc" ...
+ ✓ Ensuring node image (kindest/node:v1.32.2)
+ ✓ Preparing nodes
+ ✓ Writing configuration
+ ✓ Starting control-plane
+ ✓ Installing CNI
+ ✓ Installing StorageClass
+Set kubectl context to "kind-kubodoc"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-kubodoc
+```
+
+Verify everything is running:
+
+```{ .bash .copy }
+kubectl get pods -A
+```
+
+Should output:
+
+```bash
+NAMESPACE            NAME                                            READY   STATUS    RESTARTS   AGE
+kube-system          coredns-668d6bf9bc-nwzqj                        1/1     Running   0          52s
+kube-system          coredns-668d6bf9bc-xgv9f                        1/1     Running   0          52s
+kube-system          etcd-kubodoc-control-plane                      1/1     Running   0          59s
+kube-system          kindnet-xwfp8                                   1/1     Running   0          52s
+kube-system          kube-apiserver-kubodoc-control-plane            1/1     Running   0          59s
+kube-system          kube-controller-manager-kubodoc-control-plane   1/1     Running   0          58s
+kube-system          kube-proxy-6hv6w                                1/1     Running   0          52s
+kube-system          kube-scheduler-kubodoc-control-plane            1/1     Running   0          59s
+local-path-storage   local-path-provisioner-7dc846544d-k8bhb         1/1     Running   0          52s
+```
+
+---
+
+## Install Flux
+
+### Install the Flux CLI
+
+If not already installed, follow the [Flux CLI installation guide](https://fluxcd.io/flux/installation/#install-the-flux-cli).
+
+### Deploy Flux (Basic Mode)
+
+We’ll begin with a basic installation of Flux (no Git repository linked for now):
+
+> A full GitOps deployment will be described later in this documentation.
+
+```{ .bash .copy }
+flux install
+```
+
+Expected output:
+
+```bash
+✚ generating manifests
+✔ manifests build completed
+► installing components in flux-system namespace
+...
+✔ notification-controller: deployment ready
+✔ source-controller: deployment ready
+✔ install finished
+```
+
+Verify deployment:
+
+```{ .bash .copy }
+kubectl -n flux-system get pods
+```
+
+Expected output:
+
+```bash
+NAME                                       READY   STATUS    RESTARTS   AGE
+helm-controller-b6767d66-q27gd             1/1     Running   0          14m
+kustomize-controller-5b56686fbc-hpkhl      1/1     Running   0          14m
+notification-controller-58ffd586f7-bbvwv   1/1     Running   0          14m
+source-controller-6ff87cb475-hnmxv         1/1     Running   0          14m
+```
+
+> **💡 Want a minimal install?**  
+> You can limit Flux to the required components for KuboCD:  
+> `flux install --components source-controller,helm-controller`
+
+---
+
+## Install KuboCD
+
+Deploy KuboCD using Helm:
+
+```{ .bash .copy }
+helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.0
+```
+
+---
+
+## Install the KuboCD CLI
+
+Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.2.0).
+and rename it to `kubocd`. Then make it executable and move it to your path:
+
+```{ .bash .copy }
+mv kubocd_*_* kubocd
+chmod +x kubocd
+sudo mv kubocd /usr/local/bin/
+```
+
+Verify the installation:
+
+```{ .bash .copy }
+kubocd version
+```
+
+You can now move to [your first deployment with KuboCD](130-a-first-deployment.md)
+

@@ -1,0 +1,4 @@
+/* Modifier la taille de la police pour les admonitions */
+.md-typeset .abstract {
+    font-size: 0.75rem; /* Ajustez cette valeur selon vos besoins */
+}
