@@ -1,0 +1,26 @@
+
+
+apiVersion: v1alpha1
+name: ingress-nginx
+tag: 4.12.1-p01
+protected: true
+modules:
+  - name: main
+    specPatch:
+      timeout: 4m
+    source:
+      helmRepository:
+        url: https://kubernetes.github.io/ingress-nginx
+        chart: ingress-nginx
+        version: 4.12.1
+    values:
+      controller:
+        extraArgs:
+          enable-ssl-passthrough: true
+        service:
+          type: NodePort
+          nodePorts:
+            http: "30080"
+            https: "30443"
+roles:
+  - ingress

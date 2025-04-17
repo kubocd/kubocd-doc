@@ -29,3 +29,6 @@ bin/
 
 **/tmp
 
+**/.render
+**/.dump
+**/.charts

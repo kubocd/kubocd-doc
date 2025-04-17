@@ -19,6 +19,9 @@ Make sure:
 - You have an active internet connection
 - You have full admin rights on the target cluster.
 
+You also need an access to an OCI-compatible container registry with permissions to push images.
+This is will be necessary for uploading and storing KuboCD Packages as OCI artifacts.
+
 ---
 
 ## Install Flux
@@ -33,7 +36,7 @@ If Flux is not already installed on your cluster, we’ll begin with a basic ins
 
 > A full GitOps deployment will be described later in this documentation.
 
-```bash
+```{ .bash .copy }
 flux install
 ```
 
@@ -51,7 +54,7 @@ Expected output:
 
 Verify deployment:
 
-```bash
+```{ .bash .copy }
 kubectl -n flux-system get pods
 ```
 
@@ -75,7 +78,7 @@ source-controller-6ff87cb475-hnmxv         1/1     Running   0          14m
 
 Deploy the KuboCD controller using Helm:
 
-```bash
+```{ .bash .copy }
 helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.0
 ```
 
@@ -90,7 +93,7 @@ To enable these features, you need to deploy a webhook component alongside the c
 
 If you already have `cert-manager` installed, you can deploy the webhook with the following command:
 
-```bash
+```{ .bash .copy }
 helm -n kubocd install kubocd-wh oci://quay.io/kubocd/charts/kubocd-wh:v0.2.0
 ```
 
@@ -103,7 +106,7 @@ helm -n kubocd install kubocd-wh oci://quay.io/kubocd/charts/kubocd-wh:v0.2.0
 Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.2.0).
 and rename it to `kubocd`. Then make it executable and move it to your path:
 
-```bash
+```{ .bash .copy }
 mv kubocd_*_* kubocd
 chmod +x kubocd
 sudo mv kubocd /usr/local/bin/
@@ -111,7 +114,7 @@ sudo mv kubocd /usr/local/bin/
 
 Verify the installation:
 
-```bash
+```{ .bash .copy }
 kubocd version
 ```
 

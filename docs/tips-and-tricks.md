@@ -1,4 +1,4 @@
-# Appendix
+# Tips and Tricks
 
 ## Create a private Certificate authority
 

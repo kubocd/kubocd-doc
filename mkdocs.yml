@@ -5,8 +5,11 @@ nav:
   - "Getting started":
       - "Installation on Kind": getting-started/110-kind.md
       - "Using an existing Cluster": getting-started/120-existing-cluster.md
-  - "Appendix": appendix.md
-  - "tmp": tmp.md
+      - "A first deployment": getting-started/130-a-first-deployment
+  - "User guide":
+      - "Schemas": user-guide/schemas.md
+  - "Tips and tricks": tips-and-tricks.md
+#  - "tmp": tmp.md
 
 #    - "Preparation": getting-started/110-preparation.md
 #    - "Installation on kind": getting-started/130-kind.md

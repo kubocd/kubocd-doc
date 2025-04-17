@@ -1,20 +1,12 @@
 apiVersion: v1alpha1
 type: Package
 name: podinfo
-tag: 6.7.1-p02
+tag: 6.7.1-p01
 schema:
   parameters:
-    $schema: http://json-schema.org/schema#
-    additionalProperties: false
     properties:
-      fqdn:
-        type: string
-      ingressClassName:
-        default: nginx
-        type: string
-    required:
-      - fqdn
-    type: object
+      fqdn: { type: string, required: true }
+      ingressClassName: { type: string, default: "nginx"}
 modules:
   - name: main
     specPatch:

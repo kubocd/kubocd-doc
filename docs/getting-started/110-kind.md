@@ -24,6 +24,9 @@ Make sure:
 - You have an active internet connection
 - Ports **80** and **443** are available on your local machine
 
+You also need an access to an OCI-compatible container registry with permissions to push images.
+This is will be necessary for uploading and storing KuboCD Packages as OCI artifacts.
+
 ---
 
 ## Create the Kind Cluster

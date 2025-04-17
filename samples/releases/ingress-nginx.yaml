@@ -1,0 +1,18 @@
+
+
+---
+apiVersion: kubocd.kubotal.io/v1alpha1
+kind: Release
+metadata:
+  name: ingress-nginx
+  namespace: kubocd
+spec:
+  description: The Ingress controller
+  protected: false
+  package:
+    repository: quay.io/kubodoc/packages/ingress-nginx
+    tag: 4.12.1-p01
+    interval: 30m
+  targetNamespace: ingress-nginx
+  createNamespace: true
+
