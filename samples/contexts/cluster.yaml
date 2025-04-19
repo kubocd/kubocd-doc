@@ -1,0 +1,15 @@
+apiVersion: kubocd.kubotal.io/v1alpha1
+kind: Context
+metadata:
+  namespace: contexts
+  name: cluster
+spec:
+  description: Context global for kubodoc cluster
+  protected: true
+  context:
+    ingress:
+      className: nginx
+      domain: ingress.kubodoc.localx
+    storageClass:
+      data: standard
+      workspace: standard

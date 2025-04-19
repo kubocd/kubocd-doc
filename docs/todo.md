@@ -16,3 +16,4 @@
 - image redirection
 - Release templating
 - Reference
+- dependencies

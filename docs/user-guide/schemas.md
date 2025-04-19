@@ -1,2 +1,0 @@
-# Parameters and Context schemas
-

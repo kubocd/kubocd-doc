@@ -2,3 +2,13 @@
 .md-typeset .abstract {
     font-size: 0.75rem; /* Ajustez cette valeur selon vos besoins */
 }
+.md-typeset .admonition,
+.md-typeset details {
+    font-size: 0.75rem; /* adjust as needed (e.g. 1.1rem, 16px, etc.) */
+}
+
+/* Optional: increase heading size within admonitions */
+.md-typeset .admonition-title {
+    font-size: 0.75rem;
+    font-weight: bold;
+}

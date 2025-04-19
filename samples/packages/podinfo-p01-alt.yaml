@@ -1,0 +1,27 @@
+apiVersion: v1alpha1
+type: Package
+name: podinfo
+tag: 6.7.1-p01
+schema:
+  parameters:
+    properties:
+      fqdn: { type: string, required: true }
+      ingressClassName: { type: string, default: "nginx"}
+modules:
+  - name: main
+    specPatch:
+      timeout: 2m
+    source:
+      helmRepository:
+        url: https://stefanprodan.github.io/podinfo
+        chart: podinfo
+        version: 6.7.1
+    values: |
+      ingress:
+        enabled: true
+        className: {{ .Parameters.ingressClassName  }}
+        hosts:
+          - host: {{ .Parameters.fqdn }}
+            paths:
+              - path: /
+                pathType: ImplementationSpecific

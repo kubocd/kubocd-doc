@@ -3,8 +3,10 @@
 This section walks you through setting up a local Kubernetes cluster using Docker and **Kind**,
 then installing **FluxCD** and **KuboCD** on top of it.
 
-> **Already have a Kubernetes cluster?**  
-> You can skip the cluster creation and follow the instructions in [Installation on an existing cluster](120-existing-cluster.md).
+!!! tip
+
+    **Already have a Kubernetes cluster?**  
+    You can skip the cluster creation and follow the instructions in [Installation on an existing cluster](120-existing-cluster.md).
 
 ---
 
@@ -58,7 +60,8 @@ kind create cluster --config /tmp/kubodoc-config.yaml
 
 This will create a single-node cluster acting as both control plane and worker node.
 
-> The `extraPortMappings` allow direct access to services like the ingress controller from your local machine.
+!!! note
+    The `extraPortMappings` allow direct access to services like the ingress controller from your local machine.
 
 Example output:
 
@@ -78,13 +81,9 @@ kubectl cluster-info --context kind-kubodoc
 
 Verify everything is running:
 
-```{ .bash .copy }
+```{ .bash }
 kubectl get pods -A
-```
 
-Should output:
-
-```bash
 NAMESPACE            NAME                                            READY   STATUS    RESTARTS   AGE
 kube-system          coredns-668d6bf9bc-nwzqj                        1/1     Running   0          52s
 kube-system          coredns-668d6bf9bc-xgv9f                        1/1     Running   0          52s
@@ -109,15 +108,12 @@ If not already installed, follow the [Flux CLI installation guide](https://fluxc
 
 We’ll begin with a basic installation of Flux (no Git repository linked for now):
 
-> A full GitOps deployment will be described later in this documentation.
+!!! note
+    A full GitOps deployment will be described later in this documentation.
 
 ```{ .bash .copy }
 flux install
-```
 
-Expected output:
-
-```bash
 ✚ generating manifests
 ✔ manifests build completed
 ► installing components in flux-system namespace
@@ -129,13 +125,9 @@ Expected output:
 
 Verify deployment:
 
-```{ .bash .copy }
+```{ .bash }
 kubectl -n flux-system get pods
-```
 
-Expected output:
-
-```bash
 NAME                                       READY   STATUS    RESTARTS   AGE
 helm-controller-b6767d66-q27gd             1/1     Running   0          14m
 kustomize-controller-5b56686fbc-hpkhl      1/1     Running   0          14m
@@ -143,9 +135,10 @@ notification-controller-58ffd586f7-bbvwv   1/1     Running   0          14m
 source-controller-6ff87cb475-hnmxv         1/1     Running   0          14m
 ```
 
-> **💡 Want a minimal install?**  
-> You can limit Flux to the required components for KuboCD:  
-> `flux install --components source-controller,helm-controller`
+!!! tip
+    **💡 Want a minimal install?**  
+    You can limit Flux to the required components for KuboCD:  
+    `flux install --components source-controller,helm-controller`
 
 ---
 

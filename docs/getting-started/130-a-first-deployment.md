@@ -1,14 +1,14 @@
-# A first deployment with KuboCD
 
-## Package definition
+# A First Deployment with KuboCD
 
-For this first deployment, we will take a simple use case: A tiny web application: [podinfo](https://github.com/stefanprodan/podinfo)
+## Package Definition
 
-A Package is defined by a YAML manifest. Here is a first version to wrap up the 'podinfo' application:
+For this initial deployment, we’ll use a simple and illustrative example: a tiny web application called [**podinfo**](https://github.com/stefanprodan/podinfo).
+
+A **Package** in KuboCD is defined using a YAML manifest. Below is an example that wraps the `podinfo` application:
 
 ???+ abstract "podinfo-p01.yaml"
-
-    ```{ .yaml .copy }
+    ```yaml
     apiVersion: v1alpha1
     type: Package
     name: podinfo
@@ -38,7 +38,7 @@ A Package is defined by a YAML manifest. Here is a first version to wrap up the 
         values: |
           ingress:
             enabled: true
-            className: {{ .Parameters.ingressClassName  }}
+            className: {{ .Parameters.ingressClassName }}
             hosts:
               - host: {{ .Parameters.fqdn }}
                 paths:
@@ -46,61 +46,72 @@ A Package is defined by a YAML manifest. Here is a first version to wrap up the 
                     pathType: ImplementationSpecific
     ```
 
+!!! note
+    A KuboCD Package is **not** a native Kubernetes resource.
 
-> A KuboCD Package is NOT a Kubernetes resources.
+Description of the Sample Package Attributes:
 
-Here is a description of the attributes used in this sample: 
+- **`apiVersion`** (Required): Defines the version of the KuboCD Package format. The only supported value currently is `v1alpha1`.
+- **`type`**: Specifies the resource type. It must be `Package`, which is also the default and can be omitted.
+- **`name`**: The name of the package. This will also be used in the OCI image name.
+- **`tag`** (Required): Specifies the version tag of the OCI image. While technically flexible, it is recommended to follow this convention:
+    - Use the Helm chart version as a base, followed by `-pXX` where `XX` denotes the packaging revision (e.g. different configurations for the same chart).
+- **`schema.parameters`**: Defines input parameters for the package, using a standard OpenAPI/JSON Schema. This enables validation and documentation of parameters at deployment time.
+    - If not defined, the release will not accept parameters.
+- **`modules`** (Required): A package contains one or more Helm charts, each represented as a module.
+    - **`modules[X].name`** (Required): A unique name for the module. In this example, there's only one module, called `main`.
+    - **`modules[X].source`** (Required): Defines where to find the Helm chart. In this example, it's in a Helm repository, but it could also come from an OCI registry, Git repository, or local chart.
+    - **`values`**: This is a template rendered into a `values.yaml` for Helm. 
+        - The templating engine is the same as Helm’s.
+        - The data model, however, differs. It includes a `.Parameters` object containing the values provided during deployment (via the `Release` object).
+        - Though it appears as YAML, it is actually a string, allowing full templating flexibility.
 
-- `apiVersion`: (R) The version of this YAML format. Currently only allowed value is `v1alpha1`.
-- `type`: The type of resource described. `Package` is the default and the only allowed value. It could be omitted.
-- `name`: The name of the package. Will be used also in the image name.
-- `tag`: (R) The tag of the OCI image and is used to record the version of the package. Technically, it could be whatever you want, but we suggest the following convention:
-    - Use the version of the main module Helm chart and add a `-pXX` suffix where XX allow versioning of the packaging. (The same Helm chart can be packaged in different ways). 
-- `schema.parameters`: When the package will be deployed, some parameters will be provided. This schema allow validation 
-   (And documentation) of these parameters. It is a standard OpenAPI/json schema.
-   If not defined, this means the Release will not accept parameters.
-- `modules`: (R) A package include one or several Helm charts, each one being referenced by a `module` entry.
-- `modules[X].name`: (R) Each module must have a name. As there is only one here, we call it `main`.
-- `modules[X].source`: (R) Where to find the Helm chart. In this example in an Helm Repository provided by the authors of
-  `podinfo`. The `source` can also be an OCI Repository, a GIT repository or a local Helm Chart.
-- `values`: Defines a template that will be rendered to generate the `values.yaml` file used for deploying
-  the Helm chart.
-    - The templating engine used is the same as Helm's. More on this [here](TODO)
-    - However, the data model is different. It includes, in particular, a root object `.Parameters` that contains values
-      which will be defined during deployment, by the `Release` object.
-    - Although it may look like a `yaml` snippet, it is in fact a string, to allow insertion of template directive.
+!!! note "Required Fields"
+    Any attribute marked with **(Required)** must be specified for the package to be valid.
 
-(R) means Required
+!!! tip
+    More attributes and advanced features will be introduced later in the documentation.
 
-> Of course, there is more attributes than the ones of this sample. There wil be described later in the documentation.
+---
 
-## Package build
+## Package Build
 
-Maintenant, il convient de générer l'image OCI correspondante.
+Now that the package definition is complete, it’s time to generate the corresponding OCI image.
 
-As stated earlier, you need an access to an OCI-compatible container registry with permissions to push images.
-This is will be necessary for uploading and storing KuboCD Packages as OCI artifacts.
+As mentioned earlier, KuboCD uses an OCI-compatible container registry to store and distribute packages. You'll need access to one with permission to push images.
 
-Currently, `quay.io` (redhat), `ghcr.io` (Github) and the [distribution registry](https://github.com/distribution/distribution) 
-has been testes an known to work. Although not tested, other should also works, except Docker Hub.
+✅ Supported registries:
+- `quay.io` (Red Hat)
+- `ghcr.io` (GitHub)
+- [distribution registry](https://github.com/distribution/distribution)
 
-You must be logged on this repo with appropriate permissions. (i.e `docker login quay.io`, or `docker login ghcr.io`, ...)
+⚠️ **Note**: Docker Hub is **not supported** at the moment.
 
-Depending of the registry, you may have a concept of 'organisation'. In this sample, we will use quay.io with a `kubodoc` organization.
+Make sure you're authenticated with the registry, e.g.:
 
-To build the package, save the package file `podinfo-p01.yaml` in some place and enter a command like:
+```bash
+docker login quay.io
+```
 
-```{.bash .copy}
+Depending on the registry, the image may need to be pushed under an organization or namespace. For this example, we'll use `quay.io/kubodoc`.
+
+To build and push the package image:
+
+```bash
 kubocd package podinfo-p01.yaml --ociRepoPrefix quay.io/kubodoc/packages
 ```
 
-> Of course, you must adjust the value of `--ociRepoPrefix` to your environment. Note the sub-path `package` is arbitrary and could be anything you want, or empty.
+!!! note
+    Adjust `--ociRepoPrefix` to your own registry setup. The `packages` suffix is arbitrary — you can use any subpath or omit it.
 
-The repository name will be build by concatenating the value of `--ociRepoPrefix` and the name of the package (Provided in the file). And obviously, the tag will be taken from the definition.
+The resulting repository and tag are determined from the package manifest:
 
-The output should look like:
+- Repository = `--ociRepoPrefix` + package `name`
+- Tag = package `tag`
 
-```
+Expected Output:
+
+```text
 ====================================== Packaging package 'podinfo-p01.yaml'
 --- Handling module 'main':
 Fetching chart podinfo:6.7.1...
@@ -112,34 +123,33 @@ Wrap all in assembly.tgz
 Successfully pushed
 ```
 
-Instead of providing the `--ociRepoPrefix` on each run, you may also define an environment variable:
+You can also set the repository prefix globally via an environment variable:
 
-```{.bash .copy}
+```bash
 export OCI_REPO_PREFIX=quay.io/kubodoc/packages
 ```
 
-or:
+Or for other registries:
 
-```{.bash .copy}
+```bash
 export OCI_REPO_PREFIX=ghcr.io/kubodoc/packages
-```
-
-or
-
-```{.bash .copy}
 export OCI_REPO_PREFIX=localhost:5000/packages
 ```
 
-Last step: ensure your image is `public` (Initial default may be `private`).
+!!! warning
+    By default, pushed images may be private. To make them accessible for deployment, ensure the image is set to **public**.
 
-> If you want the image to stay `private`, you will have to provide authentication information on the `Release`. This will be described later in this doc.
+!!! note
+    If you prefer to keep the image private, you will need to provide authentication credentials in the `Release` configuration. This is explained later in the documentation.
 
-## Releasing the application
+---
 
-To deploy our application, a `Release` custom resource is used:
+## Releasing the Application
+
+To deploy the application, define a KuboCD `Release` custom resource:
 
 ???+ abstract "podinfo1.yaml"
-    ```
+    ```yaml
     ---
     apiVersion: kubocd.kubotal.io/v1alpha1
     kind: Release
@@ -156,129 +166,39 @@ To deploy our application, a `Release` custom resource is used:
         fqdn: podinfo1.ingress.kubodoc.local
     ```
 
-The attributes in the 'spec' part:
+Explanation of Key Attributes:
 
-- `description`: Optional. A short description of the release.
-- `package.repository`: The OCI repository to fetch the package image. See the packaging step above.
-- `package.tag`: The tag/version of the package. See the packaging step above.
-- `package.interval`: Interval between OCI image reconciliation. In other word, the maximum duration to wait for a package modification to be taken in account.
-- `parameters`: An object which comply the the `parameter.schema` defined in the Package. Just a single value in this first sample.
+- **`description`**: (Optional) A short description of this release.
+- **`package.repository`**: The OCI image repository that contains the package. This should match the registry used during package build.
+- **`package.tag`**: The image tag, which should match the one defined in the package manifest.
+- **`package.interval`**: Specifies how frequently KuboCD checks the registry for updates to the image.
+- **`parameters`**: The values required by the package schema. In this example, only a single parameter (`fqdn`) is needed.
 
-To deploy our application, save the above file in some place, and execute:
+Deploying the Application:
 
-```{.bash .copy}
-kubectl apply -f podinfo1.yaml
+1. Adjust the repository and parameters (if needed) to match your environment.
+2. Apply the Release:
+
+```bash
+kubectl create -f podinfo1.yaml
+
+release.kubocd.kubotal.io/podinfo1 created
 ```
 
-```{.bash .copy}
+Once deployed, monitor the status:
+
+```bash
 kubectl get releases
-```
 
-```{.bash}
 NAME       REPOSITORY                         TAG         CONTEXTS   STATUS   READY   WAIT   PRT   AGE     DESCRIPTION
 podinfo1   quay.io/kubodoc/packages/podinfo   6.7.1-p01              READY    1/1            -     6m40s   A first sample release of podinfo
 ```
 
+You can also verify the pod:
 
-
-kubectl apply -f podinfo1.yaml 
-
-
-
+```bash
 kubectl get pods
+
 NAME                             READY   STATUS    RESTARTS   AGE
 podinfo1-main-779b6b9fd4-zbgbx   1/1     Running   0          8h
-
-
-kubectl get ingresses
-NAME            CLASS   HOSTS                            ADDRESS   PORTS   AGE
-podinfo1-main   nginx   podinfo1.ingress.kubodoc.local             80      6m33s
-
-
-
-
-
-
-
-
-
-kubectl get OCIRepository
-NAME           URL                                      READY   STATUS                                                                                                           AGE
-kcd-podinfo1   oci://quay.io/kubodoc/packages/podinfo   True    stored artifact for digest '6.7.1-p01@sha256:985e4e2f89a4b17bd5cc2936a0b305df914ae479e0b8c96e61cb22725b61cd24'   9m1s
-
-
-kubectl get HelmRelease
-NAME            AGE     READY   STATUS
-podinfo1-main   7m59s   True    Helm install succeeded for release default/podinfo1-main.v1 with chart podinfo@6.7.1
-
-
-These flux CD resource are owned by the Release object. This means:
-- They will be deleted with the parent Release object.
-- If they are manually deleted, the Release object will recreate them. (For OCIRepository, this is a method to reload a modified version of a package without waiting for the configured interval).
-
-
-
-$ kubocd pack ingress-nginx.yaml
-
-====================================== Packaging package 'ingress-nginx.yaml'
---- Handling module 'main':
-Fetching chart ingress-nginx:4.12.1...
-Chart: ingress-nginx:4.12.1
---- Packaging
-Generating index file
-Wrap all in assembly.tgz
---- push OCI image: quay.io/kubodoc/packages/ingress-nginx:4.12.1-p01
-Successfully pushed
-
-
-127.0.0.1 localhost podinfo1.ingress.kubodoc.local
-
-
-## Alternate KuboCD Schema.
-
-In this first sample, the `schema.parameters` has been defined using a standard OpenAPI schema.
-But this definition turn out to be quite verbose. So a new, simplified version has been introduced for KuboCD.
-
-Here is the same package, using he KuboCD definition:
-
-???+ abstract "podinfo-p02.yaml"
-
-    ```{ .yaml .copy }
-    apiVersion: v1alpha1
-    type: Package
-    name: podinfo
-    tag: 6.7.1-p01
-    schema:
-      parameters:
-        properties:
-          fqdn: { type: string, required: true }
-          ingressClassName: { type: string, default: "nginx"}
-    modules:
-      - name: main
-        source:
-          helmRepository:
-            url: https://stefanprodan.github.io/podinfo
-            chart: podinfo
-            version: 6.7.1
-        values: |
-          ingress:
-            enabled: true
-            className: {{ .Parameters.ingressClassName  }}
-            hosts:
-              - host: {{ .Parameters.fqdn }}
-                paths:
-                  - path: /
-                    pathType: ImplementationSpecific
-    
-    ```
-
-A bit shorter isn't it.
-
-Cette définition n'est pas directement compatible avec le standard. Mais elle est facilement convertible vers celui-ci.
-C'est d'ailleurs ce que fait KuboCD en interne.
-
-A noter que c'est le token `$schema:` qui permet de distinguer un format standard d'un format KuboCD
-
-Cette definition spécifique de schema fait l'objet d'un [chapitre dédié](../user-guide/schemas.md).
-
-
+```
