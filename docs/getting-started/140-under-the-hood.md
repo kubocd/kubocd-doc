@@ -88,6 +88,9 @@ Events:
 
 One of the point to check if the generated `values` for the Helm chart deployment.
 
+!!! note
+    You will need to unstall the [yq command](https://github.com/mikefarah/yq)
+
 ``` yaml
 kubectl get HelmRelease podinfo1-main -o yaml | yq '.spec.values'
 

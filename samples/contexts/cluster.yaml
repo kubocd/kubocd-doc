@@ -9,7 +9,7 @@ spec:
   context:
     ingress:
       className: nginx
-      domain: ingress.kubodoc.localx
+      domain: ingress.kubodoc.local
     storageClass:
       data: standard
       workspace: standard

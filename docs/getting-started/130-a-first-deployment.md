@@ -12,7 +12,7 @@ A **Package** in KuboCD is defined using a YAML manifest. Below is an example th
     apiVersion: v1alpha1
     type: Package
     name: podinfo
-    tag: 6.7.1-p02
+    tag: 6.7.1-p01
     schema:
       parameters:
         $schema: http://json-schema.org/schema#
@@ -148,7 +148,7 @@ export OCI_REPO_PREFIX=localhost:5000/packages
 
 To deploy the application, define a KuboCD `Release` custom resource:
 
-???+ abstract "podinfo1.yaml"
+???+ abstract "podinfo-basic.yaml"
     ```yaml
     ---
     apiVersion: kubocd.kubotal.io/v1alpha1
@@ -180,7 +180,7 @@ Deploying the Application:
 2. Apply the Release:
 
 ```bash
-kubectl create -f podinfo1.yaml
+kubectl create -f podinfo-basic.yaml
 
 release.kubocd.kubotal.io/podinfo1 created
 ```

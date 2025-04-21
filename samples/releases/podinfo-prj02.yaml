@@ -1,0 +1,22 @@
+
+
+---
+apiVersion: kubocd.kubotal.io/v1alpha1
+kind: Release
+metadata:
+  name: podinfo
+spec:
+  description: A release of podinfo on project02
+  package:
+    repository: quay.io/kubodoc/packages/podinfo
+    tag: 6.7.1-p02
+    interval: 30m
+  parameters:
+    host: podinfo
+  contexts:
+    - namespace: contexts
+      name: cluster
+    - name: project02
+  debug:
+    dumpContext: true
+    dumpParameters: true

@@ -9,6 +9,7 @@ schema:
   context:
     properties:
       ingress:
+        required: true
         properties:
           className: { type: string, required: true }
           domain: { type: string, required: true }
