@@ -1,21 +1,22 @@
 # The Context
 
-One of the key features of KuboCD is its ability to generate Helm deployment values files from a small set of high-level input parameters, using a templating mechanism.
+L'un des aspect clé de KuboCD est sa capacité de générer les fichiers de values de déployment Helm à partir de
+quelques paramètres d'entrée de haut niveau, ceci grâce à un mechanism de templating.
 
-This mechanism combines a template with a data model.
+Ce mécanisme croise un template et un modèle de données. 
 
-Our first example uses only the `.Parameters` element of the data model:
+Notre premier example utilise uniquement l'élément `.Parametres` de notre modèle de données:
 
 ???+ abstract "podinfo-p01.yaml"
 
-    ``` { .yaml }
+    ```yaml
     apiVersion: v1alpha1
     type: Package
     name: podinfo
-    ...
+    .....
     modules:
       - name: main
-        ...
+        .....
         values: |
           ingress:
             enabled: true
@@ -27,36 +28,38 @@ Our first example uses only the `.Parameters` element of the data model:
                     pathType: ImplementationSpecific
     ```
 
-In fact, the data model includes the following top-level elements:
+ En fait, ce modèle de données comprend les éléments racine suivants:
 
-- `.Parameters`: The parameters provided in the `Release` custom resource.
-- `.Release`: The release object itself.
-- `.Context`: The deployment context.
 
-The context is a YAML object with a flexible structure, designed to hold shared configuration data relevant to all deployments.
+- `.Parameters`: Les données fournies en paramètre dans la custom resource `Release`.
+- `.Release`: L'objet release lui même.
+- `.Context`: Le context du déployment
 
-For example, the `podinfo` package includes a parameter `ingressClassName` with a default value (`nginx`). If a cluster uses a different ingress controller, this value would need to be overridden for all relevant `Release` objects.
+Le context est un objet YAML dont la structure est libre et qui à pour vocation de contenir des informations transverses à l'ensemble des déploiements:
 
-This type of shared configuration is best defined in a global cluster-level context.
+Par example, notre Package `podinfo` à un paramètre `ingressClassName`, avec une valeur par défaut ('nginx'). 
+Si un cluster intègre un autre type d'ingress-controller, il faudrait alors le redéfinir pour l'ensemble des `Release` utilisant un ingress.
 
-Similarly, if all application ingress URLs share a common root domain, that too should be centralized.
+Ce type d'information a donc pour vocation d'ètre défni dans un Context global au cluster.
 
-Here's an initial example of how this logic can be implemented.
+De même, toutes les URL ingress des différentes application partage une racine commune. Il est pertinant de mutualiser cette racine.
 
-## Context Creation
+Voici un premier example implementation de cette logique.
 
-A `Context` is a KuboCD resource:
+## Context creation
+
+Un `context` est une resource KuboCD:
 
 ???+ abstract "cluster.yaml"
 
-    ``` { .yaml }
+    ```
     apiVersion: kubocd.kubotal.io/v1alpha1
     kind: Context
     metadata:
       namespace: contexts
       name: cluster
     spec:
-      description: Global context for the kubodoc cluster
+      description: Context global for kubodoc cluster
       protected: true
       context:
         ingress:
@@ -67,41 +70,47 @@ A `Context` is a KuboCD resource:
           workspace: standard
     ```
 
-Key attributes:
+Les principaux attributs en sont:
 
-- `description`: A short description.
-- `protected`: Prevents deletion of this object. Requires KuboCD's webhook feature.
-- `context`: A tree of values that is injected into the data model for the deployment parameter templates. This section:
-    - Must be valid YAML.
-    - Has a flexible structure, but should align with what the package templates expect.
+- `description`: Une courte description
+- `protected`: Interdit la suppression de cet object. Nécessite le deployment de la fonctionnalité `webhook' de KuboCD.
+- `context`: Une aborescence de valeurs qui sera injecté dans le model de données fournis au moteur de template 
+  générant les paramètres de déploiement. Cette partie 
+    - Doit etre du YAML valide
+    - La structure est libre. Néanmoins elle doit correspondre à ce que les template des packages KuboCD s'attendent à y trouver.
 
-In this example, the context includes:
+Dans cet exemple, le context comprend les éléménts suivants:
 
-- `ingress.className`: The ingress controller type.
-- `ingress.domain`: The suffix used for building ingress URLs.
-- `storageClass`: Two Kubernetes `StorageClass` definitions for different application profiles. For our `kind` cluster, there is only one available option: `standard`.
+- `ingress.className`: Le type de controller ingress
+- `ingress.domain`: Le suffix permettant la construction des URL ingress
+- `storageClass`: Deux types de `StorageClass` Kubernetes, pour deux profils d'applications, pour les application 'statefull'. 
+  Dans le cas de notre cluster `kind`, il n'y a qu'un seul choix: `standard`
 
-Contexts should be placed in a dedicated namespace:
+Le ou les contexts seront placés dans un namespace dédié. 
 
-``` {.bash .copy }
+```
 kubectl create ns contexts
+
+namespace/contexts created
 ```
 
-``` {.bash .copy }
-kubectl create -f cluster.yaml
+```
+kubectl create -f cluster.yaml 
+
+context.kubocd.kubotal.io/cluster created
 ```
 
-!!! note
-    Since the context is shared among most of all applications, its structure must be carefully designed and well documented.
+!!! notes
+    Le context étant un object partagé entre toutes les applications, sa structure doit être conçue avec soin et documentée.
 
 
-## Package Adaptation
+## Package adaptation
 
-Our initial `podinfo` package did not account for the context concept. Here is an updated version:
+Notre premier packaging de podinfo ne prenait pas en compte ce concept de context. En voici une version adaptée:
 
 ???+ abstract "podinfo-p02.yaml"
 
-    ``` { .yaml }
+    ```
     apiVersion: v1alpha1
     type: Package
     name: podinfo
@@ -151,17 +160,17 @@ Our initial `podinfo` package did not account for the context concept. Here is a
                     pathType: ImplementationSpecific
     ```
 
-Key points:
+On notera les points suivants:
 
-- The `tag` was updated to generate a new version.
-- The `fqdn` parameter was replaced with `host` to represent only the hostname (excluding the domain).
-- The `modules[X].values` section now uses the context.
-- A `schema.context` section has been added to define and validate the expected context structure.
+- Le `tag` a été modifié, permettant ainsi de générer une nouvelle version.
+- Le paramètre `fqdn` a été remplacé par `host` car il ne définie maintenant que le hostname, sans le domaine.
+- La section `modules[X].values` a été modifiée afin de prendre en compte le `context`.
+- Une section `schema.context` a été ajouté, permettant de specifier et valider ce que notre package s'attend à trouver dans le context.
 
-This new version must be packaged:
+Cette nouvelle version doit etres packagée:
 
-``` {.bash  }
-kubocd pack podinfo-p02.yaml
+```
+kubocd pack podinfo-p02.yaml 
 
 ====================================== Packaging package 'podinfo-p02.yaml'
 --- Handling module 'main':
@@ -172,15 +181,15 @@ kubocd pack podinfo-p02.yaml
     Wrap all in assembly.tgz
 --- push OCI image: quay.io/kubodoc/packages/podinfo:6.7.1-p02
     Successfully pushed
+
 ```
 
 ## Deployment
 
-Here is the corresponding deployment manifest:
+Voici le manifest de déployment correspondant:
 
 ???+ abstract "podinfo-ctx.yaml"
-
-    ``` { .yaml }
+    ```
     ---
     apiVersion: kubocd.kubotal.io/v1alpha1
     kind: Release
@@ -200,83 +209,92 @@ Here is the corresponding deployment manifest:
           name: cluster
     ```
 
-Key points:
+On notera les points suivants:
 
-- The `fqdn` parameter was replaced with `host`.
-- A new `spec.contexts` section lists the contexts to merge into a single object passed to the template engine.
+- Le paramètre `fqdn` a été remplacé par `host`
+- Une section `spec.contexts` a été ajoutée. Il s'agit d'une liste de contexts, qui seront agrégés pour constituer
+  un object unique, intégré dans le modèle.
 
 !!! warning
-    Referencing a non-existent context results in an error.
+    Reférencer un context inexistant génère une erreur
 
-Once `spec.repository` is set correctly, apply the deployment:
 
-``` {.bash .copy }
-kubectl create -f podinfo-ctx.yaml
+Après avoir ajusté `spec.repository`, le nouveau déploiement peut ètre effectué
+
+```
+kubectl create -f podinfo-ctx.yaml 
+
+release.kubocd.kubotal.io/podinfo2 created
 ```
 
-Check that the new `Release` reaches the `READY` state:
+Si tout se passe correctement, la nouvelle `Release` doit atteindre l'état `READY` et la liste des context doit etre affichée:
 
-``` { .bash }
+```
 kubectl get releases podinfo2
 
 NAME       REPOSITORY                         TAG         CONTEXTS           STATUS   READY   WAIT   PRT   AGE   DESCRIPTION
 podinfo2   quay.io/kubodoc/packages/podinfo   6.7.1-p02   contexts:cluster   READY    1/1            -     17m   A first sample release of podinfo
 ```
 
-## Context Aggregation
+## Aggregation de contexts
 
-An application's effective context may result from the aggregation of multiple context objects.
+### Example 1
 
-For instance, a project-level context can be created to share variables across all applications within a project. This will be merged with the global cluster context.
+Le context perçu par une application peut résulter de l'agrégation de plusieurs object contexts.
 
-In the following examples, each deployed project has its own namespace and context.
+Par exemple, un 'context projet' peut etre crée pour partagé des variables commune à l'ensemble des applications composant ce projet. Celui-ci sera mergé avec le context global du cluster.
 
-### Example 1: Context addition
+Dans l'exemple suivant, un namespace et un context seront crées par projet déployé. 
 
-Create the namespace:
+Création du namespace:
 
-``` {.bash .copy }
+```
 kubectl create namespace project01
+
+namespace/project01 created
 ```
 
-Then create the project context:
+Et du context:
 
 ???+ abstract "project01.yaml"
 
-    ``` { .yaml }
+    ```
     apiVersion: kubocd.kubotal.io/v1alpha1
     kind: Context
     metadata:
       name: project01
     spec:
-      description: Context for project 1
+      description: Context For projet 1
       context:
         project:
           id: p01
           subdomain: prj01
+    
     ```
 
-Note that the `namespace` is not specified in the manifest. It will be set via the command line:
+On notera que le `namespace` n'est pas défini dans le manifest. Il sera défini en ligne de commande:
 
-``` { .bash .copy }
-kubectl -n project01 create -f project01.yaml
+```
+kubectl -n project01 create -f project01.yaml 
+
+context.kubocd.kubotal.io/project01 created
 ```
 
-List all defined contexts:
+On peu lister l'ensemble des contexts définis
 
-``` { .bash }
+```
 kubectl get --all-namespaces contexts.kubocd.kubotal.io
 
 NAMESPACE   NAME        DESCRIPTION                          PARENTS   STATUS   AGE
-contexts    cluster     Global context for the kubodoc cluster             READY    2d2h
-project01   project01   Context for project 1                            READY    2m35s
+contexts    cluster     Context global for kubodoc cluster             READY    2d2h
+project01   project01   Context For projet 1                           READY    2m35s
 ```
 
-This example requires modifying the package to include the new variable in the `values` template and in the `schema.context` section:
+Ce premier exemple implique de modifier le package afin de prendre en compte notre nouvelle variable:
 
 ???+ abstract "podinfo-p03.yaml"
-
-    ``` { .yaml }
+    
+    ```
     apiVersion: v1alpha1
     type: Package
     name: podinfo
@@ -334,17 +352,18 @@ This example requires modifying the package to include the new variable in the `
                     pathType: ImplementationSpecific
     ```
 
-Don't forget to package it:
+On n'oubliera pas de la packager:
 
-``` {.bash .copy }
-kubocd pack podinfo-p03.yaml
+```
+kubocd pack podinfo-p03.yaml 
 ```
 
-Create a new `Release` for deployment:
+Une nouvelle `Release` sera crée pour le déploiement:
+
 
 ???+ abstract "podinfo-prj01.yaml"
 
-    ``` { .yaml }
+    ```
     ---
     apiVersion: kubocd.kubotal.io/v1alpha1
     kind: Release
@@ -367,42 +386,42 @@ Create a new `Release` for deployment:
         dumpParameters: true
     ```
 
-Notes:
+A noter:
 
-- `metadata.namespace` is not defined; it will be set via command line.
-- `metadata.name` is simply `podinfo`, assuming only one instance per namespace.
-- `spec.contexts` includes two entries, with the second referencing the project context.
-- A `debug` section is added to include the merged context and parameters in the `Release` status.
+- `metadata.namespace` n'est pas défini. Il le sera en ligne de commande.
+- `metadata.name` est simplement `podinfo`. Il n'est pas prévu de déployer plus d'une instance de `podinfo` par namespace.
+- `spec.context` contient maintenant deux entrées. La seconde référence notre 'context project'. Le `namespace` n'y est pas défini. Il sera donc celui de la `Release`.
+- Une nouvelle section `spec.debug` est introduite. Elle comporte deux flags qui vont demande à KuboCD de placer dans le `Status` de l'objet `Release` la vision perçue du context et des paramètres.
 
-Deploy the release:
+Le déploiement:
 
-``` {.bash .copy }
-kubectl -n project01 create -f podinfo-prj01.yaml
+```
+kubectl -n project01 create -f podinfo-prj01.yaml 
+
+release.kubocd.kubotal.io/podinfo3 created
 ```
 
-Verify both contexts are listed:
+Si l'on examine l'objet résultant, on y trouve bien les deux contexts:
 
-``` {.bash  }
+```
 kubectl -n project01 get releases podinfo
-
 NAME      REPOSITORY                         TAG         CONTEXTS                               STATUS   READY   WAIT   PRT   AGE     DESCRIPTION
 podinfo   quay.io/kubodoc/packages/podinfo   6.7.1-p03   contexts:cluster,project01:project01   READY    1/1            -     8m31s   A release of podinfo on project01
 ```
 
-Check the resulting ingress object:
+On peut vérifier que l'objet `ìngress` associé a bien la bonne valeur;
 
-``` {.bash  }
+```
 kubectl get --all-namespaces ingress
-
 NAMESPACE   NAME            CLASS   HOSTS                                  ADDRESS        PORTS   AGE
 default     podinfo1-main   nginx   podinfo1.ingress.kubodoc.local         10.96.218.98   80      2d20h
 default     podinfo2-main   nginx   podinfo2.ingress.kubodoc.local         10.96.218.98   80      71m
 project01   podinfo-main    nginx   podinfo.prj01.ingress.kubodoc.local    10.96.218.98   80      13m
 ```
 
-Inspect the `Release` status:
+Maintenant, examinons plus en détail le `Status` de la `Release`:
 
-``` {.bash }
+```
 kubectl -n project01 get release podinfo -o yaml
 
 apiVersion: kubocd.kubotal.io/v1alpha1
@@ -422,40 +441,40 @@ status:
     storageClass:
       data: standard
       workspace: standard
-  ....      
+  ....
   parameters:
     host: podinfo2
   ....
 ```
 
-The merged context includes values from both the cluster and project contexts.
+On trouve bien dans le `Status` un context. Et on peut constater que celui-ci intègre bien les valeurs mergées du context du cluster et du context project.
 
-!!! warning
+!!! Warning
 
-    In real-world scenarios, the context may become quite large. Use this debug mode sparingly.
+    Dans la vrai vie, le context peut devenir assez volumineux. Il convient donc d'utiliser ce mode de debugging avec parcimonie.
 
+### Example 2
 
-### Example 2: Context override
+Dans ce second exemple, l'objectif reste identique (Ajouter un subdomain à l'ingress). Mais, nous utiiserons la version initiale du package, qui ne prend en compte que le context du cluster.
 
-In this second example, the objective remains the same (adding a subdomain to the ingress), but we use the initial version of the package that only leverages the cluster context.
+Un namspace dédié est crée:
 
-Create a dedicated namespace:
-
-``` {.bash .copy }
+```
 kubectl create ns project02
+namespace/project02 created
 ```
 
-Create a project context in that namespace:
+Et un context est créé dans ce namespace:
 
 ???+ abstract "project02.yaml"
 
-    ``` { .yaml }
+    ```
     apiVersion: kubocd.kubotal.io/v1alpha1
     kind: Context
     metadata:
       name: project02
     spec:
-      description: Context for project 2
+      description: Context For projet 2
       context:
         project:
           id: p02
@@ -463,15 +482,20 @@ Create a project context in that namespace:
           domain: prj02.ingress.kubodoc.local
     ```
 
-``` {.bash .copy }
-kubectl -n project02 create -f project02.yaml
+```
+kubectl -n project02 create -f project02.yaml 
+
+context.kubocd.kubotal.io/project02 created
 ```
 
-Note that the same `spec.context.ingress.domain` path exists in both the project and cluster contexts. When contexts are merged in a `Release`, later contexts in the list override earlier ones. Thus, the project’s value takes precedence.
+On y trouve le même path `spec.context.ingress.domain` que dans le context du cluster. 
+Lorsque les deux context seront mergé, ils le seront dans l'ordre définie dans l'object `Release`. 
+Le context projet étant listé après le context du cluster, sa valeur sera prioritaire. Et cette valeur inclue notre `subdomain`.  
+
 
 ???+ abstract "podinfo-prj02.yaml"
 
-    ``` { .yaml }
+    ```
     ---
     apiVersion: kubocd.kubotal.io/v1alpha1
     kind: Release
@@ -494,15 +518,17 @@ Note that the same `spec.context.ingress.domain` path exists in both the project
         dumpParameters: true
     ```
 
-``` {.bash .copy }
-kubectl -n project02 create -f podinfo-prj02.yaml
+```
+kubectl -n project02 create -f podinfo-prj02.yaml 
+
+release.kubocd.kubotal.io/podinfo created
 ```
 
-Check the resulting context in the `Release` object:
+On peut examiner le context résultant dans l'objet `Release` déployé:
 
-``` {.bash }
+```
 kubectl -n project02 get release podinfo -o yaml
-
+ 
 apiVersion: kubocd.kubotal.io/v1alpha1
 kind: Release
 metadata:
@@ -522,11 +548,10 @@ status:
   ....
 ```
 
-Ensure the correct ingress host is used:
+Et vérifier que l'on a bien la bonne valeur pour notre `ìngress`:
 
-``` {.bash }
+```
 kubectl get --all-namespaces ingress
-
 NAMESPACE   NAME            CLASS   HOSTS                                 ADDRESS        PORTS   AGE
 default     podinfo1-main   nginx   podinfo1.ingress.kubodoc.local        10.96.218.98   80      2d20h
 default     podinfo2-main   nginx   podinfo2.ingress.kubodoc.local        10.96.218.98   80      110m
@@ -534,23 +559,26 @@ project01   podinfo-main    nginx   podinfo.prj01.ingress.kubodoc.local   10.96.
 project02   podinfo-main    nginx   podinfo.prj02.ingress.kubodoc.local   10.96.218.98   80      2m52s
 ```
 
-## Context Change
+## Context change.
 
-Any change to a context is automatically applied to all associated `Release` objects. However, only the deployments that are actually affected will be updated.
+Un changement dans un context est automatiquement pris en compte par toutes les `Releases` associées. 
+Mais, seules les applications effectivement impactées seront redéployées.
 
-!!! notes
+!!! info
 
-    Technically, KuboCD patches the corresponding Flux `helmRelease` objects, which triggers a `helm upgrade`. This should only update the resources that are truly impacted.
+    Techiquement, KuboCD vas patcher les object Flux `helmRelease`, ce qui vas entrainer un `helm upgrade` qui, normalement, ne touche que les ressources réellement impacté. 
 
-For example, modify the context for `project01`:
+Par example, modifions le context du project01:
 
-``` {.bash .copy }
+```
 kubectl -n project01 patch context.kubocd.kubotal.io project01 --type='json' -p='[{"op": "replace", "path": "/spec/context/project/subdomain", "value": "project01" }]'
+
+context.kubocd.kubotal.io/project01 patched
 ```
 
-Observe that the ingress is quickly updated accordingly:
+On peut constater que la modification est rapidement prise en compte:
 
-``` { .bash }
+```
 kubectl get --all-namespaces ingress
 
 NAMESPACE   NAME            CLASS   HOSTS                                     ADDRESS        PORTS   AGE
@@ -560,8 +588,11 @@ project01   podinfo-main    nginx   podinfo.project01.ingress.kubodoc.local   10
 project02   podinfo-main    nginx   podinfo.prj02.ingress.kubodoc.local       10.96.218.98   80      6h49m
 ```
 
-To restore the original value:
+Pour remettre la valeur initiale:
 
-``` {.bash .copy }
-kubectl -n project01 patch context.kubocd.kubotal.io project01 --type='json' -p='[{"op": "replace", "path": "/spec/context/project/subdomain", "value": "prj01" }]'
 ```
+kubectl -n project01 patch context.kubocd.kubotal.io project01 --type='json' -p='[{"op": "replace", "path": "/spec/context/project/subdomain", "value": "prj01" }]'
+
+context.kubocd.kubotal.io/project01 patched
+```
+

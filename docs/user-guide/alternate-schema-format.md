@@ -43,4 +43,4 @@ As you can see, the format is significantly more compact.
 
 The presence or absence of the `$schema:` key is what KuboCD uses to distinguish between standard and KuboCD schema formats.
 
-This simplified schema is explained further in the [Schema Reference](schemas.md).
+

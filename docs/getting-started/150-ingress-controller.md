@@ -58,7 +58,7 @@ New key points compared to the `podinfo` Package:
 - `protected: true`: Prevents accidental deletion of the release. (Currently not enforced unless KuboCD webhook is installed.)
 - `timeout: 4m`: Overrides the default deployment timeout (`2m`) because this Helm chart may take some time to deploy.
 - `values`: This section is in proper YAML format (not a templated string), since it does not include any templating.
-- `roles`: Assigns the package to the `ingress` role. This is used for [dependency management](/user-guide/dependencies) between releases.
+- `roles`: Assigns the package to the `ingress` role. This is used for [dependency management](../user-guide/dependencies.md) between releases.
 
 Build the package:
 
