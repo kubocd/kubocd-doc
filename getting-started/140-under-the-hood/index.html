@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../..">
+        <link rel="prev" href="../130-a-first-deployment/">
       
       
-        <link rel="next" href="../120-existing-cluster/">
+        <link rel="next" href="../150-ingress-controller/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Installation on Kind - KuboCD</title>
+        <title>Under the hood - debugging - KuboCD</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#installing-kubocd-on-a-local-kind-cluster" class="md-skip">
+        <a href="#under-the-hood-if-things-go-wrong" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Installation on Kind
+              Under the hood - debugging
             
           </span>
         </div>
@@ -315,32 +315,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Installation on Kind
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../110-kind/" class="md-nav__link">
         
   
   
@@ -351,95 +329,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prerequisites
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#create-the-kind-cluster" class="md-nav__link">
-    <span class="md-ellipsis">
-      Create the Kind Cluster
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-flux" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install Flux
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Install Flux">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#install-the-flux-cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install the Flux CLI
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deploy-flux-basic-mode" class="md-nav__link">
-    <span class="md-ellipsis">
-      Deploy Flux (Basic Mode)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-kubocd" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install KuboCD
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-the-kubocd-cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install the KuboCD CLI
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -495,10 +384,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../140-under-the-hood/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Under the hood - debugging
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -509,6 +420,53 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-ocirepository" class="md-nav__link">
+    <span class="md-ellipsis">
+      The OCIRepository
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-helmrepository" class="md-nav__link">
+    <span class="md-ellipsis">
+      The HelmRepository
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-helmrelease" class="md-nav__link">
+    <span class="md-ellipsis">
+      The HelmRelease
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -730,69 +688,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#the-ocirepository" class="md-nav__link">
     <span class="md-ellipsis">
-      Prerequisites
+      The OCIRepository
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-the-kind-cluster" class="md-nav__link">
+  <a href="#the-helmrepository" class="md-nav__link">
     <span class="md-ellipsis">
-      Create the Kind Cluster
+      The HelmRepository
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-flux" class="md-nav__link">
+  <a href="#the-helmrelease" class="md-nav__link">
     <span class="md-ellipsis">
-      Install Flux
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Install Flux">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#install-the-flux-cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install the Flux CLI
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deploy-flux-basic-mode" class="md-nav__link">
-    <span class="md-ellipsis">
-      Deploy Flux (Basic Mode)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-kubocd" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install KuboCD
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-the-kubocd-cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install the KuboCD CLI
+      The HelmRelease
     </span>
   </a>
   
@@ -817,137 +733,89 @@
   
 
 
-<h1 id="installing-kubocd-on-a-local-kind-cluster">Installing KuboCD on a Local Kind Cluster</h1>
-<p>This section walks you through setting up a local Kubernetes cluster using Docker and <strong>Kind</strong>,
-then installing <strong>FluxCD</strong> and <strong>KuboCD</strong> on top of it.</p>
+<h1 id="under-the-hood-if-things-go-wrong">Under the Hood (If Things Go Wrong)</h1>
+<p>Behind the scenes, KuboCD creates several FluxCD resources to manage the deployment.</p>
+<p>You can inspect these resources to debug problems or understand the internals.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl<span class="w"> </span>describe<span class="w"> </span>release<span class="w"> </span>podinfo1
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>......
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Events:
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>Type<span class="w">    </span>Reason<span class="w">                 </span>Age<span class="w">   </span>From<span class="w">     </span>Message
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>----<span class="w">    </span>------<span class="w">                 </span>----<span class="w">  </span>----<span class="w">     </span>-------
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>Normal<span class="w">  </span>OCIRepositoryCreated<span class="w">   </span>12s<span class="w">   </span>release<span class="w">  </span>Created<span class="w"> </span>OCIRepository<span class="w"> </span><span class="s2">&quot;kcd-podinfo1&quot;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Normal<span class="w">  </span>HelmRepositoryCreated<span class="w">  </span>10s<span class="w">   </span>release<span class="w">  </span>Created<span class="w"> </span>HelmRepository<span class="w"> </span><span class="s2">&quot;kcd-podinfo1&quot;</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>Normal<span class="w">  </span>HelmReleaseCreated<span class="w">     </span>8s<span class="w">    </span>release<span class="w">  </span>Created<span class="w"> </span>HelmRelease<span class="w"> </span><span class="s2">&quot;podinfo1-main&quot;</span>
+</span></code></pre></div>
+<p>All of these resources are created in the same namespace as the <code>Release</code> object (e.g. <code>default</code>).</p>
+<h2 id="the-ocirepository">The OCIRepository</h2>
+<p>This Flux resource pulls the KuboCD package image:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>OCIRepository
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>NAME<span class="w">           </span>URL<span class="w">                                      </span>READY<span class="w">   </span>STATUS<span class="w">                                                                                                           </span>AGE
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>kcd-podinfo1<span class="w">   </span>oci://quay.io/kubodoc/packages/podinfo<span class="w">   </span>True<span class="w">    </span>stored<span class="w"> </span>artifact<span class="w"> </span><span class="k">for</span><span class="w"> </span>digest<span class="w"> </span><span class="s1">&#39;6.7.1-p01@sha256:985e4e2f89a4b17bd5cc2936a0b305df914ae479e0b8c96e61cb22725b61cd24&#39;</span><span class="w">   </span>9m1s
+</span></code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p><strong>Already have a Kubernetes cluster?</strong><br />
-You can skip the cluster creation and follow the instructions in <a href="../120-existing-cluster/">Installation on an existing cluster</a>.</p>
-</div>
-<hr />
-<h2 id="prerequisites">Prerequisites</h2>
-<p>Ensure the following tools are installed on your workstation:</p>
+<p>If the release is stuck in the <code>WAIT_OCI</code> state, check this resource. Common issues include:</p>
 <ul>
-<li><a href="https://www.docker.com/">Docker</a></li>
-<li><a href="https://kubernetes.io/docs/tasks/tools/">kubectl</a></li>
-<li><a href="https://helm.sh/">Helm</a></li>
-<li><a href="https://kind.sigs.k8s.io/">Kind</a></li>
-<li><a href="https://fluxcd.io/flux/installation/#install-the-flux-cli">Flux CLI</a></li>
+<li>Incorrect URL</li>
+<li>Image still private (set to public or provide authentication)</li>
 </ul>
-<p>Make sure:</p>
-<ul>
-<li>Docker is running</li>
-<li>You have an active internet connection</li>
-<li>Ports <strong>80</strong> and <strong>443</strong> are available on your local machine</li>
-</ul>
-<p>You also need an access to an OCI-compatible container registry with permissions to push images.
-This is will be necessary for uploading and storing KuboCD Packages as OCI artifacts.</p>
-<hr />
-<h2 id="create-the-kind-cluster">Create the Kind Cluster</h2>
-<p>Create a configuration file with ingress-compatible port mappings:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cat<span class="w"> </span>&gt;/tmp/kubodoc-config.yaml<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="s">kind: Cluster</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="s">apiVersion: kind.x-k8s.io/v1alpha4</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s">name: kubodoc</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="s">nodes:</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="s">- role: control-plane</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="s">  extraPortMappings:</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="s">  - containerPort: 30080</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="s">    hostPort: 80</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="s">    protocol: TCP</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="s">  - containerPort: 30443</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="s">    hostPort: 443</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="s">    protocol: TCP</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="s">EOF</span>
-</span></code></pre></div>
-<p>Then create the cluster:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>kind<span class="w"> </span>create<span class="w"> </span>cluster<span class="w"> </span>--config<span class="w"> </span>/tmp/kubodoc-config.yaml
-</span></code></pre></div>
-<p>This will create a single-node cluster acting as both control plane and worker node.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <code>extraPortMappings</code> allow direct access to services like the ingress controller from your local machine.</p>
 </div>
-<p>Example output:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Creating<span class="w"> </span>cluster<span class="w"> </span><span class="s2">&quot;kubodoc&quot;</span><span class="w"> </span>...
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w"> </span>✓<span class="w"> </span>Ensuring<span class="w"> </span>node<span class="w"> </span>image<span class="w"> </span><span class="o">(</span>kindest/node:v1.32.2<span class="o">)</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w"> </span>✓<span class="w"> </span>Preparing<span class="w"> </span>nodes
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w"> </span>✓<span class="w"> </span>Writing<span class="w"> </span>configuration
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w"> </span>✓<span class="w"> </span>Starting<span class="w"> </span>control-plane
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w"> </span>✓<span class="w"> </span>Installing<span class="w"> </span>CNI
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w"> </span>✓<span class="w"> </span>Installing<span class="w"> </span>StorageClass
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>Set<span class="w"> </span>kubectl<span class="w"> </span>context<span class="w"> </span>to<span class="w"> </span><span class="s2">&quot;kind-kubodoc&quot;</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>You<span class="w"> </span>can<span class="w"> </span>now<span class="w"> </span>use<span class="w"> </span>your<span class="w"> </span>cluster<span class="w"> </span>with:
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>kubectl<span class="w"> </span>cluster-info<span class="w"> </span>--context<span class="w"> </span>kind-kubodoc
+<p>You can manually delete this resource to trigger a refresh:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>ocirepository<span class="w"> </span>kcd-podinfo1
 </span></code></pre></div>
-<p>Verify everything is running:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
+<p>KuboCD will recreate it.</p>
+<p>This can be useful to force a relaod of a modified OCI image.</p>
+<h2 id="the-helmrepository">The HelmRepository</h2>
+<p>As the <code>podinfo</code> Helm the chart is embedded in the package, it must be served to Flux via an internal Helm repository.</p>
+<p>KuboCD creates a <code>HelmRepository</code> resource pointing to its internal server:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>HelmRepository
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>NAMESPACE<span class="w">            </span>NAME<span class="w">                                            </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>kube-system<span class="w">          </span>coredns-668d6bf9bc-nwzqj<span class="w">                        </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>52s
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>kube-system<span class="w">          </span>coredns-668d6bf9bc-xgv9f<span class="w">                        </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>52s
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>kube-system<span class="w">          </span>etcd-kubodoc-control-plane<span class="w">                      </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>59s
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>kube-system<span class="w">          </span>kindnet-xwfp8<span class="w">                                   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>52s
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>kube-system<span class="w">          </span>kube-apiserver-kubodoc-control-plane<span class="w">            </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>59s
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>kube-system<span class="w">          </span>kube-controller-manager-kubodoc-control-plane<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>58s
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>kube-system<span class="w">          </span>kube-proxy-6hv6w<span class="w">                                </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>52s
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>kube-system<span class="w">          </span>kube-scheduler-kubodoc-control-plane<span class="w">            </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>59s
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>local-path-storage<span class="w">   </span>local-path-provisioner-7dc846544d-k8bhb<span class="w">         </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>52s
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>NAME<span class="w">           </span>URL<span class="w">                                                                            </span>AGE<span class="w">    </span>READY<span class="w">   </span>STATUS
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>kcd-podinfo1<span class="w">   </span>http://kubocd-ctrl-controller-helm-repository.kubocd.svc/hr/default/podinfo1<span class="w">   </span>105m<span class="w">   </span>True<span class="w">    </span>stored<span class="w"> </span>artifact:<span class="w"> </span>revision<span class="w"> </span><span class="s1">&#39;sha256:d8db03cf45ecd75064c2a2582812dc4df5cd624d0e295b24ff79569bf46a070b&#39;</span>
 </span></code></pre></div>
-<hr />
-<h2 id="install-flux">Install Flux</h2>
-<h3 id="install-the-flux-cli">Install the Flux CLI</h3>
-<p>If not already installed, follow the <a href="https://fluxcd.io/flux/installation/#install-the-flux-cli">Flux CLI installation guide</a>.</p>
-<h3 id="deploy-flux-basic-mode">Deploy Flux (Basic Mode)</h3>
-<p>We’ll begin with a basic installation of Flux (no Git repository linked for now):</p>
+<p>This step rarely causes errors unless the internal controller is unreachable.</p>
+<h2 id="the-helmrelease">The HelmRelease</h2>
+<p>This Flux resource handles the actual Helm chart deployment.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>HelmRelease
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>NAME<span class="w">            </span>AGE<span class="w">     </span>READY<span class="w">   </span>STATUS
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>podinfo1-main<span class="w">   </span>7m59s<span class="w">   </span>True<span class="w">    </span>Helm<span class="w"> </span>install<span class="w"> </span>succeeded<span class="w"> </span><span class="k">for</span><span class="w"> </span>release<span class="w"> </span>default/podinfo1-main.v1<span class="w"> </span>with<span class="w"> </span>chart<span class="w"> </span>podinfo@6.7.1
+</span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>A full GitOps deployment will be described later in this documentation.</p>
+<p>There will be one HelmRelease per module in the package.</p>
 </div>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>flux<span class="w"> </span>install
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>✚<span class="w"> </span>generating<span class="w"> </span>manifests
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>✔<span class="w"> </span>manifests<span class="w"> </span>build<span class="w"> </span>completed
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>►<span class="w"> </span>installing<span class="w"> </span>components<span class="w"> </span><span class="k">in</span><span class="w"> </span>flux-system<span class="w"> </span>namespace
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>...
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>✔<span class="w"> </span>notification-controller:<span class="w"> </span>deployment<span class="w"> </span>ready
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>✔<span class="w"> </span>source-controller:<span class="w"> </span>deployment<span class="w"> </span>ready
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>✔<span class="w"> </span>install<span class="w"> </span>finished
-</span></code></pre></div>
-<p>Verify deployment:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>flux-system<span class="w"> </span>get<span class="w"> </span>pods
+<p>If the release is stuck in <code>WAIT_HREL</code>, inspect this resource:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>kubectl<span class="w"> </span>describe<span class="w"> </span>helmrelease<span class="w"> </span>podinfo1-main
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>NAME<span class="w">                                       </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>helm-controller-b6767d66-q27gd<span class="w">             </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>kustomize-controller-5b56686fbc-hpkhl<span class="w">      </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>notification-controller-58ffd586f7-bbvwv<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>source-controller-6ff87cb475-hnmxv<span class="w">         </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>.....
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>Events:
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span>Type<span class="w">    </span>Reason<span class="w">            </span>Age<span class="w">    </span>From<span class="w">             </span>Message
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span>----<span class="w">    </span>------<span class="w">            </span>----<span class="w">   </span>----<span class="w">             </span>-------
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span>Normal<span class="w">  </span>HelmChartCreated<span class="w">  </span>5m42s<span class="w">  </span>helm-controller<span class="w">  </span>Created<span class="w"> </span>HelmChart/default/default-podinfo1-main<span class="w"> </span>with<span class="w"> </span>SourceRef<span class="w"> </span><span class="s1">&#39;HelmRepository/default/kcd-podinfo1&#39;</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span>Normal<span class="w">  </span>InstallSucceeded<span class="w">  </span>5m39s<span class="w">  </span>helm-controller<span class="w">  </span>Helm<span class="w"> </span>install<span class="w"> </span>succeeded<span class="w"> </span><span class="k">for</span><span class="w"> </span>release<span class="w"> </span>default/podinfo1-main.v1<span class="w"> </span>with<span class="w"> </span>chart<span class="w"> </span>podinfo@6.7.1
 </span></code></pre></div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p><strong>💡 Want a minimal install?</strong><br />
-You can limit Flux to the required components for KuboCD:<br />
-<code>flux install --components source-controller,helm-controller</code></p>
+<p>One of the point to check if the generated <code>values</code> for the Helm chart deployment.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You will need to unstall the <a href="https://github.com/mikefarah/yq">yq command</a></p>
 </div>
-<hr />
-<h2 id="install-kubocd">Install KuboCD</h2>
-<p>Deploy KuboCD using Helm:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-ctrl<span class="w"> </span>--create-namespace<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.0
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="l l-Scalar l-Scalar-Plain">kubectl get HelmRelease podinfo1-main -o yaml | yq &#39;.spec.values&#39;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="l l-Scalar l-Scalar-Plain">ingress</span><span class="p p-Indicator">:</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="nt">hosts</span><span class="p">:</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">podinfo1.ingress.kubodoc.local</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">      </span><span class="nt">paths</span><span class="p">:</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">          </span><span class="nt">pathType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ImplementationSpecific</span>
 </span></code></pre></div>
-<hr />
-<h2 id="install-the-kubocd-cli">Install the KuboCD CLI</h2>
-<p>Download the KuboCD CLI from the <a href="https://github.com/kubocd/kubocd/releases/tag/v0.2.0">GitHub releases page</a>.
-and rename it to <code>kubocd</code>. Then make it executable and move it to your path:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>mv<span class="w"> </span>kubocd_*_*<span class="w"> </span>kubocd
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>kubocd
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>sudo<span class="w"> </span>mv<span class="w"> </span>kubocd<span class="w"> </span>/usr/local/bin/
-</span></code></pre></div>
-<p>Verify the installation:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>kubocd<span class="w"> </span>version
-</span></code></pre></div>
-<p>You can now move to <a href="../130-a-first-deployment/">your first deployment with KuboCD</a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If deployment fails, you may need to wait for the Helm timeout to expire (default: 2 minutes). You can configure this value in the package or in the Release.</p>
+</div>
 
 
 
@@ -977,7 +845,7 @@ and rename it to <code>kubocd</code>. Then make it executable and move it to you
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../.." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home">
+          <a href="../130-a-first-deployment/" class="md-footer__link md-footer__link--prev" aria-label="Previous: A first deployment">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -987,20 +855,20 @@ and rename it to <code>kubocd</code>. Then make it executable and move it to you
                 Previous
               </span>
               <div class="md-ellipsis">
-                Home
+                A first deployment
               </div>
             </div>
           </a>
         
         
           
-          <a href="../120-existing-cluster/" class="md-footer__link md-footer__link--next" aria-label="Next: Using an existing Cluster">
+          <a href="../150-ingress-controller/" class="md-footer__link md-footer__link--next" aria-label="Next: Ingress controller setup">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Using an existing Cluster
+                Ingress controller setup
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -12,7 +12,7 @@
         <link rel="prev" href="../110-kind/">
       
       
-        <link rel="next" href="../../user-guide/schemas/">
+        <link rel="next" href="../130-a-first-deployment/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -475,12 +475,81 @@
   
   
     <li class="md-nav__item">
-      <a href="../130-a-first-deployment" class="md-nav__link">
+      <a href="../130-a-first-deployment/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     A first deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../140-under-the-hood/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Under the hood - debugging
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../150-ingress-controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ingress controller setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../160-the-context/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    The Context resource
     
   </span>
   
@@ -543,12 +612,58 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/schemas/" class="md-nav__link">
+      <a href="../../user-guide/alternate-schema-format/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Schemas
+    KuboCD schema format
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    The CLI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/dependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dependencies management
     
   </span>
   
@@ -704,6 +819,10 @@
 
 <h1 id="installing-kubocd-on-an-existing-cluster">Installing KuboCD on an existing cluster.</h1>
 <p>If you have an existing cluster, you can use it to test KuboCD</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you don't have one, you can <a href="../110-kind/">use a Kind cluster</a> on your local workstation</p>
+</div>
 <hr />
 <h2 id="prerequisites">Prerequisites</h2>
 <p>Ensure the following tools are installed on your workstation:</p>
@@ -727,39 +846,35 @@ This is will be necessary for uploading and storing KuboCD Packages as OCI artif
 <p>If not already installed, follow the <a href="https://fluxcd.io/flux/installation/#install-the-flux-cli">Flux CLI installation guide</a>.</p>
 <h3 id="deploy-flux-basic-mode">Deploy Flux (Basic Mode)</h3>
 <p>If Flux is not already installed on your cluster, we’ll begin with a basic installation (no Git repository linked for now):</p>
-<blockquote>
-<p>A full GitOps deployment will be described later in this documentation.</p>
-</blockquote>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>flux<span class="w"> </span>install
-</span></code></pre></div>
-<p>Expected output:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>✚<span class="w"> </span>generating<span class="w"> </span>manifests
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>✔<span class="w"> </span>manifests<span class="w"> </span>build<span class="w"> </span>completed
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>►<span class="w"> </span>installing<span class="w"> </span>components<span class="w"> </span><span class="k">in</span><span class="w"> </span>flux-system<span class="w"> </span>namespace
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>...
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>✔<span class="w"> </span>notification-controller:<span class="w"> </span>deployment<span class="w"> </span>ready
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>✔<span class="w"> </span>source-controller:<span class="w"> </span>deployment<span class="w"> </span>ready
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>✔<span class="w"> </span>install<span class="w"> </span>finished
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>flux<span class="w"> </span>install
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>✚<span class="w"> </span>generating<span class="w"> </span>manifests
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>✔<span class="w"> </span>manifests<span class="w"> </span>build<span class="w"> </span>completed
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>►<span class="w"> </span>installing<span class="w"> </span>components<span class="w"> </span><span class="k">in</span><span class="w"> </span>flux-system<span class="w"> </span>namespace
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>...
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>✔<span class="w"> </span>notification-controller:<span class="w"> </span>deployment<span class="w"> </span>ready
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>✔<span class="w"> </span>source-controller:<span class="w"> </span>deployment<span class="w"> </span>ready
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>✔<span class="w"> </span>install<span class="w"> </span>finished
 </span></code></pre></div>
 <p>Verify deployment:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>flux-system<span class="w"> </span>get<span class="w"> </span>pods
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>flux-system<span class="w"> </span>get<span class="w"> </span>pods
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>NAME<span class="w">                                       </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>helm-controller-b6767d66-q27gd<span class="w">             </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>kustomize-controller-5b56686fbc-hpkhl<span class="w">      </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>notification-controller-58ffd586f7-bbvwv<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>source-controller-6ff87cb475-hnmxv<span class="w">         </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
 </span></code></pre></div>
-<p>Expected output:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>NAME<span class="w">                                       </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>helm-controller-b6767d66-q27gd<span class="w">             </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>kustomize-controller-5b56686fbc-hpkhl<span class="w">      </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>notification-controller-58ffd586f7-bbvwv<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>source-controller-6ff87cb475-hnmxv<span class="w">         </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
-</span></code></pre></div>
-<blockquote>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
 <p><strong>💡 Want a minimal install?</strong><br />
 You can limit Flux to the required components for KuboCD:<br />
 <code>flux install --components source-controller,helm-controller</code></p>
-</blockquote>
+</div>
 <hr />
 <h2 id="install-kubocd">Install KuboCD</h2>
 <p>Deploy the KuboCD controller using Helm:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-ctrl<span class="w"> </span>--create-namespace<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.0
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-ctrl<span class="w"> </span>--create-namespace<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.0
 </span></code></pre></div>
 <hr />
 <h2 id="enabling-webhook-based-features">Enabling Webhook-Based Features</h2>
@@ -767,21 +882,22 @@ You can limit Flux to the required components for KuboCD:<br />
 <p>To enable these features, you need to deploy a webhook component alongside the controller. This webhook requires 
 <a href="https://cert-manager.io/"><strong>cert-manager</strong></a> to be installed in your cluster to handle TLS certificate provisioning.</p>
 <p>If you already have <code>cert-manager</code> installed, you can deploy the webhook with the following command:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-wh<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-wh:v0.2.0
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-wh<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-wh:v0.2.0
 </span></code></pre></div>
-<blockquote>
-<p>💡 Don’t have <code>cert-manager</code> yet? No problem — we’ll show you how to package and install it with KuboCD in a later section.</p>
-</blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Don’t have <code>cert-manager</code> yet? No problem — we’ll show you how to package and install it with KuboCD in a later section.</p>
+</div>
 <hr />
 <h2 id="install-the-kubocd-cli">Install the KuboCD CLI</h2>
 <p>Download the KuboCD CLI from the <a href="https://github.com/kubocd/kubocd/releases/tag/v0.2.0">GitHub releases page</a>.
 and rename it to <code>kubocd</code>. Then make it executable and move it to your path:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>mv<span class="w"> </span>kubocd_*_*<span class="w"> </span>kubocd
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>kubocd
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>sudo<span class="w"> </span>mv<span class="w"> </span>kubocd<span class="w"> </span>/usr/local/bin/
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>mv<span class="w"> </span>kubocd_*_*<span class="w"> </span>kubocd
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>kubocd
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>sudo<span class="w"> </span>mv<span class="w"> </span>kubocd<span class="w"> </span>/usr/local/bin/
 </span></code></pre></div>
 <p>Verify the installation:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>kubocd<span class="w"> </span>version
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>kubocd<span class="w"> </span>version
 </span></code></pre></div>
 <p>You can now move to <a href="../130-a-first-deployment/">your first deployment with KuboCD</a></p>
 
@@ -830,13 +946,13 @@ and rename it to <code>kubocd</code>. Then make it executable and move it to you
         
         
           
-          <a href="../../user-guide/schemas/" class="md-footer__link md-footer__link--next" aria-label="Next: Schemas">
+          <a href="../130-a-first-deployment/" class="md-footer__link md-footer__link--next" aria-label="Next: A first deployment">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Schemas
+                A first deployment
               </div>
             </div>
             <div class="md-footer__button md-icon">
