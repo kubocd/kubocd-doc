@@ -3,12 +3,13 @@
 
 ## Package Definition
 
-For this initial deployment, we’ll use a simple and illustrative example: a tiny web application called [**podinfo**](https://github.com/stefanprodan/podinfo).
+For this initial deployment, we’ll use a simple and illustrative example: a tiny web application called [**podinfo**](https://github.com/stefanprodan/podinfo){:target="_blank"}.
 
 A **Package** in KuboCD is defined using a YAML manifest. Below is an example that wraps the `podinfo` application:
 
 ???+ abstract "podinfo-p01.yaml"
-    ```yaml
+
+    ``` { .yaml .copy }
     apiVersion: v1alpha1
     type: Package
     name: podinfo
@@ -46,16 +47,18 @@ A **Package** in KuboCD is defined using a YAML manifest. Below is an example th
                     pathType: ImplementationSpecific
     ```
 
-!!! note
-    A KuboCD Package is **not** a native Kubernetes resource.
+A KuboCD Package is **NOT** a native Kubernetes resource.
 
-Description of the Sample Package Attributes:
+!!! tips
+    You will find most on the samples used in this documentation at the [following location](https://github.com/kubocd/kubocd-doc/tree/main/samples){:target="_blank"}
+
+Description of the sample Package attributes:
 
 - **`apiVersion`** (Required): Defines the version of the KuboCD Package format. The only supported value currently is `v1alpha1`.
 - **`type`**: Specifies the resource type. It must be `Package`, which is also the default and can be omitted.
-- **`name`**: The name of the package. This will also be used in the OCI image name.
-- **`tag`** (Required): Specifies the version tag of the OCI image. While technically flexible, it is recommended to follow this convention:
-    - Use the Helm chart version as a base, followed by `-pXX` where `XX` denotes the packaging revision (e.g. different configurations for the same chart).
+- **`name`**: The name of the package. This will be used as the OCI image name.
+- **`tag`** (Required): Specifies the version tag of the OCI image. While technically flexible, we will use the following convention:
+    - Use the Helm chart version of the main module as a base, followed by `-pXX` where `XX` denotes the packaging revision (e.g. different configurations for the same chart).
 - **`schema.parameters`**: Defines input parameters for the package, using a standard OpenAPI/JSON Schema. This enables validation and documentation of parameters at deployment time.
     - If not defined, the release will not accept parameters.
 - **`modules`** (Required): A package contains one or more Helm charts, each represented as a module.
@@ -80,16 +83,17 @@ Now that the package definition is complete, it’s time to generate the corresp
 
 As mentioned earlier, KuboCD uses an OCI-compatible container registry to store and distribute packages. You'll need access to one with permission to push images.
 
-✅ Supported registries:
+Tested registry
+
 - `quay.io` (Red Hat)
 - `ghcr.io` (GitHub)
 - [distribution registry](https://github.com/distribution/distribution)
 
-⚠️ **Note**: Docker Hub is **not supported** at the moment.
+Others should works. Except **`Docker Hub`** which is not supported at the moment.
 
 Make sure you're authenticated with the registry, e.g.:
 
-```bash
+``` { .bash .copy }
 docker login quay.io
 ```
 
@@ -97,12 +101,12 @@ Depending on the registry, the image may need to be pushed under an organization
 
 To build and push the package image:
 
-```bash
+``` { .bash .copy }
 kubocd package podinfo-p01.yaml --ociRepoPrefix quay.io/kubodoc/packages
 ```
 
 !!! note
-    Adjust `--ociRepoPrefix` to your own registry setup. The `packages` suffix is arbitrary — you can use any subpath or omit it.
+    Adjust `--ociRepoPrefix` to your own registry setup.<br>The `packages` suffix is arbitrary. You can use any subpath or omit it.
 
 The resulting repository and tag are determined from the package manifest:
 
@@ -111,7 +115,7 @@ The resulting repository and tag are determined from the package manifest:
 
 Expected Output:
 
-```text
+``` bash
 ====================================== Packaging package 'podinfo-p01.yaml'
 --- Handling module 'main':
 Fetching chart podinfo:6.7.1...
@@ -125,7 +129,7 @@ Successfully pushed
 
 You can also set the repository prefix globally via an environment variable:
 
-```bash
+```bash { .bash .copy }
 export OCI_REPO_PREFIX=quay.io/kubodoc/packages
 ```
 
@@ -133,14 +137,14 @@ Or for other registries:
 
 ```bash
 export OCI_REPO_PREFIX=ghcr.io/kubodoc/packages
+
 export OCI_REPO_PREFIX=localhost:5000/packages
 ```
 
 !!! warning
     By default, pushed images may be private. To make them accessible for deployment, ensure the image is set to **public**.
-
-!!! note
-    If you prefer to keep the image private, you will need to provide authentication credentials in the `Release` configuration. This is explained later in the documentation.
+    <br>
+    If you prefer to keep the image private, you will need to provide authentication credentials in the `Release` configuration. This will be explained later in the documentation.
 
 ---
 
@@ -148,8 +152,9 @@ export OCI_REPO_PREFIX=localhost:5000/packages
 
 To deploy the application, define a KuboCD `Release` custom resource:
 
-???+ abstract "podinfo-basic.yaml"
-    ```yaml
+???+ abstract "podinfo1-basic.yaml"
+
+    ``` { .yaml .copy }
     ---
     apiVersion: kubocd.kubotal.io/v1alpha1
     kind: Release
@@ -166,7 +171,7 @@ To deploy the application, define a KuboCD `Release` custom resource:
         fqdn: podinfo1.ingress.kubodoc.local
     ```
 
-Explanation of Key Attributes:
+Explanation of attributes:
 
 - **`description`**: (Optional) A short description of this release.
 - **`package.repository`**: The OCI image repository that contains the package. This should match the registry used during package build.
@@ -179,26 +184,28 @@ Deploying the Application:
 1. Adjust the repository and parameters (if needed) to match your environment.
 2. Apply the Release:
 
-```bash
-kubectl create -f podinfo-basic.yaml
-
-release.kubocd.kubotal.io/podinfo1 created
+``` { .bash .copy }
+kubectl apply -f podinfo1-basic.yaml
 ```
 
 Once deployed, monitor the status:
 
-```bash
+```{ .bash .copy }
 kubectl get releases
+```
 
+```bash
 NAME       REPOSITORY                         TAG         CONTEXTS   STATUS   READY   WAIT   PRT   AGE     DESCRIPTION
 podinfo1   quay.io/kubodoc/packages/podinfo   6.7.1-p01              READY    1/1            -     6m40s   A first sample release of podinfo
 ```
 
 You can also verify the pod:
 
-```bash
+```{ .bash .copy }
 kubectl get pods
+```
 
+```bash
 NAME                             READY   STATUS    RESTARTS   AGE
 podinfo1-main-779b6b9fd4-zbgbx   1/1     Running   0          8h
 ```

@@ -1,0 +1,20 @@
+
+config:
+  defaultContexts:
+    - name: cluster
+      namespace: contexts
+extraNamespaces:
+  - name: contexts
+contexts:
+  - name: cluster
+    namespace: contexts
+    protected: true
+    description: Context specific to the cluster 'kubodoc'
+    context:
+      ingress:
+        className: nginx
+        domain: ingress.kubodoc.local
+      storageClass:
+        data: standard
+        workspace: standard
+

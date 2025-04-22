@@ -13,3 +13,4 @@ spec:
     storageClass:
       data: standard
       workspace: standard
+

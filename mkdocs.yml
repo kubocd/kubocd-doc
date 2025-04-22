@@ -3,12 +3,13 @@ site_name: KuboCD
 nav:
   - Home: index.md
   - "Getting started":
-      - "Installation on Kind": getting-started/110-kind.md
-      - "Using an existing Cluster": getting-started/120-existing-cluster.md
+      - "Installation: Kind": getting-started/110-kind.md
+      - "Installation: Existing Cluster": getting-started/120-existing-cluster.md
       - "A first deployment": getting-started/130-a-first-deployment.md
       - "Under the hood - debugging": getting-started/140-under-the-hood.md
       - "Ingress controller setup": getting-started/150-ingress-controller.md
       - "The Context resource": getting-started/160-the-context.md
+      - "Context and configuration": getting-started/170-context-and-config.md
   - "User guide":
       - "KuboCD schema format": user-guide/alternate-schema-format.md
       - "The CLI": user-guide/cli.md

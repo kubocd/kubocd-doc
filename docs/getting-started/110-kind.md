@@ -14,11 +14,11 @@ then installing **FluxCD** and **KuboCD** on top of it.
 
 Ensure the following tools are installed on your workstation:
 
-- [Docker](https://www.docker.com/)
-- [kubectl](https://kubernetes.io/docs/tasks/tools/)
-- [Helm](https://helm.sh/)
-- [Kind](https://kind.sigs.k8s.io/)
-- [Flux CLI](https://fluxcd.io/flux/installation/#install-the-flux-cli)
+- [Docker](https://www.docker.com/){:target="_blank"}.
+- [kubectl](https://kubernetes.io/docs/tasks/tools/){:target="_blank"}.
+- [Helm](https://helm.sh/){:target="_blank"}.
+- [Kind](https://kind.sigs.k8s.io/){:target="_blank"}.
+- [Flux CLI](https://fluxcd.io/flux/installation/#install-the-flux-cli){:target="_blank"}.
 
 Make sure:
 
@@ -52,6 +52,9 @@ nodes:
 EOF
 ```
 
+!!! note
+    The `extraPortMappings` allow direct access to services like the ingress controller from your local machine.
+
 Then create the cluster:
 
 ```{ .bash .copy }
@@ -59,9 +62,6 @@ kind create cluster --config /tmp/kubodoc-config.yaml
 ```
 
 This will create a single-node cluster acting as both control plane and worker node.
-
-!!! note
-    The `extraPortMappings` allow direct access to services like the ingress controller from your local machine.
 
 Example output:
 
@@ -102,7 +102,7 @@ local-path-storage   local-path-provisioner-7dc846544d-k8bhb         1/1     Run
 
 ### Install the Flux CLI
 
-If not already installed, follow the [Flux CLI installation guide](https://fluxcd.io/flux/installation/#install-the-flux-cli).
+If not already installed, follow the [Flux CLI installation guide](https://fluxcd.io/flux/installation/#install-the-flux-cli){:target="_blank"}..
 
 ### Deploy Flux (Basic Mode)
 
@@ -113,7 +113,9 @@ We’ll begin with a basic installation of Flux (no Git repository linked for no
 
 ```{ .bash .copy }
 flux install
+```
 
+``` { .bash }
 ✚ generating manifests
 ✔ manifests build completed
 ► installing components in flux-system namespace
@@ -125,9 +127,11 @@ flux install
 
 Verify deployment:
 
-```{ .bash }
+``` { .bash .copy }
 kubectl -n flux-system get pods
+```
 
+``` { .bash }
 NAME                                       READY   STATUS    RESTARTS   AGE
 helm-controller-b6767d66-q27gd             1/1     Running   0          14m
 kustomize-controller-5b56686fbc-hpkhl      1/1     Running   0          14m
@@ -154,7 +158,7 @@ helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/chart
 
 ## Install the KuboCD CLI
 
-Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.2.0).
+Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.2.0){:target="_blank"}..
 and rename it to `kubocd`. Then make it executable and move it to your path:
 
 ```{ .bash .copy }

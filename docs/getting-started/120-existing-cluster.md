@@ -11,10 +11,10 @@ If you have an existing cluster, you can use it to test KuboCD
 
 Ensure the following tools are installed on your workstation:
 
-- [Docker](https://www.docker.com/)
-- [kubectl](https://kubernetes.io/docs/tasks/tools/)
-- [Helm](https://helm.sh/)
-- [Flux CLI](https://fluxcd.io/flux/installation/#install-the-flux-cli)
+- [Docker](https://www.docker.com/){:target="_blank"}.
+- [kubectl](https://kubernetes.io/docs/tasks/tools/){:target="_blank"}.
+- [Helm](https://helm.sh/){:target="_blank"}.
+- [Flux CLI](https://fluxcd.io/flux/installation/#install-the-flux-cli){:target="_blank"}.
 
 Make sure:
 
@@ -31,7 +31,7 @@ This is will be necessary for uploading and storing KuboCD Packages as OCI artif
 
 ### Install the Flux CLI
 
-If not already installed, follow the [Flux CLI installation guide](https://fluxcd.io/flux/installation/#install-the-flux-cli).
+If not already installed, follow the [Flux CLI installation guide](https://fluxcd.io/flux/installation/#install-the-flux-cli){:target="_blank"}..
 
 ### Deploy Flux (Basic Mode)
 
@@ -39,9 +39,11 @@ If Flux is not already installed on your cluster, we’ll begin with a basic ins
 
 
 
-```{ .bash  }
+```{ .bash .copy }
 flux install
+```
 
+``` { .bash  }
 ✚ generating manifests
 ✔ manifests build completed
 ► installing components in flux-system namespace
@@ -53,9 +55,11 @@ flux install
 
 Verify deployment:
 
-```{ .bash  }
+```{ .bash .copy }
 kubectl -n flux-system get pods
+```
 
+```{ .bash  }
 NAME                                       READY   STATUS    RESTARTS   AGE
 helm-controller-b6767d66-q27gd             1/1     Running   0          14m
 kustomize-controller-5b56686fbc-hpkhl      1/1     Running   0          14m
@@ -85,7 +89,7 @@ helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/chart
 Some advanced features in **KuboCD** such as **Release protection** rely on a Kubernetes **validating webhook.**
 
 To enable these features, you need to deploy a webhook component alongside the controller. This webhook requires 
-[**cert-manager**](https://cert-manager.io/) to be installed in your cluster to handle TLS certificate provisioning.
+[**cert-manager**](https://cert-manager.io/){:target="_blank"}. to be installed in your cluster to handle TLS certificate provisioning.
 
 If you already have `cert-manager` installed, you can deploy the webhook with the following command:
 
@@ -94,13 +98,14 @@ helm -n kubocd install kubocd-wh oci://quay.io/kubocd/charts/kubocd-wh:v0.2.0
 ```
 
 !!! note
-    Don’t have `cert-manager` yet? No problem — we’ll show you how to package and install it with KuboCD in a later section.
+    Don’t have `cert-manager` yet? No problem !
+    <br>We’ll show you how to package and install it with KuboCD in a later section.
 
 ---
 
 ## Install the KuboCD CLI
 
-Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.2.0).
+Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.2.0){:target="_blank"}..
 and rename it to `kubocd`. Then make it executable and move it to your path:
 
 ```{ .bash .copy }
