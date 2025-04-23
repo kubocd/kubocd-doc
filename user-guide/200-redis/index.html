@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../200-redis/">
+        <link rel="prev" href="../190-alternate-schema-format/">
       
       
-        <link rel="next" href="../../tips-and-tricks/">
+        <link rel="next" href="../dependencies/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Dependencies management - KuboCD</title>
+        <title>Redis: Advanced features - KuboCD</title>
       
     
     
@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#redis-a-realistic-example" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -105,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Dependencies management
+              Redis: Advanced features
             
           </span>
         </div>
@@ -539,10 +544,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../200-redis/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -553,6 +567,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -562,17 +577,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../dependencies/" class="md-nav__link">
         
   
   
@@ -583,7 +591,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -635,6 +642,8 @@
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -653,9 +662,23 @@
   
 
 
-  <h1>Dependencies management</h1>
-
-
+<h1 id="redis-a-realistic-example">Redis: a realistic example.</h1>
+<p>We will use this sample to demonstrate some more advanced feature of KuboCD.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubocd pack redis-p01.yaml 
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>====================================== Packaging package &#39;redis-p01.yaml&#39;
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>--- Handling module &#39;redis&#39;:
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    Pulling image &#39;registry-1.docker.io/bitnamicharts/redis:20.6.1&#39;
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    Chart: redis:20.6.1
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>--- Handling module &#39;commander&#39;:
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    Cloning git repository &#39;https://github.com/joeferner/redis-commander.git&#39;
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    Chart: redis-commander:0.6.0
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>--- Packaging
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    Generating index file
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    Wrap all in assembly.tgz
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>--- push OCI image: quay.io/kubodoc/packages/redis:20.6.1-p01
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    Successfully pushed
+</span></code></pre></div>
 
 
 
@@ -685,7 +708,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../200-redis/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Redis: Advanced features">
+          <a href="../190-alternate-schema-format/" class="md-footer__link md-footer__link--prev" aria-label="Previous: KuboCD schema format">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -695,20 +718,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Redis: Advanced features
+                KuboCD schema format
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../tips-and-tricks/" class="md-footer__link md-footer__link--next" aria-label="Next: Tips and tricks">
+          <a href="../dependencies/" class="md-footer__link md-footer__link--next" aria-label="Next: Dependencies management">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Tips and tricks
+                Dependencies management
               </div>
             </div>
             <div class="md-footer__button md-icon">
