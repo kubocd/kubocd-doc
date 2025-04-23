@@ -157,27 +157,7 @@ Fetching chart podinfo:6.8.0...
 Chart: podinfo:6.8.0
 
 ---------------------- Chart.yaml:
-apiVersion: v1
-appVersion: 6.8.0
-description: Podinfo Helm chart for Kubernetes
-home: https://github.com/stefanprodan/podinfo
-kubeVersion: '>=1.23.0-0'
-maintainers:
-- email: stefanprodan@users.noreply.github.com
-  name: stefanprodan
-name: podinfo
-sources:
-- https://github.com/stefanprodan/podinfo
-version: 6.8.0
-
-
--------------------- content:
-podinfo/Chart.yaml
-podinfo/values.yaml
-podinfo/templates/NOTES.txt
-podinfo/templates/_helpers.tpl
-podinfo/templates/certificate.
-.........
+...
 ```
 
 ---
@@ -190,26 +170,7 @@ Use the `--chart` flag to download the chart into the local `.charts` directory:
 kubocd dump helmRepository https://stefanprodan.github.io/podinfo podinfo 6.8.0 --chart
 ```
 
-```
-kubocd dump helmRepository https://stefanprodan.github.io/podinfo podinfo 6.8.0 --chart
-```
-
-```
-Fetching chart podinfo:6.8.0...
-
-Chart: podinfo:6.8.0
-
----------------------- Chart.yaml:
-apiVersion: v1
-........
-
--------------------- content:
-podinfo/Chart.yaml
-podinfo/values.yaml
-.......
-
----------------------- Extract chart podinfo (6.8.0) to ./.charts/podinfo-6.8.0
-```
+...
 
 
 
@@ -256,8 +217,6 @@ storageClass:
 ```
 
 Display context for an application in the `project03` namespace:
-
-> It is assumed than this namespace has a default context, as described in previous chapters
 
 ```
 kubocd dump context --namespace project03
@@ -362,4 +321,3 @@ Key output files:
 | modules/main/helmRelease.yaml    | Flux `HelmRelease` object for the main module                                                  |
 | modules/main/values.yaml         | Templated Helm values for the main module                                                      |
 | modules/main/manifests.yaml      | Result of `helm template --debug ...` for the main module                                      |
-

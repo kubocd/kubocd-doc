@@ -1,0 +1,13 @@
+
+
+---
+apiVersion: kubocd.kubotal.io/v1alpha1
+kind: Release
+metadata:
+  name: redis-basic
+  namespace: default
+spec:
+  package:
+    repository: quay.io/kubodoc/packages/redis
+    tag: 20.6.1-p01
+    interval: 30m
