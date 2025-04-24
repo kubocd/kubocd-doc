@@ -2,8 +2,15 @@
 
 apiVersion: v1alpha1
 name: redis
-tag: 20.6.1-p01
-description: Redis and a front UI
+tag: 20.6.1-p0X
+templateHeader: | 
+  {{- $uiHost :=  .Parameters.commander.host | default (printf "%s-%s-ui" .Release.metadata.name .Release.metadata.namespace) -}}
+usage:
+  text: |
+    Redis UI can be accessed using {{if .Parameters.commander.tls}}https{{else}}http{{end}}://{{ $uiHost }}.{{.Context.ingress.hostPostfix}}
+  html: |
+    <p>Redis UI can be accessed using <a href="{{if .Parameters.commander.tls}}https{{else}}http{{end}}://{{ $uiHost }}.{{.Context.ingress.hostPostfix}}">this link</a></p>
+description: Redis and a front UI on {{ $uiHost }}
 schema:
   parameters:
     description: Redis stack
@@ -13,16 +20,17 @@ schema:
           password: { type: string, default: redis123 }
           replicaCount: { type: integer, default: 1, description: "The number of replicas"}
       commander:
-        required: true
         properties:
           enabled: { type: boolean, default: true }
-          host: { type: string, required: true }
+          tls: { type: boolean, default: false }
+          host: { type: string, required: false }
   context:
     properties:
       ingress:
         required: true
         properties:
           className: { type: string, default: "nginx"}
+          clusterIssuer: { type: string }
           domain: { type: string, required: true }
 modules:
   - name: redis
@@ -63,10 +71,20 @@ modules:
       ingress:
         enabled: true
         className: {{ .Context.ingress.className }}
+        {{- if .Parameters.commander.tls }}
+        annotations:
+          cert-manager.io/cluster-issuer: {{ required ".Context.certificateIssuer.public must be defined if tls: true" .Context.certificateIssuer.public }}
+        {{- end }}
         hosts:
-          - host: {{ .Parameters.commander.host }}.{{.Context.ingress.domain}}
+          - host: {{ $uiHost }}.{{.Context.ingress.domain}}
             paths:
               - "/"
+        {{- if .Parameters.commander.tls }}
+        tls:
+          - secretName: {{ .Release.metadata.name }}-tls
+            hosts:
+              - {{ $uiHost }}.{{.Context.ingress.domain}}
+        {{- end }}
     dependsOn:
       - redis
 roles: |
@@ -77,4 +95,7 @@ roles: |
 dependencies: |
   {{ if .Parameters.commander.enabled }}
   - ingress
+  {{ if .Parameters.commander.tls }}
+  - certManager
+  {{ end }}
   {{ end }}

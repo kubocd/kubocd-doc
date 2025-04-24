@@ -6,7 +6,7 @@ Creates a KuboCD package from a manifest and stores it in an OCI image repositor
 
 See the [A First Deployment / Package Build](130-a-first-deployment.md/#package-build) section for a usage example.
 
-```
+``` { .bash }
 Usage:
   kubocd package <Package manifest> [flags]
 
@@ -27,7 +27,7 @@ Flags:
 
 Displays the contents of a KuboCD package.
 
-```
+``` { .bash }
 Usage:
   kubocd dump package <package.yaml|oci://repo:version> [flags]
 
@@ -47,17 +47,17 @@ Global Flags:
 
 Example:
 
-```
+``` { .bash .copy }
 kubocd dump package oci://quay.io/kubodoc/packages/podinfo:6.7.1-p01
 ```
 
 or:
 
-```
+``` { .bash .copy }
 kubocd dump package podinfo-p01.yaml
 ```
 
-```
+``` { .bash  }
 Create .dump/podinfo/status.yaml
 Create .dump/podinfo/original.yaml
 Create .dump/podinfo/groomed.yaml
@@ -74,11 +74,11 @@ This command creates a `.dump` directory in the local folder, containing:
 
 Optionally, you can extract the Helm charts of the modules embedded in the package:
 
-```
+``` { .bash .copy }
 kubocd dump package podinfo-p01.yaml --charts
 ```
 
-```
+``` { .bash }
 --- Handling module 'main':
     Fetching chart podinfo:6.7.1...
     Chart: podinfo:6.7.1
@@ -98,7 +98,7 @@ The Helm chart for `podinfo` is available in `.dump/podinfo/charts/main`.
 
 This command allows you to explore the contents of a remote Helm repository.
 
-```
+``` { .bash  }
 Usage:
   kubocd dump helmRepository repoUrl [chartName [version]] [flags]
 
@@ -118,11 +118,11 @@ Examples:
 
 #### List charts
 
-```
+``` { .bash .copy }
 kubocd dump helmRepository https://stefanprodan.github.io/podinfo
 ```
 
-```
+``` { .bash  }
 ---------------Chart in repo 'https://stefanprodan.github.io/podinfo':
 podinfo
 ```
@@ -131,11 +131,11 @@ podinfo
 
 #### List versions
 
-```
+``` { .bash .copy }
 kubocd dump helmRepository https://stefanprodan.github.io/podinfo podinfo
 ```
 
-```
+``` { .bash  }
 ---------- Versions for 'podinfo':
 6.8.0
 6.7.1
@@ -147,11 +147,11 @@ kubocd dump helmRepository https://stefanprodan.github.io/podinfo podinfo
 
 #### View contents of a specific version
 
-```
+``` { .bash .copy }
 kubocd dump helmRepository https://stefanprodan.github.io/podinfo podinfo 6.8.0
 ```
 
-```
+``` { .bash  }
 Fetching chart podinfo:6.8.0...
 
 Chart: podinfo:6.8.0
@@ -186,15 +186,11 @@ podinfo/templates/certificate.
 
 Use the `--chart` flag to download the chart into the local `.charts` directory:
 
-```
+``` { .bash .copy }
 kubocd dump helmRepository https://stefanprodan.github.io/podinfo podinfo 6.8.0 --chart
 ```
 
-```
-kubocd dump helmRepository https://stefanprodan.github.io/podinfo podinfo 6.8.0 --chart
-```
-
-```
+``` { .bash }
 Fetching chart podinfo:6.8.0...
 
 Chart: podinfo:6.8.0
@@ -219,7 +215,7 @@ podinfo/values.yaml
 
 This command displays the application context as perceived by KuboCD. It requires access to the Kubernetes cluster.
 
-```
+``` { .bash }
 Usage:
   kubocd dump context [flags]
 
@@ -239,13 +235,13 @@ Global Flags:
 
 Examples:
 
-Display context for an application in the `default` namespace:
+Display the context for an application in the `default` namespace:
 
-```
+``` { .bash .copy }
 kubocd dump context
 ```
 
-```
+``` { .bash }
 ---
 ingress:
   className: nginx
@@ -255,15 +251,15 @@ storageClass:
   workspace: standard
 ```
 
-Display context for an application in the `project03` namespace:
+Display the context for an application in the `project03` namespace:
 
 > It is assumed than this namespace has a default context, as described in previous chapters
 
-```
+``` { .bash .copy }
 kubocd dump context --namespace project03
 ```
 
-```
+``` { .bash }
 ---
 ingress:
   className: nginx
@@ -277,11 +273,11 @@ storageClass:
 
 Aggregate specific contexts:
 
-```
+``` { .bash .copy }
 kubocd dump context --skipDefaultContext --context contexts:cluster --context project01:project01
 ```
 
-```
+``` { .bash }
 ---
 ingress:
   className: nginx
@@ -300,9 +296,11 @@ storageClass:
 
 This command previews all the resources that will be deployed as part of a `Release`.
 
+It is also a good validation of a new `Package` and/or `Release` before deployment.
+
 It accesses the current Kubernetes cluster (mainly to retrieve `Contexts`).
 
-```
+``` { .bash }
 Usage:
   kubocd render <Release manifest> [<package manifest>] [flags]
 
@@ -314,13 +312,14 @@ Flags:
   -w, --workDir string           Working directory. Defaults to $HOME/.kubocd
 ```
 
+
 Example:
 
-```
+``` { .bash .copy }
 kubocd render podinfo2-ctx.yaml
 ```
 
-```
+``` { .bash }
 Create .render/podinfo2/release.yaml
 Create .render/podinfo2/configs.yaml
 # Pulling image 'quay.io/kubodoc/packages/podinfo:6.7.1-p02'
@@ -345,21 +344,23 @@ Contexts: contexts:cluster,contexts:cluster
 
 Key output files:
 
-| FILES                            | DESCRIPTION                                                                                     |
-|----------------------------------|-------------------------------------------------------------------------------------------------|
-| release.yaml                     | Final `Release` manifest with defaults added                                                    |
-| package.yaml                     | Processed package manifest with normalized parameter and context schemas                        |
-| default-parameters.yaml          | Default parameter values extracted from the parameter schema                                    |
-| default-context.yaml             | Default context values extracted from the context schema                                        |
-| context.yaml                     | Resulting context after processing                                                              |
-| parameters.yaml                  | Parameters provided for templating                                                              |
-| model.yaml                       | Complete data model used for templating values and other properties                            |
-| roles.yaml                       | List of roles fulfilled by this deployment                                                     |
-| dependencies.yaml                | List of deployment dependencies                                                                |
-| ociRepository.yaml               | Flux `OCIRepository` object to be created                                                      |
-| usage.txt                        | Templated result of the package usage                                                          |
-| helmRepository.yaml              | Flux `HelmRepository` object to be created                                                     |
-| modules/main/helmRelease.yaml    | Flux `HelmRelease` object for the main module                                                  |
-| modules/main/values.yaml         | Templated Helm values for the main module                                                      |
-| modules/main/manifests.yaml      | Result of `helm template --debug ...` for the main module                                      |
+| FILES                            | DESCRIPTION                                                              |
+|----------------------------------|--------------------------------------------------------------------------|
+| release.yaml                     | Final `Release` manifest with defaults added                             |
+| package.yaml                     | Processed package manifest with normalized parameter and context schemas |
+| default-parameters.yaml          | Default parameter values extracted from the parameter schema             |
+| default-context.yaml             | Default context values extracted from the context schema                 |
+| context.yaml                     | Resulting context after processing                                       |
+| parameters.yaml                  | Parameters provided for templating                                       |
+| model.yaml                       | Complete data model used for templating values and other properties      |
+| roles.yaml                       | List of roles fulfilled by this deployment                               |
+| dependencies.yaml                | List of deployment dependencies                                          |
+| ociRepository.yaml               | Flux `OCIRepository` object to be created                                |
+| usage.txt                        | Templated result of the package usage                                    |
+| helmRepository.yaml              | Flux `HelmRepository` object to be created                               |
+| modules/main/helmRelease.yaml    | Flux `HelmRelease` object for the main module                            |
+| modules/main/values.yaml         | Templated Helm values for the main module                                |
+| modules/main/manifests.yaml      | Result of `helm template --debug ...` for the main module                |
 
+!!! tips
+    It is of good practice to check a `Release` with this `kubocd render` command before deployment on the cluster.

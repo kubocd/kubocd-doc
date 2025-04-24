@@ -5,9 +5,19 @@
 We will use this sample to demonstrate some more advanced feature of KuboCD.
 
 
+???+ abstract "ingress-nginx.yaml"
+
+```
+
+
+```
+
+
 ```
 kubocd pack redis-p01.yaml 
+```
 
+```
 ====================================== Packaging package 'redis-p01.yaml'
 --- Handling module 'redis':
     Pulling image 'registry-1.docker.io/bitnamicharts/redis:20.6.1'
