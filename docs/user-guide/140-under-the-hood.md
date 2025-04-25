@@ -1,6 +1,6 @@
 # Under the Hood (If Things Go Wrong)
 
-Behind the scenes, KuboCD creates several FluxCD resources to manage the deployment.
+Behind the scenes, KuboCD creates several Flux resources to manage the deployment.
 
 You can inspect these resources to debug problems or understand the internals.
 
@@ -10,17 +10,19 @@ Check the events bound to the `Release` which was previously created:
 kubectl describe release podinfo1
 ```
 
+There are `Events` for each Flux resources create:
+
 ``` { .bash }
 ......
 Events:
-Type    Reason                 Age   From     Message
-----    ------                 ----  ----     -------
-Normal  OCIRepositoryCreated   12s   release  Created OCIRepository "kcd-podinfo1"
-Normal  HelmRepositoryCreated  10s   release  Created HelmRepository "kcd-podinfo1"
-Normal  HelmReleaseCreated     8s    release  Created HelmRelease "podinfo1-main"
+  Type    Reason                 Age   From     Message
+  ----    ------                 ----  ----     -------
+  Normal  OCIRepositoryCreated   49s   release  Created OCIRepository "kcd-podinfo1"
+  Normal  HelmRepositoryCreated  45s   release  Created HelmRepository "kcd-podinfo1"
+  Normal  HelmReleaseCreated     44s   release  Created HelmRelease "podinfo1-main"
 ```
 
-All of these resources are created in the same namespace as the `Release` object (e.g. `default`).
+All of these resources are created in the same namespace as the `Release` object (`default` in this sample).
 
 ---
 
@@ -83,12 +85,12 @@ kubectl get HelmRelease
 ```
 
 ``` { .bash }
-NAME            AGE     READY   STATUS
-podinfo1-main   7m59s   True    Helm install succeeded for release default/podinfo1-main.v1 with chart podinfo@6.7.1
+NAME                AGE     READY   STATUS
+podinfo1-main   7m29s   True    Helm install succeeded for release default/kcd-podinfo1-main.v1 with chart podinfo@6.7.1
 ```
 
 !!! note
-    There will be one HelmRelease per module in the package.
+    There will be one `HelmRelease` per module in the package.
 
 If the release is stuck in `WAIT_HREL`, inspect this resource:
 
@@ -101,14 +103,14 @@ kubectl describe helmrelease podinfo1-main
 Events:
   Type    Reason            Age    From             Message
   ----    ------            ----   ----             -------
-  Normal  HelmChartCreated  5m42s  helm-controller  Created HelmChart/default/default-podinfo1-main with SourceRef 'HelmRepository/default/kcd-podinfo1'
-  Normal  InstallSucceeded  5m39s  helm-controller  Helm install succeeded for release default/podinfo1-main.v1 with chart podinfo@6.7.1
+  Normal  HelmChartCreated  4m38s  helm-controller  Created HelmChart/default/default-podinfo1-main with SourceRef 'HelmRepository/default/kcd-podinfo1'
+  Normal  InstallSucceeded  4m37s  helm-controller  Helm install succeeded for release default/podinfo1-main.v1 with chart podinfo@6.7.1
 ```
 
-One of the point to check if the generated `values` for the Helm chart deployment.
+One of the point to check in case of problem is the generated `values` for the Helm chart deployment.
 
 !!! note
-    You will need to unstall the [yq command](https://github.com/mikefarah/yq){:target="_blank"}.
+    You will need to install the [yq command](https://github.com/mikefarah/yq){:target="_blank"}.
 
 ``` { .bash .copy }
 kubectl get HelmRelease podinfo1-main -o yaml | yq '.spec.values'
@@ -126,7 +128,7 @@ ingress:
 ```
 
 !!! note
-    If deployment fails, you may need to wait for the Helm timeout to expire (default: 2 minutes) to have failure reason. 
+    If deployment fails, you may need to wait for the Helm timeout to expire (default: 2 minutes) to have the failure reason. 
     You can configure this value in the `Package` or in the `Release`.
 
 

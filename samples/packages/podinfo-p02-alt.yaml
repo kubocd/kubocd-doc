@@ -15,8 +15,6 @@ schema:
           domain: { type: string, required: true }
 modules:
   - name: main
-    specPatch:
-      timeout: 2m
     source:
       helmRepository:
         url: https://stefanprodan.github.io/podinfo

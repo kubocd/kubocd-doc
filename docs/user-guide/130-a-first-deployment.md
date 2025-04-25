@@ -29,8 +29,6 @@ A **Package** in KuboCD is defined using a YAML manifest. Below is an example th
         type: object
     modules:
       - name: main
-        specPatch:
-          timeout: 2m
         source:
           helmRepository:
             url: https://stefanprodan.github.io/podinfo
@@ -47,7 +45,7 @@ A **Package** in KuboCD is defined using a YAML manifest. Below is an example th
                     pathType: ImplementationSpecific
     ```
 
-A KuboCD Package is **NOT** a native Kubernetes resource.
+> A KuboCD Package is **NOT** a native Kubernetes resource.
 
 !!! tips
     You will find most on the samples used in this documentation at the [following location](https://github.com/kubocd/kubocd-doc/tree/main/samples){:target="_blank"}
@@ -97,12 +95,18 @@ Make sure you're authenticated with the registry, e.g.:
 docker login quay.io
 ```
 
-Depending on the registry, the image may need to be pushed under an organization or namespace. For this example, we'll use `quay.io/kubodoc`.
+or
+
+``` { .bash .copy }
+docker login ghcr.io
+```
+
+Depending on the registry, the image may be pushed under an organization or namespace. For this example, we'll use `quay.io/kubodoc`.
 
 To build and push the package image:
 
 ``` { .bash .copy }
-kubocd package podinfo-p01.yaml --ociRepoPrefix quay.io/kubodoc/packages
+kubocd package packages/podinfo-p01.yaml --ociRepoPrefix quay.io/kubodoc/packages
 ```
 
 !!! note
@@ -135,11 +139,20 @@ export OCI_REPO_PREFIX=quay.io/kubodoc/packages
 
 Or for other registries:
 
-```bash
+``` { .bash .copy }
 export OCI_REPO_PREFIX=ghcr.io/kubodoc/packages
+```
 
+``` { .bash .copy }
 export OCI_REPO_PREFIX=localhost:5000/packages
 ```
+
+Then: 
+
+``` { .bash .copy }
+kubocd package packages/podinfo-p01.yaml
+```
+
 
 !!! warning
     By default, pushed images may be private. To make them accessible for deployment, ensure the image is set to **public**.
@@ -185,7 +198,7 @@ Deploying the Application:
 2. Apply the Release:
 
 ``` { .bash .copy }
-kubectl apply -f podinfo1-basic.yaml
+kubectl apply -f releases/podinfo1-basic.yaml
 ```
 
 Once deployed, monitor the status:

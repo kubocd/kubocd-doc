@@ -6,8 +6,7 @@ tag: 4.12.1-p01
 protected: true
 modules:
   - name: main
-    specPatch:
-      timeout: 4m
+    timeout: 4m
     source:
       helmRepository:
         url: https://kubernetes.github.io/ingress-nginx

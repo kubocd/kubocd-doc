@@ -28,8 +28,6 @@ A Package is defined by a YAML manifest. Here is a first version to wrap up the 
         type: object
     modules:
       - name: main
-        specPatch:
-          timeout: 2m
         source:
           helmRepository:
             url: https://stefanprodan.github.io/podinfo
@@ -332,8 +330,7 @@ Here is a KuboCD package for the nginx ingress controller.
     protected: true
     modules:
       - name: main
-        specPatch:
-          timeout: 4m
+        timeout: 4m
         source:
           helmRepository:
             url: https://kubernetes.github.io/ingress-nginx

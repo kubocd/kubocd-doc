@@ -7,18 +7,27 @@ Creates a KuboCD package from a manifest and stores it in an OCI image repositor
 See the [A First Deployment / Package Build](130-a-first-deployment.md/#package-build) section for a usage example.
 
 ``` { .bash }
+Assemble a KuboCd Package from a manifest to an OCI image
+
 Usage:
   kubocd package <Package manifest> [flags]
 
 Aliases:
   package, pack, build
 
+Examples:
+	Build and push a package:
+	$ kubocd package podinfo-p01.yaml --ociRepoPrefix quay.io/kubodoc/packages
+
+	or
+	$ export OCI_REPO_PREFIX=quay.io/kubodoc/packages
+	$ kubocd package podinfo-p01.yaml
+
 Flags:
   -h, --help                   help for package
-  -r, --ociRepoPrefix string   OCI repository prefix (e.g., 'quay.io/your-organization/packages'). 
-                               Can also be specified via the OCI_REPO_PREFIX environment variable
-  -p, --plainHTTP              Use plain HTTP instead of HTTPS when pushing the image
-  -w, --workDir string         Working directory. Defaults to $HOME/.kubocd
+  -r, --ociRepoPrefix string   OCI repository prefix (i.e 'quay.io/your-organization/packages'). Can also be specified with OCI_REPO_PREFIX environment variable
+  -p, --plainHTTP              Use plain HTTP instead of HTTPS when pushing image
+  -w, --workDir string         Working directory. Default to $HOME/.kubocd
 ```
 
 ---
@@ -28,21 +37,33 @@ Flags:
 Displays the contents of a KuboCD package.
 
 ``` { .bash }
+Dump KuboCD Package
+
 Usage:
   kubocd dump package <package.yaml|oci://repo:version> [flags]
 
 Aliases:
   package, pck, Package, Pck, pack, Pack
 
+Examples:
+	Dump package content from an OCI image repository
+	$ kubocd dump package oci://quay.io/kubodoc/packages/podinfo:6.7.1-p01
+
+	Dump package content from a manifest
+	$ kubocd dump package podinfo-p01.yaml
+
+	Dump package content from a manifest and fetch Helm charts
+	$ kubocd dump package podinfo-p01.yaml --charts
+
 Flags:
-  -a, --anonymous       Connect anonymously to the registry (useful for checking 'public' image status)
-  -c, --charts          Unpack charts in the output directory
+  -a, --anonymous       Connect anonymously to the registry. To check 'public' image status
+  -c, --charts          unpack charts in output directory
   -h, --help            help for package
-  -i, --insecure        Insecure (use HTTP instead of HTTPS)
+  -i, --insecure        insecure (use HTTP, not HTTPS)
   -o, --output string   Output dump directory (default "./.dump")
 
 Global Flags:
-  -w, --workDir string   Working directory. Defaults to $HOME/.kubocd
+  -w, --workDir string   working directory. Default to $HOME/.kubocd
 ```
 
 Example:
@@ -54,7 +75,7 @@ kubocd dump package oci://quay.io/kubodoc/packages/podinfo:6.7.1-p01
 or:
 
 ``` { .bash .copy }
-kubocd dump package podinfo-p01.yaml
+kubocd dump package packages/podinfo-p01.yaml
 ```
 
 ``` { .bash  }
@@ -75,7 +96,7 @@ This command creates a `.dump` directory in the local folder, containing:
 Optionally, you can extract the Helm charts of the modules embedded in the package:
 
 ``` { .bash .copy }
-kubocd dump package podinfo-p01.yaml --charts
+kubocd dump package packages/podinfo-p01.yaml --charts
 ```
 
 ``` { .bash }
@@ -99,19 +120,34 @@ The Helm chart for `podinfo` is available in `.dump/podinfo/charts/main`.
 This command allows you to explore the contents of a remote Helm repository.
 
 ``` { .bash  }
+Dump helm chart
+
 Usage:
   kubocd dump helmRepository repoUrl [chartName [version]] [flags]
 
 Aliases:
   helmRepository, hr, HelmRepository, helmrepository, helmRepo, HelmRepo, helmrepo
 
+Examples:
+	List charts from helm repositories
+	$ kubocd dump helmRepository https://stefanprodan.github.io/podinfo
+
+	List all versions for a chart
+	$ kubocd dump helmRepository https://stefanprodan.github.io/podinfo podinfo
+
+	View chart information
+	$ kubocd dump helmRepository https://stefanprodan.github.io/podinfo podinfo 6.8.0
+
+	Download locally the chart
+	$ kubocd dump helmRepository https://stefanprodan.github.io/podinfo podinfo 6.8.0 --chart
+
 Flags:
-  -c, --chart           Unpack charts into the output directory
+  -c, --chart           unpack charts in output directory
   -h, --help            help for helmRepository
   -o, --output string   Output chart directory (default "./.charts")
 
 Global Flags:
-  -w, --workDir string   Working directory. Defaults to $HOME/.kubocd
+  -w, --workDir string   working directory. Default to $HOME/.kubocd
 ```
 
 Examples:
@@ -216,21 +252,33 @@ podinfo/values.yaml
 This command displays the application context as perceived by KuboCD. It requires access to the Kubernetes cluster.
 
 ``` { .bash }
+Dump KuboCD context
+
 Usage:
   kubocd dump context [flags]
 
 Aliases:
   context, ctx, Context, Ctx
 
+Examples:
+	Display the context for an application in the default namespace:
+	$ kubocd dump context
+
+	Display the context for an application in the project03 namespace:
+	$ kubocd dump context --namespace project03
+
+	Aggregate specific contexts:
+	$ kubocd dump context --skipDefaultContext --context contexts:cluster --context project01:project01
+
 Flags:
-  -c, --context stringArray      Context in the form 'namespace:name'
+  -c, --context stringArray      context as 'namespace:name'. May be repeated.
   -h, --help                     help for context
-      --kubocdNamespace string   The namespace where the KuboCD controller is installed (To fetch config resources) (default "kubocd")
-  -n, --namespace string         Namespace (default "default")
-      --skipDefaultContext       Do not use the default context
+      --kubocdNamespace string   The namespace where the kubocd controller is installed in (To fetch configs resources) (default "kubocd")
+  -n, --namespace string         namespace (default "default")
+      --skipDefaultContext       Don't use default context
 
 Global Flags:
-  -w, --workDir string   Working directory. Defaults to $HOME/.kubocd
+  -w, --workDir string   working directory. Default to $HOME/.kubocd
 ```
 
 Examples:
@@ -301,22 +349,31 @@ It is also a good validation of a new `Package` and/or `Release` before deployme
 It accesses the current Kubernetes cluster (mainly to retrieve `Contexts`).
 
 ``` { .bash }
+Render a KuboCD release
+
 Usage:
   kubocd render <Release manifest> [<package manifest>] [flags]
 
+Examples:
+	Preview a Release.
+	$ render releases/podinfo2-ctx.yaml
+
+	Preview a Release using an alternate package manifest.
+	$ kubocd render releases/podinfo1.yaml packages/podinfo-p01.yaml
+
 Flags:
   -h, --help                     help for render
-      --kubocdNamespace string   Namespace where the kubocd controller is installed (default "kubocd")
-  -n, --namespace string         Namespace to use if release.metadata.namespace is empty (default "default")
+      --kubocdNamespace string   The namespace where the kubocd controller is installed in (To fetch configs resources) (default "kubocd")
+  -n, --namespace string         Value to set if release.metadata.namespace is empty (default "default")
   -o, --output string            Output directory (default "./.render")
-  -w, --workDir string           Working directory. Defaults to $HOME/.kubocd
+  -w, --workDir string           working directory. Default to $HOME/.kubocd
 ```
 
 
 Example:
 
 ``` { .bash .copy }
-kubocd render podinfo2-ctx.yaml
+kubocd render releases/podinfo2-ctx.yaml
 ```
 
 ``` { .bash }

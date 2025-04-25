@@ -8,9 +8,11 @@ If you're following the local `kind` cluster setup, you’ll need to install an 
 
 Check the current `Ingress` object created by the `podinfo` deployment:
 
-```bash
+``` { .base .copy }
 kubectl get ingresses
+```
 
+``` { .bash }
 NAME            CLASS   HOSTS                            ADDRESS   PORTS   AGE
 podinfo1-main   nginx   podinfo1.ingress.kubodoc.local             80      6m33s
 ```
@@ -21,10 +23,10 @@ At this point, the ingress is inactive since no ingress controller is installed.
 
 ## Build the ingress-nginx package:
 
-Here is a sample package definition for deploying the `ingress-nginx` controller:
+Here is a sample package definition for the `ingress-nginx` controller:
 
 !!! warning
-    This first version is dedicated to the way we setup the cluster, using the kind portMapping and NodePorts
+    This first version is dedicated to the configuration we set up the cluster, using the kind `portMapping` and `NodePorts`.
 
 
 ???+ abstract "ingress-nginx-p01.yaml"
@@ -36,8 +38,7 @@ Here is a sample package definition for deploying the `ingress-nginx` controller
     protected: true
     modules:
       - name: main
-        specPatch:
-          timeout: 4m
+        timeout: 4m
         source:
           helmRepository:
             url: https://kubernetes.github.io/ingress-nginx
@@ -66,7 +67,7 @@ New key points compared to the `podinfo` Package:
 Build the package:
 
 ``` { .bash .copy }
-kubocd pack ingress-nginx-p01.yaml
+kubocd pack packages/ingress-nginx-p01.yaml
 ```
 
 ``` { .bash }
@@ -117,7 +118,7 @@ Key points:
 Apply the release:
 
 ``` { .bash .copy }
-kubectl apply -f ingress-nginx.yaml
+kubectl apply -f releases/ingress-nginx.yaml
 ```
 
 Check the release status:
@@ -147,5 +148,5 @@ Make sure the hostname matches **exactly** what was provided in the Release para
 
 You should now be able to access the 'podinfo` web server:
 
-👉 [http://podinfo1.ingress.kubodoc.local](http://podinfo1.ingress.kubodoc.local)
+👉 [http://podinfo1.ingress.kubodoc.local](http://podinfo1.ingress.kubodoc.local){:target="_blank"}.
 

@@ -81,9 +81,11 @@ kubectl cluster-info --context kind-kubodoc
 
 Verify everything is running:
 
-```{ .bash }
+```{ .bash .copy }
 kubectl get pods -A
+```
 
+```{ .bash }
 NAMESPACE            NAME                                            READY   STATUS    RESTARTS   AGE
 kube-system          coredns-668d6bf9bc-nwzqj                        1/1     Running   0          52s
 kube-system          coredns-668d6bf9bc-xgv9f                        1/1     Running   0          52s
@@ -151,14 +153,14 @@ source-controller-6ff87cb475-hnmxv         1/1     Running   0          14m
 Deploy KuboCD using Helm:
 
 ```{ .bash .copy }
-helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.0
+helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.1
 ```
 
 ---
 
 ## Install the KuboCD CLI
 
-Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.2.0){:target="_blank"}..
+Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.2.1){:target="_blank"}..
 and rename it to `kubocd`. Then make it executable and move it to your path:
 
 ```{ .bash .copy }

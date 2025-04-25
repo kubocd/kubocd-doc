@@ -42,6 +42,7 @@ metadata:
 spec:
   clusterRoles: []
   defaultContexts: []
+  defaultNamespaceContexts: []
   imageRedirects: []
   packageRedirects: []
 ```
@@ -76,7 +77,7 @@ It defines a list of default contexts, which here includes only the cluster cont
 Apply it:
 
 ``` { .bash .copy }
-kubectl apply -f conf01-b.yaml 
+kubectl apply -f configs/conf01-b.yaml 
 ```
 
 > Don't worry about any warning messages
@@ -107,7 +108,7 @@ We can now create a new `Release` of the `podinfo` application using the context
     ```
 
 ``` { .bash .copy }
-kubectl apply -f podinfo3-ctx-def.yaml 
+kubectl apply -f releases/podinfo3-ctx-def.yaml 
 ```
 
 We can verify that the `Release` does pick up the context:
@@ -153,28 +154,29 @@ We modify our configuration resource again:
       defaultContexts:
         - namespace: contexts
           name: cluster
-      defaultNamespaceContext: project
+      defaultNamespaceContexts: 
+        - project
     ```
 
 
 ``` { .bash .copy }
-kubectl apply -f conf01-c.yaml 
+kubectl apply -f configs/conf01-c.yaml 
 ```
 
 Thanks to this setup, every `Release` will attempt to load a context named `project` from its own namespace,
 and use it if it exists.
 
-A new namespace `project03` is created:
+Create a new namespace `project03`:
 
 ``` { .bash .copy }
 kubectl create ns project03
 ```
 
-A project-specific context is created there, using the generic name `project`:
+Create A project-specific context there, using the generic name `project`:
 
 ???+ abstract "project03.yaml"
 
-    ```
+    ``` { .yaml .copy }
     apiVersion: kubocd.kubotal.io/v1alpha1
     kind: Context
     metadata:
@@ -190,14 +192,14 @@ A project-specific context is created there, using the generic name `project`:
 
 
 ``` { .bash .copy }
-kubectl -n project03 apply -f project03.yaml 
+kubectl -n project03 apply -f contexts/project03.yaml 
 ```
 
 We now create a new `Release` without explicitly specifying which context to use:
 
 ???+ abstract "podinfo-prj03.yaml"
 
-    ```
+    ``` { .yaml .copy }
     ---
     apiVersion: kubocd.kubotal.io/v1alpha1
     kind: Release
@@ -218,7 +220,7 @@ We now create a new `Release` without explicitly specifying which context to use
 
 
 ``` { .bash .copy }
-kubectl -n project03 apply -f podinfo-prj03.yaml
+kubectl -n project03 apply -f releases/podinfo-prj03.yaml
 ```
 
 We can confirm both default contexts are applied:
@@ -294,12 +296,13 @@ For example, by creating the following file:
 
 ???+ abstract "values1-ctrl.yaml"
 
-    ```
+    ``` { .yaml .copy }
     config:
       defaultContexts:
         - name: cluster
           namespace: contexts
-      defaultNamespaceContext: project
+      defaultNamespaceContext: 
+        - project
     extraNamespaces:
       - name: contexts
     contexts:
@@ -323,7 +326,7 @@ For example, by creating the following file:
 To upgrade the KuboCD deployment:
 
 ``` { .bash .copy }
-helm -n kubocd upgrade kubocd-ctrl oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.0 --values values1-ctrl.yaml
+helm -n kubocd upgrade kubocd-ctrl oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.1 --values values1-ctrl.yaml
 ```
 !!! warning
 

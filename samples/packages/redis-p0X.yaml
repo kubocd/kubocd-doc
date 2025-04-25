@@ -34,8 +34,7 @@ schema:
           domain: { type: string, required: true }
 modules:
   - name: redis
-    specPatch:
-      timeout: 4m
+    timeout: 4m
     source:
       oci:
         repository: registry-1.docker.io/bitnamicharts/redis
@@ -55,8 +54,6 @@ modules:
           enabled: false
         replicaCount: {{ .Parameters.redis.replicaCount }}
   - name: commander
-    specPatch:
-      timeout: 2m
     enabled: "{{ .Parameters.commander.enabled }}"
     source:
       git:

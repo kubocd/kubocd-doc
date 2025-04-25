@@ -142,8 +142,6 @@ Notre premier packaging de podinfo ne prenait pas en compte ce concept de contex
           - ingress
     modules:
       - name: main
-        specPatch:
-          timeout: 2m
         source:
           helmRepository:
             url: https://stefanprodan.github.io/podinfo
@@ -334,8 +332,6 @@ Ce premier exemple implique de modifier le package afin de prendre en compte not
           - project
     modules:
       - name: main
-        specPatch:
-          timeout: 2m
         source:
           helmRepository:
             url: https://stefanprodan.github.io/podinfo

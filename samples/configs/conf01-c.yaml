@@ -9,4 +9,5 @@ spec:
   defaultContexts:
     - namespace: contexts
       name: cluster
-  defaultNamespaceContext: project
+  defaultNamespaceContexts:
+    - project

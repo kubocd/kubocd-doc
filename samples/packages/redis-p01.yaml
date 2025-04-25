@@ -12,7 +12,7 @@ schema:
         properties:
           password: { type: string, default: redis123 }
           replicaCount: { type: integer, default: 1, description: "The number of replicas"}
-      commander:
+      ui:
         required: true
         properties:
           enabled: { type: boolean, default: true }
@@ -26,14 +26,13 @@ schema:
           domain: { type: string, required: true }
 modules:
   - name: redis
-    specPatch:
-      timeout: 4m
+    timeout: 4m
     source:
       oci:
         repository: registry-1.docker.io/bitnamicharts/redis
         tag: 20.6.1
     values: |
-      fullnameOverride: {{ .Release.metadata.name }}
+      fullnameOverride: {{ .Release.metadata.name }}-main
       global:
         redis:
           password: {{ .Parameters.redis.password }}
@@ -46,16 +45,15 @@ modules:
         persistence:
           enabled: false
         replicaCount: {{ .Parameters.redis.replicaCount }}
-  - name: commander
-    specPatch:
-      timeout: 2m
-    enabled: "{{ .Parameters.commander.enabled }}"
+  - name: ui
+    enabled: "{{ .Parameters.ui.enabled }}"
     source:
       git:
         url: https://github.com/joeferner/redis-commander.git
         path: ././k8s/helm-chart/redis-commander
         branch: master
     values: |
+      fullnameOverride: {{ .Release.metadata.name }}-ui
       redis:
         # host is <fullnameOverride>-<moduleName>-master
         host: {{ printf "%s-master" .Release.metadata.name }}
@@ -64,17 +62,17 @@ modules:
         enabled: true
         className: {{ .Context.ingress.className }}
         hosts:
-          - host: {{ .Parameters.commander.host }}.{{.Context.ingress.domain}}
+          - host: {{ .Parameters.ui.host }}.{{.Context.ingress.domain}}
             paths:
               - "/"
     dependsOn:
       - redis
 roles: |
   - redis
-  {{ if .Parameters.commander.enabled }}
+  {{ if .Parameters.ui.enabled }}
   - redis-ui
   {{ end }}
 dependencies: |
-  {{ if .Parameters.commander.enabled }}
+  {{ if .Parameters.ui.enabled }}
   - ingress
   {{ end }}

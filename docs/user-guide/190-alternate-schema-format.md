@@ -81,9 +81,14 @@ The difference are the following:
 - the `type: array` is now optional. It is deduced from the presence of the `items` attribute.
 - All others attributes (`default`, `enums`, `pattern`, ....) are left unchanged.
 
-When a `Package` is build, both schemas are converted to their standard OpenAPI/JSON and stored in this form. 
+When a `Package` is build using this form, both schemas are converted to their standard OpenAPI/JSON and stored in this last form. 
 
 This normalized version will be accessible using `kubocd dump package...` or `kubocd render....` CLI tools.
+
+!!! warning
+
+    If you still use the standard form, setting `additionalProperties: false` on all objects of `schema.parameters` is important. 
+    If not, any typo in a variable name will not be trapped and may lead tricky errors.
 
 For the remaining of this manuel, we will use the KuboCD schema. 
 

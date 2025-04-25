@@ -29,8 +29,6 @@ schema:
       - ingress
 modules:
   - name: main
-    specPatch:
-      timeout: 2m
     source:
       helmRepository:
         url: https://stefanprodan.github.io/podinfo
