@@ -621,7 +621,7 @@
   
   
   <span class="md-ellipsis">
-    Redis: Advanced features
+    More features (Redis)
     
   </span>
   
@@ -639,12 +639,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../dependencies/" class="md-nav__link">
+      <a href="../210-cert-manager/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Dependencies management
+    Cert-manager setup
     
   </span>
   
@@ -668,18 +668,64 @@
   
   
   
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../tips-and-tricks/" class="md-nav__link">
+      <a href="../../reference/500-package/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Tips and tricks
+    Package
     
   </span>
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -757,20 +803,21 @@
 
 
 <h1 id="under-the-hood-if-things-go-wrong">Under the Hood (If Things Go Wrong)</h1>
-<p>Behind the scenes, KuboCD creates several FluxCD resources to manage the deployment.</p>
+<p>Behind the scenes, KuboCD creates several Flux resources to manage the deployment.</p>
 <p>You can inspect these resources to debug problems or understand the internals.</p>
 <p>Check the events bound to the <code>Release</code> which was previously created:</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl<span class="w"> </span>describe<span class="w"> </span>release<span class="w"> </span>podinfo1
 </span></code></pre></div>
+<p>There are <code>Events</code> for each Flux resources create:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>......
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Events:
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Type<span class="w">    </span>Reason<span class="w">                 </span>Age<span class="w">   </span>From<span class="w">     </span>Message
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>----<span class="w">    </span>------<span class="w">                 </span>----<span class="w">  </span>----<span class="w">     </span>-------
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Normal<span class="w">  </span>OCIRepositoryCreated<span class="w">   </span>12s<span class="w">   </span>release<span class="w">  </span>Created<span class="w"> </span>OCIRepository<span class="w"> </span><span class="s2">&quot;kcd-podinfo1&quot;</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Normal<span class="w">  </span>HelmRepositoryCreated<span class="w">  </span>10s<span class="w">   </span>release<span class="w">  </span>Created<span class="w"> </span>HelmRepository<span class="w"> </span><span class="s2">&quot;kcd-podinfo1&quot;</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Normal<span class="w">  </span>HelmReleaseCreated<span class="w">     </span>8s<span class="w">    </span>release<span class="w">  </span>Created<span class="w"> </span>HelmRelease<span class="w"> </span><span class="s2">&quot;podinfo1-main&quot;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>Type<span class="w">    </span>Reason<span class="w">                 </span>Age<span class="w">   </span>From<span class="w">     </span>Message
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>----<span class="w">    </span>------<span class="w">                 </span>----<span class="w">  </span>----<span class="w">     </span>-------
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>Normal<span class="w">  </span>OCIRepositoryCreated<span class="w">   </span>49s<span class="w">   </span>release<span class="w">  </span>Created<span class="w"> </span>OCIRepository<span class="w"> </span><span class="s2">&quot;kcd-podinfo1&quot;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>Normal<span class="w">  </span>HelmRepositoryCreated<span class="w">  </span>45s<span class="w">   </span>release<span class="w">  </span>Created<span class="w"> </span>HelmRepository<span class="w"> </span><span class="s2">&quot;kcd-podinfo1&quot;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>Normal<span class="w">  </span>HelmReleaseCreated<span class="w">     </span>44s<span class="w">   </span>release<span class="w">  </span>Created<span class="w"> </span>HelmRelease<span class="w"> </span><span class="s2">&quot;podinfo1-main&quot;</span>
 </span></code></pre></div>
-<p>All of these resources are created in the same namespace as the <code>Release</code> object (e.g. <code>default</code>).</p>
+<p>All of these resources are created in the same namespace as the <code>Release</code> object (<code>default</code> in this sample).</p>
 <hr />
 <h2 id="the-ocirepository">The OCIRepository</h2>
 <p>This Flux resource pulls the KuboCD package image:</p>
@@ -807,12 +854,12 @@
 <p>This Flux resource handles the actual Helm chart deployment.</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>HelmRelease
 </span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>NAME<span class="w">            </span>AGE<span class="w">     </span>READY<span class="w">   </span>STATUS
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>podinfo1-main<span class="w">   </span>7m59s<span class="w">   </span>True<span class="w">    </span>Helm<span class="w"> </span>install<span class="w"> </span>succeeded<span class="w"> </span><span class="k">for</span><span class="w"> </span>release<span class="w"> </span>default/podinfo1-main.v1<span class="w"> </span>with<span class="w"> </span>chart<span class="w"> </span>podinfo@6.7.1
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>NAME<span class="w">                </span>AGE<span class="w">     </span>READY<span class="w">   </span>STATUS
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>podinfo1-main<span class="w">   </span>7m29s<span class="w">   </span>True<span class="w">    </span>Helm<span class="w"> </span>install<span class="w"> </span>succeeded<span class="w"> </span><span class="k">for</span><span class="w"> </span>release<span class="w"> </span>default/kcd-podinfo1-main.v1<span class="w"> </span>with<span class="w"> </span>chart<span class="w"> </span>podinfo@6.7.1
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>There will be one HelmRelease per module in the package.</p>
+<p>There will be one <code>HelmRelease</code> per module in the package.</p>
 </div>
 <p>If the release is stuck in <code>WAIT_HREL</code>, inspect this resource:</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>kubectl<span class="w"> </span>describe<span class="w"> </span>helmrelease<span class="w"> </span>podinfo1-main
@@ -821,13 +868,13 @@
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Events:
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span>Type<span class="w">    </span>Reason<span class="w">            </span>Age<span class="w">    </span>From<span class="w">             </span>Message
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span>----<span class="w">    </span>------<span class="w">            </span>----<span class="w">   </span>----<span class="w">             </span>-------
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span>Normal<span class="w">  </span>HelmChartCreated<span class="w">  </span>5m42s<span class="w">  </span>helm-controller<span class="w">  </span>Created<span class="w"> </span>HelmChart/default/default-podinfo1-main<span class="w"> </span>with<span class="w"> </span>SourceRef<span class="w"> </span><span class="s1">&#39;HelmRepository/default/kcd-podinfo1&#39;</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span>Normal<span class="w">  </span>InstallSucceeded<span class="w">  </span>5m39s<span class="w">  </span>helm-controller<span class="w">  </span>Helm<span class="w"> </span>install<span class="w"> </span>succeeded<span class="w"> </span><span class="k">for</span><span class="w"> </span>release<span class="w"> </span>default/podinfo1-main.v1<span class="w"> </span>with<span class="w"> </span>chart<span class="w"> </span>podinfo@6.7.1
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span>Normal<span class="w">  </span>HelmChartCreated<span class="w">  </span>4m38s<span class="w">  </span>helm-controller<span class="w">  </span>Created<span class="w"> </span>HelmChart/default/default-podinfo1-main<span class="w"> </span>with<span class="w"> </span>SourceRef<span class="w"> </span><span class="s1">&#39;HelmRepository/default/kcd-podinfo1&#39;</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span>Normal<span class="w">  </span>InstallSucceeded<span class="w">  </span>4m37s<span class="w">  </span>helm-controller<span class="w">  </span>Helm<span class="w"> </span>install<span class="w"> </span>succeeded<span class="w"> </span><span class="k">for</span><span class="w"> </span>release<span class="w"> </span>default/podinfo1-main.v1<span class="w"> </span>with<span class="w"> </span>chart<span class="w"> </span>podinfo@6.7.1
 </span></code></pre></div>
-<p>One of the point to check if the generated <code>values</code> for the Helm chart deployment.</p>
+<p>One of the point to check in case of problem is the generated <code>values</code> for the Helm chart deployment.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You will need to unstall the <a href="https://github.com/mikefarah/yq" target="_blank">yq command</a>.</p>
+<p>You will need to install the <a href="https://github.com/mikefarah/yq" target="_blank">yq command</a>.</p>
 </div>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>HelmRelease<span class="w"> </span>podinfo1-main<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span><span class="s1">&#39;.spec.values&#39;</span>
 </span></code></pre></div>
@@ -842,7 +889,7 @@
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If deployment fails, you may need to wait for the Helm timeout to expire (default: 2 minutes) to have failure reason. 
+<p>If deployment fails, you may need to wait for the Helm timeout to expire (default: 2 minutes) to have the failure reason. 
 You can configure this value in the <code>Package</code> or in the <code>Release</code>.</p>
 </div>
 

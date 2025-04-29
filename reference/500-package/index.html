@@ -9,10 +9,8 @@
       
       
       
-        <link rel="prev" href="../200-redis/">
+        <link rel="prev" href="../../user-guide/210-cert-manager/">
       
-      
-        <link rel="next" href="../../tips-and-tricks/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +18,7 @@
     
     
       
-        <title>Dependencies management - KuboCD</title>
+        <title>Package - KuboCD</title>
       
     
     
@@ -73,6 +71,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#the-kubocd-package" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -105,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Dependencies management
+              Package
             
           </span>
         </div>
@@ -292,20 +295,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -321,7 +322,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             User guide
@@ -335,7 +336,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../110-kind/" class="md-nav__link">
+      <a href="../../user-guide/110-kind/" class="md-nav__link">
         
   
   
@@ -358,7 +359,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../120-existing-cluster/" class="md-nav__link">
+      <a href="../../user-guide/120-existing-cluster/" class="md-nav__link">
         
   
   
@@ -381,7 +382,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../130-a-first-deployment/" class="md-nav__link">
+      <a href="../../user-guide/130-a-first-deployment/" class="md-nav__link">
         
   
   
@@ -404,7 +405,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../140-under-the-hood/" class="md-nav__link">
+      <a href="../../user-guide/140-under-the-hood/" class="md-nav__link">
         
   
   
@@ -427,7 +428,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../150-ingress-controller/" class="md-nav__link">
+      <a href="../../user-guide/150-ingress-controller/" class="md-nav__link">
         
   
   
@@ -450,7 +451,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../160-the-context/" class="md-nav__link">
+      <a href="../../user-guide/160-the-context/" class="md-nav__link">
         
   
   
@@ -473,7 +474,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../170-context-and-config/" class="md-nav__link">
+      <a href="../../user-guide/170-context-and-config/" class="md-nav__link">
         
   
   
@@ -496,7 +497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../180-kubocd-cli/" class="md-nav__link">
+      <a href="../../user-guide/180-kubocd-cli/" class="md-nav__link">
         
   
   
@@ -519,7 +520,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../190-alternate-schema-format/" class="md-nav__link">
+      <a href="../../user-guide/190-alternate-schema-format/" class="md-nav__link">
         
   
   
@@ -542,12 +543,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../200-redis/" class="md-nav__link">
+      <a href="../../user-guide/200-redis/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Redis: Advanced features
+    More features (Redis)
     
   </span>
   
@@ -562,28 +563,20 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../user-guide/210-cert-manager/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Dependencies management
+    Cert-manager setup
     
   </span>
   
 
       </a>
-      
     </li>
   
 
@@ -600,20 +593,470 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../tips-and-tricks/" class="md-nav__link">
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Package
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
-    Tips and tricks
+    Package
     
   </span>
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#package-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Package object:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Package object:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apiversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      *apiVersion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type" class="md-nav__link">
+    <span class="md-ellipsis">
+      *type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#name" class="md-nav__link">
+    <span class="md-ellipsis">
+      *name
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      - *tag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protected" class="md-nav__link">
+    <span class="md-ellipsis">
+      protected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schemaparameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      schema.parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schemacontext" class="md-nav__link">
+    <span class="md-ellipsis">
+      schema.context
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      *modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      roles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      dependencies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Module object
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Module object">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#name_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      *name
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#source" class="md-nav__link">
+    <span class="md-ellipsis">
+      *source
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#values" class="md-nav__link">
+    <span class="md-ellipsis">
+      values
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      timeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enabled" class="md-nav__link">
+    <span class="md-ellipsis">
+      enabled
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#targetnamespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      targetNamespace
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependson" class="md-nav__link">
+    <span class="md-ellipsis">
+      dependsOn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specpatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      specPatch
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#helmrepository-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      HelmRepository source
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HelmRepository source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#url" class="md-nav__link">
+    <span class="md-ellipsis">
+      url
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      chart
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version" class="md-nav__link">
+    <span class="md-ellipsis">
+      version
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oci-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      OCI source
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OCI source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      tag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insecure" class="md-nav__link">
+    <span class="md-ellipsis">
+      insecure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Git source
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Git source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#url_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      url
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      branch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      tag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path" class="md-nav__link">
+    <span class="md-ellipsis">
+      path
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Local source
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Local source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#path_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      path
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -635,6 +1078,376 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#package-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Package object:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Package object:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apiversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      *apiVersion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type" class="md-nav__link">
+    <span class="md-ellipsis">
+      *type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#name" class="md-nav__link">
+    <span class="md-ellipsis">
+      *name
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      - *tag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protected" class="md-nav__link">
+    <span class="md-ellipsis">
+      protected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schemaparameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      schema.parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schemacontext" class="md-nav__link">
+    <span class="md-ellipsis">
+      schema.context
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      *modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      roles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      dependencies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Module object
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Module object">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#name_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      *name
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#source" class="md-nav__link">
+    <span class="md-ellipsis">
+      *source
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#values" class="md-nav__link">
+    <span class="md-ellipsis">
+      values
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      timeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enabled" class="md-nav__link">
+    <span class="md-ellipsis">
+      enabled
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#targetnamespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      targetNamespace
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependson" class="md-nav__link">
+    <span class="md-ellipsis">
+      dependsOn
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specpatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      specPatch
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#helmrepository-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      HelmRepository source
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HelmRepository source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#url" class="md-nav__link">
+    <span class="md-ellipsis">
+      url
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      chart
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version" class="md-nav__link">
+    <span class="md-ellipsis">
+      version
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oci-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      OCI source
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OCI source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      tag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insecure" class="md-nav__link">
+    <span class="md-ellipsis">
+      insecure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Git source
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Git source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#url_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      url
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      branch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      tag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path" class="md-nav__link">
+    <span class="md-ellipsis">
+      path
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Local source
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Local source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#path_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      path
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -653,9 +1466,57 @@
   
 
 
-  <h1>Dependencies management</h1>
-
-
+<h1 id="the-kubocd-package">The KuboCD Package</h1>
+<p>Required attributes are flagged with '*'</p>
+<h2 id="package-object">Package object:</h2>
+<h3 id="apiversion">*<em>apiVersion</em></h3>
+<ul>
+<li>Manifest version. Only allowed value is currently <code>v1alpha1</code></li>
+</ul>
+<h3 id="type">*<em>type</em></h3>
+<ul>
+<li>Manifest type. Only allowed value is <code>Package</code>. May be omitted.</li>
+</ul>
+<h3 id="name">*<em>name</em></h3>
+<ul>
+<li>
+<p>The name of the package. Will be used in the OCI repository name.</p>
+<p>dlmkdld mlkm dlmldkm</p>
+</li>
+</ul>
+<h3 id="-tag">- *tag</h3>
+<p>lkk lkl lk lk lk ll l</p>
+<h3 id="description">description</h3>
+<h3 id="protected">protected</h3>
+<h3 id="schemaparameters">schema.parameters</h3>
+<h3 id="schemacontext">schema.context</h3>
+<h3 id="modules">*modules</h3>
+<h3 id="roles">roles</h3>
+<h3 id="dependencies">dependencies</h3>
+<h2 id="module-object">Module object</h2>
+<h3 id="name_1">*name</h3>
+<h3 id="source">*source</h3>
+<h3 id="values">values</h3>
+<h3 id="timeout">timeout</h3>
+<h3 id="enabled">enabled</h3>
+<h3 id="targetnamespace">targetNamespace</h3>
+<h3 id="dependson">dependsOn</h3>
+<h3 id="specpatch">specPatch</h3>
+<h2 id="helmrepository-source">HelmRepository source</h2>
+<h3 id="url">url</h3>
+<h3 id="chart">chart</h3>
+<h3 id="version">version</h3>
+<h2 id="oci-source">OCI source</h2>
+<h3 id="repository">repository</h3>
+<h3 id="tag">tag</h3>
+<h3 id="insecure">insecure</h3>
+<h2 id="git-source">Git source</h2>
+<h3 id="url_1">url</h3>
+<h3 id="branch">branch</h3>
+<h3 id="tag_1">tag</h3>
+<h3 id="path">path</h3>
+<h2 id="local-source">Local source</h2>
+<h3 id="path_1">path</h3>
 
 
 
@@ -685,7 +1546,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../200-redis/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Redis: Advanced features">
+          <a href="../../user-guide/210-cert-manager/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Cert-manager setup">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -695,27 +1556,11 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Redis: Advanced features
+                Cert-manager setup
               </div>
             </div>
           </a>
         
-        
-          
-          <a href="../../tips-and-tricks/" class="md-footer__link md-footer__link--next" aria-label="Next: Tips and tricks">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Tips and tricks
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
         
       </nav>
     
