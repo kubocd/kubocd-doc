@@ -17,7 +17,7 @@ efficiency and reliability.
 KuboCD is a tool that enables Platform Engineers to package applications in a way that simplifies deployment for other 
 technical users (such as Developers, AppOps, etc.) by abstracting most of the underlying infrastructure and environment complexities.
 
-In addition to user applications, KuboCD can also provision core system components (e.g., ingress controllers, 
+In addition to usual applications, KuboCD can also provision core system components (e.g., ingress controllers, 
 load balancers, Kubernetes operators, etc.), enabling fully automated bootstrapping of a production-ready cluster 
 from the ground up.
 

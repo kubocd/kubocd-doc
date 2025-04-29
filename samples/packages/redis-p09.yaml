@@ -6,16 +6,42 @@ tag: 20.6.1-p01
 description: Redis and a front UI
 schema:
   parameters:
+    $schema: http://json-schema.org/schema#
+    type: object
+    additionalProperties: false
+    description: Redis stack
+    required:
+      - ui
     properties:
       redis:
+        type: object
+        additionalProperties: false
         properties:
-          password: { type: string, default: redis123 }
-          replicaCount: { type: integer, default: 1, description: "The number of replicas"}
+          password:
+            default: redis123
+            type: string
+          replicaCount:
+            default: 1
+            description: The number of replicas
+            type: integer
+        required: []
       ui:
-        required: true
+        type: object
+        additionalProperties: false
         properties:
-          enabled: { type: boolean, default: true }
-          host: { type: string, required: true }
+          enabled:
+            default: true
+            type: boolean
+          host:
+            type: string
+        anyOf:
+          - properties:
+              enabled: { const: true }
+            required:
+              - host
+          - properties:
+              enabled: { const: false }
+            required: []
   context:
     properties:
       ingress:

@@ -62,7 +62,8 @@ New key points compared to the `podinfo` Package:
 - `protected: true`: Prevents accidental deletion of the release. (Currently not enforced unless KuboCD webhook is installed.)
 - `timeout: 4m`: Overrides the default deployment timeout (`2m`) because this Helm chart may take some time to deploy.
 - `values`: This section is in proper YAML format (no '|': not a templated string), since it does not include any templating.
-- `roles`: Assigns the package to the `ingress` role. This is used for [dependency management](dependencies.md) between releases.
+- `roles`: Assigns the package to the `ingress` role. This is used for dependency management between releases. 
+  This will be described later in this documentation
 
 Build the package:
 
@@ -144,9 +145,10 @@ The simplest way in our case is to use the `/etc/hosts` file:
 127.0.0.1 localhost podinfo1.ingress.kubodoc.local
 ```
 
-Make sure the hostname matches **exactly** what was provided in the Release parameters.
+Make sure the fqdn matches **exactly** what was provided in the podinfo `Release` parameters.
 
 You should now be able to access the 'podinfo` web server:
 
 👉 [http://podinfo1.ingress.kubodoc.local](http://podinfo1.ingress.kubodoc.local){:target="_blank"}.
 
+Of course, since we are using a CA that is not trusted by your workstation, you will need to bypass some security warnings.

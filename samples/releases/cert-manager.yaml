@@ -1,0 +1,28 @@
+
+
+---
+apiVersion: kubocd.kubotal.io/v1alpha1
+kind: Release
+metadata:
+  name: cert-manager
+  namespace: kubocd
+spec:
+  description: The certificate manager
+  package:
+    repository: quay.io/kubodoc/packages/cert-manager
+    tag: 1.17.1-p01
+    interval: 30m
+  parameters:
+    issuers:
+      selfSignedClusterIssuers:
+        - name: cluster-self
+    trust:
+      enabled: true
+      bundle:
+        target:
+          configMap:
+            enabled: true
+          secret:
+            enabled: true
+  targetNamespace: cert-manager
+  createNamespace: true

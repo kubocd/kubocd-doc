@@ -101,6 +101,16 @@ or
 docker login ghcr.io
 ```
 
+!!! tips
+
+    If you encounter issues authenticating with a registry, KuboCD provides an alternative method.
+    You can supply your credentials through two environment variables: `KCD_OCI_USER` and `KCD_OCI_SECRET`.
+    
+    This method is also useful in CI/CD pipelines or scripts, where interactive authentication is not possible.
+    
+    Be sure to handle these variables securely, especially when used in shared environments.
+
+
 Depending on the registry, the image may be pushed under an organization or namespace. For this example, we'll use `quay.io/kubodoc`.
 
 To build and push the package image:

@@ -1,0 +1,42 @@
+apiVersion: v1alpha1
+type: Package
+name: podinfo
+tag: 6.7.1-p04
+schema:
+  parameters:
+    properties:
+      host: { type: string, required: true }
+      tls: { type: boolean, default: false }
+  context:
+    properties:
+      ingress:
+        required: true
+        properties:
+          className: { type: string, required: true }
+          domain: { type: string, required: true }
+modules:
+  - name: main
+    source:
+      helmRepository:
+        url: https://stefanprodan.github.io/podinfo
+        chart: podinfo
+        version: 6.7.1
+    values: |
+      ingress:
+        enabled: true
+        className: {{ .Context.ingress.className  }}
+        {{- if .Parameters.tls }}
+        annotations:
+          cert-manager.io/cluster-issuer: {{ required ".Context.certificateIssuer.public must be defined if tls: true" .Context.certificateIssuer.public }}
+        {{- end }}
+        hosts:
+          - host: {{ .Parameters.host }}.{{ .Context.ingress.domain }}
+            paths:
+              - path: /
+                pathType: ImplementationSpecific
+        {{- if .Parameters.tls }}
+        tls:
+          - secretName: {{ .Release.metadata.name }}-tls
+            hosts:
+              - {{  .Parameters.host }}.{{ .Context.ingress.domain }}
+        {{- end }}

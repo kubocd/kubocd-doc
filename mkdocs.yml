@@ -13,9 +13,10 @@ nav:
     - "Context and configuration": user-guide/170-context-and-config.md
     - "The kuboCD CLI": user-guide/180-kubocd-cli.md
     - "KuboCD schema format": user-guide/190-alternate-schema-format.md
-    - "Redis: Advanced features": user-guide/200-redis.md
-    - "Dependencies management": user-guide/dependencies.md
-  - "Tips and tricks": tips-and-tricks.md
+    - "More features (Redis)": user-guide/200-redis.md
+    - "Cert-manager setup": user-guide/210-cert-manager.md
+  - "Reference":
+    - "Package": reference/500-package.md
 
 theme:
 #  name: readthedocs

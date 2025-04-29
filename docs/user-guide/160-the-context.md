@@ -67,6 +67,9 @@ A `Context` is a KuboCD resource:
         storageClass: 
           data: standard
           workspace: standard
+        certificateIssuer:
+          public: cluster-self
+          internal: cluster-self
     ```
 
 Key attributes:
@@ -81,7 +84,11 @@ In this example, the context includes:
 
 - `ingress.className`: The ingress controller type.
 - `ingress.domain`: The suffix used for building ingress URLs.
-- `storageClass`: Two Kubernetes `StorageClass` definitions for different application profiles. For our `kind` based cluster, there is only one available option: `standard`.
+- `storageClass`: Two Kubernetes `StorageClass` definitions for different application profiles. For our `kind` based 
+  cluster, there is only one available option: `standard`.
+- `certificateIssuer`: Two certificate issuers, one to use internally and one intended for endpoints exposed to external 
+  world. As configuring a CA (Certificate Authority) is out of the scope of this documentation, we will set-up only a 
+  self-signed CA. This will be performed later with the chapter on [cert-manager deployment](./210-cert-manager.md) 
 
 Cluster-wide contexts should be placed in a dedicated namespace:
 

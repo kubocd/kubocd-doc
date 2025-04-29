@@ -13,4 +13,7 @@ spec:
     storageClass:
       data: standard
       workspace: standard
+    certificateIssuer:
+      public: cluster-self
+      internal: cluster-self
 
