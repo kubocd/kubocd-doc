@@ -87,6 +87,8 @@ We will use another example to demonstrate some of KuboCD’s more advanced feat
 
 We will now explore the new features used in this package.
 
+---
+
 ## Integrate Multiple Modules
 
 This package integrates two modules: the Redis server itself, and [Commander](https://github.com/joeferner/redis-commander), a Redis UI front end.
@@ -97,6 +99,8 @@ Consequently, the `schema.parameters` and `schema.context` are also global.
 
 Regarding the related Flux objects, there will be one `OCIRepository`, one `HelmRepository`, and two `HelmReleases`.
 
+---
+
 ## Configure Different Source Types
 
 Redis publishes its Helm chart as an OCI image. Therefore, in the source section of the first module, the chart is 
@@ -105,10 +109,14 @@ referenced in this form.
 Redis Commander, on the other hand, provides its chart only through its GitHub repository. Thus, it is referenced
 in the source section of the second module accordingly.
 
+---
+
 ## Control Module Deployment
 
 The `ui` module includes a `disabled` attribute, which can be templated. This allows the deployment of this module to be 
 conditionally triggered based on a choice made during deployment, using a parameter passed to the `Release` resource.
+
+---
 
 ## Manage Dependencies
 
@@ -165,6 +173,19 @@ Similarly, dependencies can be defined at either the `Package` level or the `Rel
 > Note:
     During rendering, both roles and dependencies defined at the Package and Release levels are concatenated.
     This ensures that the final dependency graph combines all relevant definitions from both scopes.
+
+### Cluster roles
+
+The deployment of a package is conditioned on the availability of the roles it depends on, meaning that at least one 
+application fulfilling each required role must be successfully deployed.
+
+In some cases, a role may already be fulfilled by an application that was not deployed by KuboCD.
+For example, if you're using a cluster that already includes an Ingress controller and a Load Balancer, you need 
+to inform KuboCD that these roles are already satisfied externally.
+
+Such roles are called `ClusterRoles`, and their list is defined in the global [KuboCD configuration resource: `Config`](./170-context-and-config.md).
+
+---
 
 ## Deployment
 

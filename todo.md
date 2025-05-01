@@ -1,32 +1,16 @@
 
-- 
+Extra
 
-- context and config
-- kubocd cli
-- alternate schema format
-- redis sample
-- cert-manager
-- Air gap
+- Dnsmasq
+- mac connect
+- Metallb
+- private CA
 
+Provide example:
 
-reference
-- Package
-- Release
-- Data model
+- Release Values templating
+- specPatch and specPatch by module
+- Release value templating
 
-
-misc:
-- kubocd CLI
-- Flux object
-- cert manager
-- source type
-- Oci repo authentication
-- schema
-- data model
-- Templating (Helm+spring+DNS resolve)
-- config
-- package redirection
-- image redirection
-- Release templating
-- Reference
-- dependencies
+To document:
+- Package and Image redirection

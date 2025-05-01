@@ -160,7 +160,7 @@ helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/chart
 
 ## Install the KuboCD CLI
 
-Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.2.1){:target="_blank"}..
+Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.2.1){:target="_blank"}
 and rename it to `kubocd`. Then make it executable and move it to your path:
 
 ```{ .bash .copy }

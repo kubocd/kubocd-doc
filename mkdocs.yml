@@ -17,6 +17,9 @@ nav:
     - "Cert-manager setup": user-guide/210-cert-manager.md
   - "Reference":
     - "Package": reference/500-package.md
+    - "Release": reference/510-release.md
+    - "Context": reference/520-context.md
+    - "Config": reference/530-config.md
 
 theme:
 #  name: readthedocs
