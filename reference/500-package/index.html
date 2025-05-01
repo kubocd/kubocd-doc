@@ -12,6 +12,8 @@
         <link rel="prev" href="../../user-guide/210-cert-manager/">
       
       
+        <link rel="next" href="../510-release/">
+      
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.11">
@@ -686,19 +688,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#package-object" class="md-nav__link">
+  <a href="#templating" class="md-nav__link">
     <span class="md-ellipsis">
-      Package object:
+      Templating
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Package object:">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package" class="md-nav__link">
+    <span class="md-ellipsis">
+      Package
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Package">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#apiversion" class="md-nav__link">
     <span class="md-ellipsis">
-      *apiVersion
+      apiVersion
     </span>
   </a>
   
@@ -707,7 +718,7 @@
           <li class="md-nav__item">
   <a href="#type" class="md-nav__link">
     <span class="md-ellipsis">
-      *type
+      type
     </span>
   </a>
   
@@ -716,16 +727,16 @@
           <li class="md-nav__item">
   <a href="#name" class="md-nav__link">
     <span class="md-ellipsis">
-      *name
+      name
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#-tag" class="md-nav__link">
+  <a href="#tag" class="md-nav__link">
     <span class="md-ellipsis">
-      - *tag
+      tag
     </span>
   </a>
   
@@ -770,7 +781,7 @@
           <li class="md-nav__item">
   <a href="#modules" class="md-nav__link">
     <span class="md-ellipsis">
-      *modules
+      modules
     </span>
   </a>
   
@@ -800,19 +811,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#module-object" class="md-nav__link">
+  <a href="#packagemodule" class="md-nav__link">
     <span class="md-ellipsis">
-      Module object
+      Package.module
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Module object">
+    <nav class="md-nav" aria-label="Package.module">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#name_1" class="md-nav__link">
     <span class="md-ellipsis">
-      *name
+      name
     </span>
   </a>
   
@@ -821,7 +832,7 @@
           <li class="md-nav__item">
   <a href="#source" class="md-nav__link">
     <span class="md-ellipsis">
-      *source
+      source
     </span>
   </a>
   
@@ -887,13 +898,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#helmrepository-source" class="md-nav__link">
+  <a href="#packagemodulesourcehelmrepository" class="md-nav__link">
     <span class="md-ellipsis">
-      HelmRepository source
+      Package.module.source.helmRepository
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="HelmRepository source">
+    <nav class="md-nav" aria-label="Package.module.source.helmRepository">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -929,55 +940,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#oci-source" class="md-nav__link">
+  <a href="#packagemodulesourcegit" class="md-nav__link">
     <span class="md-ellipsis">
-      OCI source
+      Package.module.source.git
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="OCI source">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      repository
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tag" class="md-nav__link">
-    <span class="md-ellipsis">
-      tag
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#insecure" class="md-nav__link">
-    <span class="md-ellipsis">
-      insecure
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#git-source" class="md-nav__link">
-    <span class="md-ellipsis">
-      Git source
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Git source">
+    <nav class="md-nav" aria-label="Package.module.source.git">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1022,13 +991,55 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#local-source" class="md-nav__link">
+  <a href="#packagemodulesourceoci" class="md-nav__link">
     <span class="md-ellipsis">
-      Local source
+      Package.module.source.oci
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Local source">
+    <nav class="md-nav" aria-label="Package.module.source.oci">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      tag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insecure" class="md-nav__link">
+    <span class="md-ellipsis">
+      insecure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagemodulesourcelocal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Package.module.source.local
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Package.module.source.local">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1049,6 +1060,75 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../510-release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Release
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../520-context/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Context
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../530-config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Config
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1088,19 +1168,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#package-object" class="md-nav__link">
+  <a href="#templating" class="md-nav__link">
     <span class="md-ellipsis">
-      Package object:
+      Templating
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Package object:">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package" class="md-nav__link">
+    <span class="md-ellipsis">
+      Package
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Package">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#apiversion" class="md-nav__link">
     <span class="md-ellipsis">
-      *apiVersion
+      apiVersion
     </span>
   </a>
   
@@ -1109,7 +1198,7 @@
           <li class="md-nav__item">
   <a href="#type" class="md-nav__link">
     <span class="md-ellipsis">
-      *type
+      type
     </span>
   </a>
   
@@ -1118,16 +1207,16 @@
           <li class="md-nav__item">
   <a href="#name" class="md-nav__link">
     <span class="md-ellipsis">
-      *name
+      name
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#-tag" class="md-nav__link">
+  <a href="#tag" class="md-nav__link">
     <span class="md-ellipsis">
-      - *tag
+      tag
     </span>
   </a>
   
@@ -1172,7 +1261,7 @@
           <li class="md-nav__item">
   <a href="#modules" class="md-nav__link">
     <span class="md-ellipsis">
-      *modules
+      modules
     </span>
   </a>
   
@@ -1202,19 +1291,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#module-object" class="md-nav__link">
+  <a href="#packagemodule" class="md-nav__link">
     <span class="md-ellipsis">
-      Module object
+      Package.module
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Module object">
+    <nav class="md-nav" aria-label="Package.module">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#name_1" class="md-nav__link">
     <span class="md-ellipsis">
-      *name
+      name
     </span>
   </a>
   
@@ -1223,7 +1312,7 @@
           <li class="md-nav__item">
   <a href="#source" class="md-nav__link">
     <span class="md-ellipsis">
-      *source
+      source
     </span>
   </a>
   
@@ -1289,13 +1378,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#helmrepository-source" class="md-nav__link">
+  <a href="#packagemodulesourcehelmrepository" class="md-nav__link">
     <span class="md-ellipsis">
-      HelmRepository source
+      Package.module.source.helmRepository
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="HelmRepository source">
+    <nav class="md-nav" aria-label="Package.module.source.helmRepository">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1331,55 +1420,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#oci-source" class="md-nav__link">
+  <a href="#packagemodulesourcegit" class="md-nav__link">
     <span class="md-ellipsis">
-      OCI source
+      Package.module.source.git
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="OCI source">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      repository
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tag" class="md-nav__link">
-    <span class="md-ellipsis">
-      tag
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#insecure" class="md-nav__link">
-    <span class="md-ellipsis">
-      insecure
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#git-source" class="md-nav__link">
-    <span class="md-ellipsis">
-      Git source
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Git source">
+    <nav class="md-nav" aria-label="Package.module.source.git">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1424,13 +1471,55 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#local-source" class="md-nav__link">
+  <a href="#packagemodulesourceoci" class="md-nav__link">
     <span class="md-ellipsis">
-      Local source
+      Package.module.source.oci
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Local source">
+    <nav class="md-nav" aria-label="Package.module.source.oci">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      tag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insecure" class="md-nav__link">
+    <span class="md-ellipsis">
+      insecure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagemodulesourcelocal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Package.module.source.local
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Package.module.source.local">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1467,56 +1556,111 @@
 
 
 <h1 id="the-kubocd-package">The KuboCD Package</h1>
-<p>Required attributes are flagged with '*'</p>
-<h2 id="package-object">Package object:</h2>
-<h3 id="apiversion">*<em>apiVersion</em></h3>
+<p>A <code>Package</code> is an OCI-compliant container image that bundles an application descriptor along with one or more Helm charts. 
+It serves as the standardized unit of deployment, encapsulating everything needed to describe and install an application.</p>
+<p>Refer to <a href="../../user-guide/130-a-first-deployment/">A first deployment</a> for an introductory example.</p>
+<p>The OCI image is built from a manifest, whose structure is described below.</p>
+<h2 id="templating">Templating</h2>
+<p>Some attributes can accept a template, rendering the final value. There are noted as the following:</p>
 <ul>
-<li>Manifest version. Only allowed value is currently <code>v1alpha1</code></li>
+<li>template(string): A template which must render a string.</li>
+<li>template(bool): A template that must render a string convertible to a boolean value. (1, t, T, TRUE, true, True, 0, f, F, FALSE, false, False)</li>
+<li>template(list(string)): A template which must render a list of string</li>
+<li>template(map): A template which must render a map/object. </li>
+<li>template(duration): A template that must render a string convertible to a duration value.</li>
 </ul>
-<h3 id="type">*<em>type</em></h3>
-<ul>
-<li>Manifest type. Only allowed value is <code>Package</code>. May be omitted.</li>
-</ul>
-<h3 id="name">*<em>name</em></h3>
-<ul>
-<li>
-<p>The name of the package. Will be used in the OCI repository name.</p>
-<p>dlmkdld mlkm dlmldkm</p>
-</li>
-</ul>
-<h3 id="-tag">- *tag</h3>
-<p>lkk lkl lk lk lk ll l</p>
+<hr />
+<h2 id="package">Package</h2>
+<h3 id="apiversion"><em>apiVersion</em></h3>
+<p><strong>String, required</strong> | The manifest version. Only allowed value is currently <code>v1alpha1</code></p>
+<h3 id="type"><em>type</em></h3>
+<p><strong>String, optional:</strong> The manifest type. Only allowed value is <code>Package</code>. May be omitted.</p>
+<h3 id="name"><em>name</em></h3>
+<p><strong>String, required:</strong> The name of the package. Will be used in the OCI repository name. Must be a valid DNS Subdomain name (<a href="https://tools.ietf.org/html/rfc1123" target="_blank">RFC 1123</a>).</p>
+<h3 id="tag"><em>tag</em></h3>
+<p><strong>String, required:</strong> The tag for the OCI image.</p>
 <h3 id="description">description</h3>
+<p><strong>Template(string), optional</strong>: A short description of the package. Will act as default for its <code>Release</code> counterpart. </p>
 <h3 id="protected">protected</h3>
+<p><strong>Bool, Default: false:</strong> Prevent deletion. Will act as default for its <code>Release</code> counterpart</p>
 <h3 id="schemaparameters">schema.parameters</h3>
+<p><strong>Map, Optional:</strong> Allow validation or the <code>Parameters</code> defined in the <code>Release</code> object. It could be a JSON/OpenAPI 
+schema or a <a href="../../user-guide/190-alternate-schema-format/">KuboCD specific format</a>.</p>
+<p>If none is provided, this means the <code>Release</code> will not accept any parameters.</p>
 <h3 id="schemacontext">schema.context</h3>
-<h3 id="modules">*modules</h3>
+<p><strong>Map, Optional:</strong> Allow validation or the <code>Context</code> of the deployment. It could be a JSON/OpenAPI
+schema or a <a href="../../user-guide/190-alternate-schema-format/">KuboCD specific format</a>.</p>
+<p>If none is provided, there will be no control on provided <code>Context</code></p>
+<h3 id="modules">modules</h3>
+<p><strong>List(<a href="./#packagemodule">Modules</a>), Required:</strong> The list of <a href="./#packagemodule">modules</a> included in this package.</p>
 <h3 id="roles">roles</h3>
+<p><strong>Template(List(string)), optional</strong>: The roles this package aims to fulfill. See <a href="../../user-guide/200-redis/#release-dependencies-and-roles">Release Dependencies and Roles</a></p>
 <h3 id="dependencies">dependencies</h3>
-<h2 id="module-object">Module object</h2>
-<h3 id="name_1">*name</h3>
-<h3 id="source">*source</h3>
+<p><strong>Template(List(string)), optional</strong>: The roles this package depends on. See <a href="../../user-guide/200-redis/#release-dependencies-and-roles">Release Dependencies and Roles</a></p>
+<hr />
+<h2 id="packagemodule">Package.module</h2>
+<p>A <code>Module</code> embed an Helm Chart</p>
+<h3 id="name_1">name</h3>
+<p><strong>String, required:</strong> The module name. Must be unique for a package. Used in the name of several Kubernetes ressources, 
+so it must be a valid DNS Subdomain name (<a href="https://tools.ietf.org/html/rfc1123">RFC 1123</a>) </p>
+<h3 id="source">source</h3>
+<p><strong>Map, required:</strong>: Provide the location from which to fetch the Helm chart. Must contain of the following sub-elements:</p>
+<ul>
+<li><a href="./#packagemodulesourcehelmrepository">helmRepository</a> </li>
+<li><a href="./#packagemodulesourcegit">git</a></li>
+<li><a href="./#packagemodulesourceoci">oci</a></li>
+<li><a href="./#packagemodulesourcelocal">local</a></li>
+</ul>
 <h3 id="values">values</h3>
+<p><strong>Template(map), Optional:</strong> The template rendering the 'values file' used to deploy the Helm Chart. Refer to
+<a href="../../user-guide/130-a-first-deployment/">A first deployment</a> for an simple first example.</p>
 <h3 id="timeout">timeout</h3>
+<p><strong>Template(duration), default: 2m:</strong> Timeout is the time to wait for any individual Kubernetes operation (like Jobs for hooks) 
+during the performance of a Helm action.</p>
 <h3 id="enabled">enabled</h3>
+<p><strong>Template(bool), default: true:</strong> When set to false, the module is not deployed at all. See <a href=""></a> for an example.</p>
 <h3 id="targetnamespace">targetNamespace</h3>
+<p><strong>Template(string), default: {{ .Release.spec.targetNamespace }}:</strong> The namespace to deploy the application into.</p>
 <h3 id="dependson">dependsOn</h3>
+<p><strong>Template(list(string)), optional:</strong> A list of other modules of this package we depends on.</p>
 <h3 id="specpatch">specPatch</h3>
-<h2 id="helmrepository-source">HelmRepository source</h2>
+<p><strong>Template(map), optional:</strong> A patch applied to the <code>spec</code> section of the Flux <code>HelmRelease</code> resource. 
+It allows you to set any parameters that are not exposed by KuboCD.</p>
+<hr />
+<h2 id="packagemodulesourcehelmrepository">Package.module.source.helmRepository</h2>
+<p>Use this section to fetch an Helm Chart stored on an Helm Repository.</p>
 <h3 id="url">url</h3>
+<p><strong>String, required:</strong> The URL of the Helm repository</p>
 <h3 id="chart">chart</h3>
+<p><strong>String, required:</strong> The Chart name</p>
 <h3 id="version">version</h3>
-<h2 id="oci-source">OCI source</h2>
-<h3 id="repository">repository</h3>
-<h3 id="tag">tag</h3>
-<h3 id="insecure">insecure</h3>
-<h2 id="git-source">Git source</h2>
+<p><strong>String, required:</strong> The Chart version</p>
+<hr />
+<h2 id="packagemodulesourcegit">Package.module.source.git</h2>
+<p>Use this section to fetch an Helm Chart stored on an Git Repository.</p>
 <h3 id="url_1">url</h3>
+<p><strong>String, required:</strong> The URL of the Git repository</p>
 <h3 id="branch">branch</h3>
+<p><strong>String, required if tag is not defined:</strong> The branch to fetch</p>
 <h3 id="tag_1">tag</h3>
+<p><strong>String, required if branch is not defined:</strong> The tag to fetch</p>
 <h3 id="path">path</h3>
-<h2 id="local-source">Local source</h2>
+<p><strong>String, required:</strong> The folder inside the Git repository of the Chart (Where is <code>Chart.yaml</code> is located)</p>
+<hr />
+<h2 id="packagemodulesourceoci">Package.module.source.oci</h2>
+<p>Use this section to fetch an Helm Chart stored as an OCI image.</p>
+<h3 id="repository">repository</h3>
+<p><strong>String, required:</strong> The repository URL without <code>oci://</code> and <code>tag</code>.</p>
+<h3 id="tag_2">tag</h3>
+<p><strong>String, required:</strong> The image tag.</p>
+<h3 id="insecure">insecure</h3>
+<p><strong>Bool, default: false:</strong> Repository access is in clear text (non encrypted) </p>
+<hr />
+<h2 id="packagemodulesourcelocal">Package.module.source.local</h2>
+<p>Use this section to fetch an Helm Chart stored on your workstation, alongside the <code>Package</code> manifest.</p>
 <h3 id="path_1">path</h3>
+<p><strong>String, required:</strong> The local folder of the Chart (Where is <code>Chart.yaml</code> is located). Relative to the <code>Package</code>
+manifest location</p>
 
 
 
@@ -1561,6 +1705,22 @@
             </div>
           </a>
         
+        
+          
+          <a href="../510-release/" class="md-footer__link md-footer__link--next" aria-label="Next: Release">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Release
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
         
       </nav>
     

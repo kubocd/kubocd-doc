@@ -651,6 +651,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#cluster-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cluster roles
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -798,6 +807,75 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/510-release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Release
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/520-context/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Context
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/530-config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Config
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -881,6 +959,15 @@
   <a href="#release-dependencies-and-roles" class="md-nav__link">
     <span class="md-ellipsis">
       Release Dependencies and Roles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cluster-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cluster roles
     </span>
   </a>
   
@@ -1034,19 +1121,23 @@
 </span></code></pre></div>
 </details>
 <p>We will now explore the new features used in this package.</p>
+<hr />
 <h2 id="integrate-multiple-modules">Integrate Multiple Modules</h2>
 <p>This package integrates two modules: the Redis server itself, and <a href="https://github.com/joeferner/redis-commander">Commander</a>, a Redis UI front end.</p>
 <p>There is a single data model used by both modules, which allows variables to be shared easily.</p>
 <p>Consequently, the <code>schema.parameters</code> and <code>schema.context</code> are also global.</p>
 <p>Regarding the related Flux objects, there will be one <code>OCIRepository</code>, one <code>HelmRepository</code>, and two <code>HelmReleases</code>.</p>
+<hr />
 <h2 id="configure-different-source-types">Configure Different Source Types</h2>
 <p>Redis publishes its Helm chart as an OCI image. Therefore, in the source section of the first module, the chart is 
 referenced in this form.</p>
 <p>Redis Commander, on the other hand, provides its chart only through its GitHub repository. Thus, it is referenced
 in the source section of the second module accordingly.</p>
+<hr />
 <h2 id="control-module-deployment">Control Module Deployment</h2>
 <p>The <code>ui</code> module includes a <code>disabled</code> attribute, which can be templated. This allows the deployment of this module to be 
 conditionally triggered based on a choice made during deployment, using a parameter passed to the <code>Release</code> resource.</p>
+<hr />
 <h2 id="manage-dependencies">Manage Dependencies</h2>
 <p>Usually, in the Kubernetes ecosystem, it is possible to ignore dependencies between applications, as they are typically 
 well-designed and operate with retry logic until they eventually reach a stable state.</p>
@@ -1089,6 +1180,14 @@ regardless of whether the controller is implemented by NGINX, Traefik, Kong, or 
     During rendering, both roles and dependencies defined at the Package and Release levels are concatenated.
     This ensures that the final dependency graph combines all relevant definitions from both scopes.</p>
 </blockquote>
+<h3 id="cluster-roles">Cluster roles</h3>
+<p>The deployment of a package is conditioned on the availability of the roles it depends on, meaning that at least one 
+application fulfilling each required role must be successfully deployed.</p>
+<p>In some cases, a role may already be fulfilled by an application that was not deployed by KuboCD.
+For example, if you're using a cluster that already includes an Ingress controller and a Load Balancer, you need 
+to inform KuboCD that these roles are already satisfied externally.</p>
+<p>Such roles are called <code>ClusterRoles</code>, and their list is defined in the global <a href="../170-context-and-config/">KuboCD configuration resource: <code>Config</code></a>.</p>
+<hr />
 <h2 id="deployment">Deployment</h2>
 <h3 id="packaging">Packaging</h3>
 <p>This new application must be packaged:</p>
