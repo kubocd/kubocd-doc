@@ -1072,11 +1072,11 @@ You can limit Flux to the required components for KuboCD:<br />
 <hr />
 <h2 id="install-kubocd">Install KuboCD</h2>
 <p>Deploy KuboCD using Helm:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-ctrl<span class="w"> </span>--create-namespace<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.1
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-ctrl<span class="w"> </span>--create-namespace<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-ctrl<span class="w"> </span>--version<span class="w"> </span>v0.2.1
 </span></code></pre></div>
 <hr />
 <h2 id="install-the-kubocd-cli">Install the KuboCD CLI</h2>
-<p>Download the KuboCD CLI from the <a href="https://github.com/kubocd/kubocd/releases/tag/v0.2.1" target="_blank">GitHub releases page</a>..
+<p>Download the KuboCD CLI from the <a href="https://github.com/kubocd/kubocd/releases/tag/v0.2.1" target="_blank">GitHub releases page</a>
 and rename it to <code>kubocd</code>. Then make it executable and move it to your path:</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>mv<span class="w"> </span>kubocd_*_*<span class="w"> </span>kubocd
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>kubocd

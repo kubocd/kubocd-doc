@@ -1012,7 +1012,7 @@ You can limit Flux to the required components for KuboCD:<br />
 <hr />
 <h2 id="install-kubocd">Install KuboCD</h2>
 <p>Deploy the KuboCD controller using Helm:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-ctrl<span class="w"> </span>--create-namespace<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.1
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-ctrl<span class="w"> </span>--create-namespace<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-ctrl<span class="w"> </span>--version<span class="w"> </span>v0.2.1
 </span></code></pre></div>
 <hr />
 <h2 id="enabling-webhook-based-features">Enabling Webhook-Based Features</h2>
@@ -1020,7 +1020,7 @@ You can limit Flux to the required components for KuboCD:<br />
 <p>To enable these features, you need to deploy a webhook component alongside the controller. This webhook requires 
 <a href="https://cert-manager.io/" target="_blank"><strong>cert-manager</strong></a>. to be installed in your cluster to handle TLS certificate provisioning.</p>
 <p>If you already have <code>cert-manager</code> installed, you can deploy the webhook with the following command:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-wh<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-wh:v0.2.1
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-wh<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-wh<span class="w"> </span>--version<span class="w"> </span>v0.2.1
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1029,7 +1029,7 @@ You can limit Flux to the required components for KuboCD:<br />
 </div>
 <hr />
 <h2 id="install-the-kubocd-cli">Install the KuboCD CLI</h2>
-<p>Download the KuboCD CLI from the <a href="https://github.com/kubocd/kubocd/releases/tag/v0.2.1" target="_blank">GitHub releases page</a>..
+<p>Download the KuboCD CLI from the <a href="https://github.com/kubocd/kubocd/releases/tag/v0.2.1" target="_blank">GitHub releases page</a>
 and rename it to <code>kubocd</code>. Then make it executable and move it to your path:</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>mv<span class="w"> </span>kubocd_*_*<span class="w"> </span>kubocd
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>kubocd
