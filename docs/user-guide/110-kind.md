@@ -153,7 +153,7 @@ source-controller-6ff87cb475-hnmxv         1/1     Running   0          14m
 Deploy KuboCD using Helm:
 
 ```{ .bash .copy }
-helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.1
+helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl --version v0.2.1
 ```
 
 ---

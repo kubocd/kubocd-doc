@@ -79,7 +79,7 @@ source-controller-6ff87cb475-hnmxv         1/1     Running   0          14m
 Deploy the KuboCD controller using Helm:
 
 ```{ .bash .copy }
-helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.1
+helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl --version v0.2.1
 ```
 
 ---
@@ -94,7 +94,7 @@ To enable these features, you need to deploy a webhook component alongside the c
 If you already have `cert-manager` installed, you can deploy the webhook with the following command:
 
 ```{ .bash .copy }
-helm -n kubocd install kubocd-wh oci://quay.io/kubocd/charts/kubocd-wh:v0.2.1
+helm -n kubocd install kubocd-wh oci://quay.io/kubocd/charts/kubocd-wh --version v0.2.1
 ```
 
 !!! note

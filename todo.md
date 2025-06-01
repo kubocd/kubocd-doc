@@ -1,4 +1,8 @@
 
+Set a remark on flux install as only for dev. And a ref to sandbox
+
+Setup a sandbox and document.
+
 Extra
 
 - Dnsmasq
@@ -10,7 +14,8 @@ Provide example:
 
 - Release Values templating
 - specPatch and specPatch by module
-- Release value templating
 
 To document:
 - Package and Image redirection
+
+
