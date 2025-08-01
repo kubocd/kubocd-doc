@@ -1390,13 +1390,13 @@
 <h3 id="metadata">metadata</h3>
 <p><strong>Map, required:</strong> Refer to the Kubernetes API documentation for the fields of the metadata field.</p>
 <h3 id="spec">spec</h3>
-<p><strong>Release.spec, required:</strong> See <a href="./#releasespec">Release.spec</a> below</p>
+<p><strong>Release.spec, required:</strong> See <a href="#releasespec">Release.spec</a> below</p>
 <hr />
 <h2 id="releasespec">Release.spec</h2>
 <h3 id="description">description</h3>
 <p><strong>String, default: {Package.description}:</strong> A short description. </p>
 <h3 id="package">package</h3>
-<p><strong>Release.spec.package, required:</strong> Where to fetch the <code>Package</code> OCI image. Description in <a href="./#releasespecpackage">Release.spec.package</a></p>
+<p><strong>Release.spec.package, required:</strong> Where to fetch the <code>Package</code> OCI image. Description in <a href="#releasespecpackage">Release.spec.package</a></p>
 <h3 id="contexts">contexts</h3>
 <p><strong>List(CrossNamespaceReference):</strong> A list of supplementary contexts merged with the default ones. 
 If the <code>namespace</code> of the context is not defined, it will take the <code>Release.metadata.namespace</code>.</p>
@@ -1422,7 +1422,7 @@ It allows you to set any parameters that are not exposed by KuboCD at the <code>
 <p><strong>Bool, default: false:</strong> If set, this <code>Release</code> will ignore the global default contexts as well as those defined at the namespace level.
 Only the contexts explicitly listed in the <code>Release</code> resource will be taken into account.</p>
 <h3 id="debug">debug</h3>
-<p><strong>Release.spec.debug, optional:</strong> Refer to <a href="./#releasespecdebug">Release.spec.debug</a> below</p>
+<p><strong>Release.spec.debug, optional:</strong> Refer to <a href="#releasespecdebug">Release.spec.debug</a> below</p>
 <hr />
 <h2 id="releasespecpackage">Release.spec.package</h2>
 <h3 id="repository">repository</h3>
