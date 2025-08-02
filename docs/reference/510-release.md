@@ -17,7 +17,7 @@
 
 ### spec
 
-**Release.spec, required:** See [Release.spec](./#releasespec) below
+**Release.spec, required:** See [Release.spec](#releasespec) below
 
 ---
 
@@ -29,7 +29,7 @@
 
 ### package
 
-**Release.spec.package, required:** Where to fetch the `Package` OCI image. Description in [Release.spec.package](./#releasespecpackage)
+**Release.spec.package, required:** Where to fetch the `Package` OCI image. Description in [Release.spec.package](#releasespecpackage)
 
 ### contexts
 
@@ -76,7 +76,7 @@ Only the contexts explicitly listed in the `Release` resource will be taken into
 
 ### debug
 
-**Release.spec.debug, optional:** Refer to [Release.spec.debug](./#releasespecdebug) below
+**Release.spec.debug, optional:** Refer to [Release.spec.debug](#releasespecdebug) below
 
 
 

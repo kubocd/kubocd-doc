@@ -18,7 +18,7 @@ You can refer to [The context resource](../user-guide/160-the-context.md) for so
 
 ### spec
 
-**Context.spec, required:** See [Context.spec](./#contextpec) below
+**Context.spec, required:** See [Context.spec](#contextspec) below
 
 ---
 

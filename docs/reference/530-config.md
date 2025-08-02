@@ -16,7 +16,7 @@
 
 ### spec
 
-**Config.spec, required:** See [Config.spec](./#configspec) below
+**Config.spec, required:** See [Config.spec](#configspec) below
 
 ---
 

@@ -61,7 +61,7 @@ If none is provided, there will be no control on provided `Context`
 
 ### modules
 
-**List([Modules](./#packagemodule)), Required:** The list of [modules](./#packagemodule) included in this package.
+**List([Modules](#packagemodule)), Required:** The list of [modules](#packagemodule) included in this package.
 
 ### roles
 
@@ -86,10 +86,10 @@ so it must be a valid DNS Subdomain name ([RFC 1123](https://tools.ietf.org/html
 
 **Map, required:**: Provide the location from which to fetch the Helm chart. Must contain of the following sub-elements:
 
-- [helmRepository](./#packagemodulesourcehelmrepository) 
-- [git](./#packagemodulesourcegit)
-- [oci](./#packagemodulesourceoci)
-- [local](./#packagemodulesourcelocal)
+- [helmRepository](#packagemodulesourcehelmrepository) 
+- [git](#packagemodulesourcegit)
+- [oci](#packagemodulesourceoci)
+- [local](#packagemodulesourcelocal)
 
 ### values
 

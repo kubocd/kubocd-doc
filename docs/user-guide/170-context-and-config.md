@@ -326,7 +326,7 @@ For example, by creating the following file:
 To upgrade the KuboCD deployment:
 
 ``` { .bash .copy }
-helm -n kubocd upgrade kubocd-ctrl oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.1 --values helm-values/values1-ctrl.yaml
+helm -n kubocd upgrade kubocd-ctrl oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.2 --values helm-values/values1-ctrl.yaml
 ```
 !!! warning
 
