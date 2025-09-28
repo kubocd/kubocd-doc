@@ -104,11 +104,21 @@ docker login ghcr.io
 !!! tips
 
     If you encounter issues authenticating with a registry, KuboCD provides an alternative method.
-    You can supply your credentials through two environment variables: `KCD_OCI_USER` and `KCD_OCI_SECRET`.
+    You can supply your credentials through two environment variables: `KCD_OCI_{REGISTRY}_USER` and `KCD_OCI_{REGISTRY}_SECRET`, 
+    where `{REGISTRY}` is a identifier for the target registry, build with the following rules:
+
+    - Characters ".", ":", "/" and "-" are replaced with "_"
+    - To upper cases
+
+    For example, to authenticate on `quay.io`, you will use `KCD_OCI_QUAY_IO_USER` and `KCD_OCI_QUAY_IO_SECRET`.
     
     This method is also useful in CI/CD pipelines or scripts, where interactive authentication is not possible.
     
     Be sure to handle these variables securely, especially when used in shared environments.
+
+    NB: Old version used 'KCD_OCI_USER' and 'KCD_OCI_SECRET'. They are now deprected.
+
+    Trick: You can launch the `package` command with the `--logLevel debug` option to display the wanted environement variable names.
 
 
 Depending on the registry, the image may be pushed under an organization or namespace. For this example, we'll use `quay.io/kubodoc`.
