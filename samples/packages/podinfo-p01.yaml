@@ -1,7 +1,7 @@
 apiVersion: v1alpha1
 type: Package
 name: podinfo
-tag: 6.7.1-p02
+tag: 6.7.1-p01
 schema:
   parameters:
     $schema: http://json-schema.org/schema#

@@ -242,3 +242,13 @@ kubectl get pods
 NAME                             READY   STATUS    RESTARTS   AGE
 podinfo1-main-779b6b9fd4-zbgbx   1/1     Running   0          8h
 ```
+
+## Preflight check
+
+Before deploying an application, a good practice will be to test the `Release` with the `render` kubocd CLI command:
+
+```{ .bash .copy }
+kubocd render releases/podinfo1-basic.yaml
+```
+
+You will find a detailled description of this command in the [kubocd cli section](./180-kubocd-cli.md/#kubocd-render)

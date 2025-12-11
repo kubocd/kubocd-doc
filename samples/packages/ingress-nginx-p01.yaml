@@ -5,7 +5,7 @@ name: ingress-nginx
 tag: 4.12.1-p01
 protected: true
 modules:
-  - name: main
+  - name: noname
     timeout: 4m
     source:
       helmRepository:

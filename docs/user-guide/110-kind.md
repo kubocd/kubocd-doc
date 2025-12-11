@@ -110,9 +110,6 @@ If not already installed, follow the [Flux CLI installation guide](https://fluxc
 
 We’ll begin with a basic installation of Flux (no Git repository linked for now):
 
-!!! note
-    A full GitOps deployment will be described later in this documentation.
-
 ```{ .bash .copy }
 flux install
 ```
@@ -155,6 +152,16 @@ Deploy KuboCD using Helm:
 ```{ .bash .copy }
 helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl --version v0.2.3
 ```
+---
+
+## About Webhook-Based Features
+
+Some advanced features in **KuboCD** such as **Release protection** rely on a Kubernetes **validating webhook.**
+
+To enable these features, you need to deploy a webhook component alongside the controller. 
+
+But, this webhook requires [**cert-manager**](https://cert-manager.io/){:target="_blank"}. to be installed in your cluster to handle TLS certificate provisioning. 
+We’ll show you how to package and install it with KuboCD in a later section. After that, you will be able to deploy the KuboCD webhook. 
 
 ---
 
