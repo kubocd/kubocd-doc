@@ -45,12 +45,12 @@ KuboCD introduces two core concepts that form the foundation of its deployment m
 
 ## KuboCD, Flux, Helm and GitOps
 
-KuboCD is designed to seamlessly integrate with [Flux](https://fluxcd.io/), enabling a fully automated GitOps workflow. 
+KuboCD is designed to seamlessly integrate with [Flux](https://fluxcd.io/){:target="_blank"}, enabling a fully automated GitOps workflow. 
 While Flux handles the continuous delivery aspect (tracking changes in Git and applying them to the cluster), 
 KuboCD simplifies application packaging and deployment logic, making the overall delivery pipeline more modular,
 maintainable, and user-friendly.
 
-KuboCD is not a replacement for [Helm](https://helm.sh/). It is quite the opposite. It builds on top of Helm’s proven capabilities and 
+KuboCD is not a replacement for [Helm](https://helm.sh/){:target="_blank"}. It is quite the opposite. It builds on top of Helm’s proven capabilities and 
 leverages the rich ecosystem of existing Helm charts.
 
 Most production-grade applications already provide an official or community-maintained Helm chart. 

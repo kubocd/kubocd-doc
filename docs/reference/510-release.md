@@ -97,7 +97,7 @@ Only the contexts explicitly listed in the `Release` resource will be taken into
 When a `Release` resource is created, a Flux `OCIRepository` resource is also created to reference the Package's OCI image.
 This object supports many configuration attributes. These attributes can be overridden at the Release level and will be passed through as-is.
 
-Refer to the [Flux documentation for OCIRepositorySpec](https://fluxcd.io/flux/components/source/api/v1beta2/#source.toolkit.fluxcd.io/v1beta2.OCIRepositorySpec){:target="_blank"}
+Refer to the [Flux documentation for OCIRepositorySpec](https://fluxcd.io/flux/components/source/api/v1/#source.toolkit.fluxcd.io/v1.OCIRepositorySpec){:target="_blank"}
 for full details.
 
 Here is the list of supported forwarded attributes:
