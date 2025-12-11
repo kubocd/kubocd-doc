@@ -153,14 +153,14 @@ source-controller-6ff87cb475-hnmxv         1/1     Running   0          14m
 Deploy KuboCD using Helm:
 
 ```{ .bash .copy }
-helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl --version v0.2.2
+helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl --version v0.2.3
 ```
 
 ---
 
 ## Install the KuboCD CLI
 
-Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.2.2){:target="_blank"}
+Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.2.3){:target="_blank"}
 and rename it to `kubocd`. Then make it executable and move it to your path:
 
 ```{ .bash .copy }
