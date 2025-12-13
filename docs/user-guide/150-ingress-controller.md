@@ -37,7 +37,7 @@ Here is a sample package definition for the `ingress-nginx` controller:
     tag: 4.12.1-p01
     protected: true
     modules:
-      - name: main
+      - name: noname
         timeout: 4m
         source:
           helmRepository:
@@ -60,8 +60,9 @@ Here is a sample package definition for the `ingress-nginx` controller:
 New key points compared to the `podinfo` Package:
 
 - `protected: true`: Prevents accidental deletion of the release. (Currently not enforced unless KuboCD webhook is installed.)
-- `timeout: 4m`: Overrides the default deployment timeout (`2m`) because this Helm chart may take some time to deploy.
-- `values`: This section is in proper YAML format (no '|': not a templated string), since it does not include any templating.
+- `modules[0].name`: The specific value `noname` prevent the module name to be appended to the Helm release name, and to all derivative objects. See previous chapter.
+- `modules[0].timeout: 4m`: Overrides the default deployment timeout (`2m`) because this Helm chart may take some time to deploy.
+- `modules[0].values`: This section is in proper YAML format (no '|': not a templated string), since it does not include any templating.
 - `roles`: Assigns the package to the `ingress` role. This is used for dependency management between releases. 
   This will be described later in this documentation
 
@@ -73,7 +74,7 @@ kubocd pack packages/ingress-nginx-p01.yaml
 
 ``` { .bash }
 ====================================== Packaging package 'ingress-nginx.yaml'
---- Handling module 'main':
+--- Handling module 'noname':
 Fetching chart ingress-nginx:4.12.1...
 Chart: ingress-nginx:4.12.1
 --- Packaging
@@ -133,6 +134,19 @@ NAME            REPOSITORY                               TAG          CONTEXTS  
 ingress-nginx   quay.io/kubodoc/packages/ingress-nginx   4.12.1-p01              READY    1/1            -     86s   The Ingress controller
 ```
 
+And check the resulting pod:
+
+``` { .bash .copy }
+kubectl -n ingress-nginx get pods
+```
+
+``` { .bash }
+NAME                                        READY   STATUS    RESTARTS   AGE
+ingress-nginx-controller-658fbb96d5-hctqp   1/1     Running   0          4m12s
+```
+
+> If the module name `noname` is still present in the pod name<br>(i.e. `ingress-nginx-noname-controller-79887b485d-hwn6j`)<br>this indicates you use a KuboCD version older than `v0.2.3`.
+
 ---
 
 ## Configure the DNS entry
@@ -151,4 +165,3 @@ You should now be able to access the 'podinfo` web server:
 
 👉 [http://podinfo1.ingress.kubodoc.local](http://podinfo1.ingress.kubodoc.local){:target="_blank"}.
 
-Of course, since we are using a CA that is not trusted by your workstation, you will need to bypass some security warnings.

@@ -7,7 +7,7 @@ nav:
     - "Installation: Kind": user-guide/110-kind.md
     - "Installation: Existing Cluster": user-guide/120-existing-cluster.md
     - "A first deployment": user-guide/130-a-first-deployment.md
-    - "Under the hood - debugging": user-guide/140-under-the-hood.md
+    - "Under the hood - Components": user-guide/140-under-the-hood.md
     - "Ingress controller setup": user-guide/150-ingress-controller.md
     - "The Context resource": user-guide/160-the-context.md
     - "Context and configuration": user-guide/170-context-and-config.md

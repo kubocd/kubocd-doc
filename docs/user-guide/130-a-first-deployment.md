@@ -251,4 +251,6 @@ Before deploying an application, a good practice will be to test the `Release` w
 kubocd render releases/podinfo1-basic.yaml
 ```
 
-You will find a detailled description of this command in the [kubocd cli section](./180-kubocd-cli.md/#kubocd-render)
+You will find a detailed description of this command in the [kubocd cli section](./180-kubocd-cli.md/#kubocd-render)
+
+

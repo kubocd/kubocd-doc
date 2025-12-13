@@ -326,24 +326,23 @@ For example, by creating the following file:
 To upgrade the KuboCD deployment:
 
 ``` { .bash .copy }
-helm -n kubocd upgrade kubocd-ctrl oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.3 --values helm-values/values1-ctrl.yaml
+helm -n kubocd upgrade kubocd-ctrl oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.3-snapshot --values helm-values/values1-ctrl.yaml
 ```
 !!! warning
 
-    If you've followed the steps in this chapter, an error will be raised — Helm refuses to manage objects it did not originally create.
+    If you've followed the steps in this chapter, an error will be raised — Helm refuses to manage objects it did not originally create. 
+         
+    In that case, delete the `contexts` namespace and its associated objects first:
     
-
-In that case, delete the `contexts` namespace and its associated objects first:
-
-``` { .bash .copy }
-kubectl -n contexts delete context.kubocd.kubotal.io cluster
-```
-
-``` { .bash .copy }
-kubectl delete ns contexts
-```
-
-Then re-run the `helm upgrade` command.
+    ``` { .bash .copy }
+    kubectl -n contexts delete context.kubocd.kubotal.io cluster
+    ```
+    
+    ``` { .bash .copy }
+    kubectl delete ns contexts
+    ```
+    
+    Then re-run the `helm upgrade` command.
 
 While performing this operation, `Releases` may temporarily enter the `ERROR` state before returning to `READY` once the context is recreated.
 However, the applications themselves (pods and ingress for `podinfo`, etc.) will remain unaffected.

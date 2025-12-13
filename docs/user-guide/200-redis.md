@@ -32,7 +32,7 @@ We will use another example to demonstrate some of KuboCD’s more advanced feat
               className: { type: string, default: "nginx"}
               domain: { type: string, required: true }
     modules:
-      - name: redis
+      - name: noname
         timeout: 4m
         source:
           oci:
@@ -73,7 +73,7 @@ We will use another example to demonstrate some of KuboCD’s more advanced feat
                 paths:
                   - "/"
         dependsOn:
-          - redis
+          - noname
     roles: |
       - redis
       {{ if .Parameters.ui.enabled }}
@@ -98,6 +98,8 @@ There is a single data model used by both modules, which allows variables to be 
 Consequently, the `schema.parameters` and `schema.context` are also global.
 
 Regarding the related Flux objects, there will be one `OCIRepository`, one `HelmRepository`, and two `HelmReleases`.
+
+Note also the first, main module is named `noname`, to have a clean name of all related resources.
 
 ---
 
@@ -142,17 +144,17 @@ apiVersion: v1alpha1
 name: redis
 ......
 modules:
-  - name: redis
+  - name: noname
     ........
   - name: ui
     ..........
     dependsOn:
-      - redis
+      - noname
 ```
 
 The `dependsOn` attribute lists other module names that the current module depends on. These modules must belong to the same `Package`
 
-In this example, it ensures that the deployment of the `ui` module will wait until the deployment of the `redis` module is complete.
+In this example, it ensures that the deployment of the `ui` module will wait until the deployment of the `noname` module (redis itself) is complete.
 
 > This mechanism results in adding the `dependsOn` attribute to the Flux `HelmRelease` resource corresponding to the `ui` module.
 
@@ -200,7 +202,7 @@ kubocd pack packages/redis-p01.yaml
 
 ```
 ====================================== Packaging package 'packages/redis-p01.yaml'
---- Handling module 'redis':
+--- Handling module 'noname':
     Pulling image 'registry-1.docker.io/bitnamicharts/redis:20.6.1'
     Chart: redis:20.6.1
 --- Handling module 'ui':

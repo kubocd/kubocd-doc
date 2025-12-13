@@ -1,4 +1,4 @@
-# Under the Hood (If Things Go Wrong)
+# Under the Hood (KuboCD components)
 
 Behind the scenes, KuboCD creates several Flux resources to manage the deployment.
 
@@ -55,6 +55,12 @@ KuboCD will recreate it.
 
 This can be useful to force a reload of a modified OCI image, without waiting for the sync period.
 
+### Naming
+
+The `OCIRepository` is a namespaced resource, located in the same namespace as the `Release` object.
+
+Its name is the `Release` name, prefixed with `kcd-`.
+
 ---
 
 ## The HelmRepository
@@ -73,6 +79,12 @@ kcd-podinfo1   http://kubocd-ctrl-controller-helm-repository.kubocd.svc/hr/defau
 ```
 
 This step rarely causes errors unless the internal controller is unreachable.
+
+### Naming
+
+The `HelmRepository` is a namespaced resource, located in the same namespace as the `Release` object.
+
+Its name is the `Release` name, prefixed with `kcd-`.
 
 --- 
 
@@ -132,3 +144,46 @@ ingress:
     You can configure this value in the `Package` or in the `Release`.
 
 
+!!! tips
+    Another way to check the generated `values` stanza is to use the 'kubocd render' command:
+
+    ```{ .bash .copy }
+    kubocd render releases/podinfo1-basic.yaml
+    ```
+
+    You will find a detailed description of this command in the [kubocd cli section](./180-kubocd-cli.md/#kubocd-render)
+
+
+### Naming
+
+The `HelmRelease` is a namespaced resource, located in the same namespace as the `Release` object.
+
+As stated above there is one HelmRelease object per module in the package. Its name is `<Release name>-<ModuleName>`
+
+The `HelmRelease` is a FluxCD object. It will perform an Helm deployment, which is stored as a kubernetes `secret` 
+
+```
+kubectl get secrets
+NAME                                  TYPE                 DATA   AGE
+sh.helm.release.v1.podinfo1-main.v1   helm.sh/release.v1   1      66m
+```
+
+As most of the Helm chart use the release name as base for the generated object naming, this will leads to have a lot of final resources name built from `<Release name>-<ModuleName>`
+
+For example, with our first deployment: 
+
+```{ .bash .copy }
+kubectl get pods
+```
+
+```bash
+NAME                             READY   STATUS    RESTARTS   AGE
+podinfo1-main-779b6b9fd4-zbgbx   1/1     Running   0          8h
+```
+
+To avoid this extra, useless name postfix, KuboCD implements a specific module name: `noname`, in the package definition. 
+When a module is named `noname`, the corresponding `HelmRelease` (And all its related components) will be named with only the `Release` name.
+
+> As module name must be unique in a KuboCD package, there could be only one `noname` module in a package
+
+As an example, the next chapter use this feature.
