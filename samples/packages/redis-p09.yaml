@@ -57,7 +57,8 @@ modules:
         repository: registry-1.docker.io/bitnamicharts/redis
         tag: 20.6.1
     values: |
-      fullnameOverride: {{ .Release.metadata.name }}-main
+      image:
+        tag: latest
       global:
         redis:
           password: {{ .Parameters.redis.password }}

@@ -32,115 +32,102 @@ After deploying cert-manager and trust-manager, the next steps involve setting u
 
 All of these components will be grouped into a single package, composed of three modules:
 
-- `main`, which handles the deployment of the cert-manager Helm chart
-- `trust`, which handles the deployment of the trust-manager Helm chart
-- `issuer`, which handles the deployment of an ad hoc Helm chart that creates the self-signed CA and the Trust Bundle
+- `noname`, the main module which handles the deployment of the cert-manager Helm chart.(
+  > `noname` is a specific name, which imply the release name will not be post-fixed with the module name
+- `trust`, which handles the deployment of the trust-manager Helm chart.
+- `issuer`, which handles the deployment of an ad hoc Helm chart that creates the self-signed CA and the Trust Bundle.
 
 ???+ abstract "cert-manager-p01.yaml"
 
     ``` { .yaml .copy }
-    ---
     apiVersion: v1alpha1
-    name: redis
-    tag: 20.6.1-p01
-    description: Redis and a front UI
+    name: cert-manager
+    tag: 1.17.1-p01
+    protected: true
     schema:
       parameters:
-        $schema: http://json-schema.org/schema#
-        type: object
-        additionalProperties: false
-        description: Redis stack
-        required:
-          - ui
         properties:
-          redis:
-            type: object
-            additionalProperties: false
+          trust:
             properties:
-              password:
-                default: redis123
-                type: string
-              replicaCount:
-                default: 1
-                description: The number of replicas
-                type: integer
-            required: []
-          ui:
-            type: object
-            additionalProperties: false
+              enabled: { type: boolean, default: false }
+              bundle:
+                properties:
+                  name: { type: string, default: certs-bundle }
+                  target:
+                    properties:
+                      configMap:
+                        properties:
+                          enabled: { type: boolean, default: false }
+                          key: { type: string, default: "root-certs.pem" }
+                      secret:
+                        properties:
+                          enabled: { type: boolean, default: false }
+                          key: { type: string, default: "ca.crt" }
+          issuers:
             properties:
-              enabled:
-                default: true
-                type: boolean
-              host:
-                type: string
-            anyOf:
-              - properties:
-                  enabled: { const: true }
-                required:
-                  - host
-              - properties:
-                  enabled: { const: false }
-                required: []
-      context:
-        properties:
-          ingress:
-            required: true
-            properties:
-              className: { type: string, default: "nginx"}
-              domain: { type: string, required: true }
+              enabled: { type: boolean, default: true }
+              caClusterIssuers:
+                items:
+                  properties:
+                    name: { type: string, required: true }
+                    ca_crt: { type: string, required: true }
+                    ca_key: { type: string, required: true }
+              selfSignedClusterIssuers:
+                items:
+                  type: object
+                  properties:
+                    name: { type: string, required: true}
     modules:
-      - name: redis
+      - name: noname
         timeout: 4m
         source:
-          oci:
-            repository: registry-1.docker.io/bitnamicharts/redis
-            tag: 20.6.1
+          helmRepository:
+            url: https://charts.jetstack.io
+            chart: cert-manager
+            version: v1.17.1
         values: |
-          fullnameOverride: {{ .Release.metadata.name }}-main
-          global:
-            redis:
-              password: {{ .Parameters.redis.password }}
-            security:
-              allowInsecureImages: true
-          master:
-            persistence:
-              enabled: false
-          replica:
-            persistence:
-              enabled: false
-            replicaCount: {{ .Parameters.redis.replicaCount }}
-      - name: ui
-        enabled: "{{ .Parameters.ui.enabled }}"
+          installCRDs: true
+          enableCertificateOwnerRef: true
+      - name: trust
+        enabled: "{{ .Parameters.trust.enabled }}"
         source:
-          git:
-            url: https://github.com/joeferner/redis-commander.git
-            path: ././k8s/helm-chart/redis-commander
-            branch: master
+          helmRepository:
+            url: https://charts.jetstack.io
+            chart: trust-manager
+            version: v0.16.0 # v0.9.2
         values: |
-          fullnameOverride: {{ .Release.metadata.name }}-ui
-          redis:
-            # host is <fullnameOverride>-<moduleName>-master
-            host: {{ printf "%s-master" .Release.metadata.name }}
-            password: {{ .Parameters.redis.password }}
-          ingress:
-            enabled: true
-            className: {{ .Context.ingress.className }}
-            hosts:
-              - host: {{ .Parameters.ui.host }}.{{.Context.ingress.domain}}
-                paths:
-                  - "/"
+          app:
+            trust:
+              namespace: {{ .Release.spec.targetNamespace }}
+          secretTargets:
+            enabled: {{ and .Parameters.trust.enabled .Parameters.trust.bundle.target.secret.enabled }}
+            authorizedSecrets:
+              - {{ .Parameters.trust.bundle.name }}
         dependsOn:
-          - redis
-    roles: |
-      - redis
-      {{ if .Parameters.ui.enabled }}
-      - redis-ui
-      {{ end }}
-    dependencies: |
-      {{ if .Parameters.ui.enabled }}
-      - ingress
-      {{ end }}
+          - noname
+      - name: issuers
+        enabled: "{{ .Parameters.issuers.enabled }}"
+        source:
+          local:
+            path: ../charts/cert-issuers/0.1.0
+        values: |
+          {{ toYaml .Parameters.issuers }}
+          bundle:
+            name: {{ .Parameters.trust.bundle.name }}
+            target:
+              configMap:
+                enabled: {{ .Parameters.trust.bundle.target.configMap.enabled }}
+                key: {{ .Parameters.trust.bundle.target.configMap.key }}
+              secret:
+                enabled: {{ .Parameters.trust.bundle.target.secret.enabled }}
+                key: {{ .Parameters.trust.bundle.target.secret.key }}
+        dependsOn: |
+          - noname
+          {{ if and .Parameters.trust.enabled }}
+          - trust
+          {{ end }}
+    roles:
+      - certManager
     ```
 
 
@@ -153,7 +140,7 @@ All of these components will be grouped into a single package, composed of three
 In addition to demonstrating KuboCD’s ability to deploy a relatively complex application stack, this example also 
 introduces a new type of source for Helm charts.
 
-As mentioned earlier, the deployment of the self-signed CA and the Trust Bundle is handled by a small ad hoc Helm chart.
+The deployment of the self-signed CA and the Trust Bundle is handled by a small ad hoc Helm chart.
 This chart is stored alongside the manifest and is referenced via `modules[3].source.local.path`, where the path is 
 relative to the location of the manifest.
 
@@ -256,7 +243,7 @@ cert-manager-main-webhook-7d776cf7b8-6b5gh     1/1     Running   0          12m
 trust-manager-54d8c969b5-xjjbz                 1/1     Running   0          10m
 ```
 
-As mentioned earlier, the role of trust-manager is to distribute, across the various namespaces of the cluster, the 
+The role of trust-manager is to distribute, across the various namespaces of the cluster, the 
 certificates needed to validate the CAs used by cert-manager.
 
 This certificate can be provided either as a Secret and/or a ConfigMap. In our example, both forms are enabled 

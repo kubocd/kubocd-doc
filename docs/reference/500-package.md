@@ -79,8 +79,10 @@ A `Module` embed an Helm Chart
 
 ### name
 
-**String, required:** The module name. Must be unique for a package. Used in the name of several Kubernetes ressources, 
+**String, required:** The module name. Must be unique for a package. Used as postfix for the name of the generated HelmRelease, 
 so it must be a valid DNS Subdomain name ([RFC 1123](https://tools.ietf.org/html/rfc1123)) 
+
+There is a specific value `noname`, which make the FluxCD `HelmRelease` name identical to the KuboCD `Release` name.
 
 ### source
 

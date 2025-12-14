@@ -37,13 +37,13 @@ schema:
               properties:
                 name: { type: string, required: true}
 modules:
-  - name: main
+  - name: noname
     timeout: 4m
     source:
       helmRepository:
         url: https://charts.jetstack.io
         chart: cert-manager
-        version: v1.17.1 # v1.14.4
+        version: v1.17.1
     values: |
       installCRDs: true
       enableCertificateOwnerRef: true
@@ -63,7 +63,7 @@ modules:
         authorizedSecrets:
           - {{ .Parameters.trust.bundle.name }}
     dependsOn:
-      - main
+      - noname
   - name: issuers
     enabled: "{{ .Parameters.issuers.enabled }}"
     source:
@@ -81,9 +81,11 @@ modules:
             enabled: {{ .Parameters.trust.bundle.target.secret.enabled }}
             key: {{ .Parameters.trust.bundle.target.secret.key }}
     dependsOn: |
-      - main
+      - noname
       {{ if and .Parameters.trust.enabled }}
       - trust
       {{ end }}
 roles:
   - certManager
+
+

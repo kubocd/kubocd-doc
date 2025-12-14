@@ -243,8 +243,15 @@ podinfo/values.yaml
 ---------------------- Extract chart podinfo (6.8.0) to ./.charts/podinfo-6.8.0
 ```
 
+!!! tips
+    If your helm chart is provided as an OCI resource, you can use `helm pull` to download it locally.
 
-
+    For example:
+    ```
+    helm pull oci://quay.io/kubocd/charts/kubocd-ctrl --version v0.2.3
+    tar tvzf kubocd-ctrl-v0.2.3.tgz
+    ```
+    
 ---
 
 ## kubocd dump context

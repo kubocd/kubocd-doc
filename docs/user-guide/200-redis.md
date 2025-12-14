@@ -39,7 +39,8 @@ We will use another example to demonstrate some of KuboCD’s more advanced feat
             repository: registry-1.docker.io/bitnamicharts/redis
             tag: 20.6.1
         values: |
-          fullnameOverride: {{ .Release.metadata.name }}-main
+          image:
+            tag: latest
           global:
             redis:
               password: {{ .Parameters.redis.password }}
@@ -107,6 +108,8 @@ Note also the first, main module is named `noname`, to have a clean name of all 
 
 Redis publishes its Helm chart as an OCI image. Therefore, in the source section of the first module, the chart is 
 referenced in this form.
+
+> The bitnami Redis docker image defined by the Helm chart no longer exists. This is why the tag is set to `latest`.
 
 Redis Commander, on the other hand, provides its chart only through its GitHub repository. Thus, it is referenced
 in the source section of the second module accordingly.
@@ -217,6 +220,10 @@ kubocd pack packages/redis-p01.yaml
 
 ### Full deployment
 
+!!! notes
+    As the redis package integrate reference to the default `context`, you must have performed related steps described 
+    previously ([The context resource](./160-the-context.md) and [Context and configuration](./170-context-and-config.md))   
+
 A first deployment, including the front end:
 
 ???+ abstract "redis1-basic.yaml"
@@ -297,6 +304,11 @@ kubectl get ingresses redis1-ui
 NAME        CLASS   HOSTS                          ADDRESS      PORTS   AGE
 redis1-ui   nginx   redis1.ingress.kubodoc.local   10.96.59.9   80      3m40s
 ```
+
+!!! Notes
+
+    Of course, to access the Redis UI, its ingress entry must be defined in your DNS.
+
 
 ### Redis only deployment
 
