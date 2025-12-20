@@ -15,5 +15,5 @@ spec:
     ui:
       host: redis1
   specPatchByModule:
-    redis:
-      timeout: 3m25s
+    noname:
+      releaseName: redis-engine

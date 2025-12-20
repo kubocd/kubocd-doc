@@ -5,6 +5,10 @@
 Following the logic from the previous chapter, it becomes clear that the cluster’s global context should be included in every `Release`. 
 From there, the idea of defining a default context naturally follows.
 
+And this default context should be defined in a global configuration.
+
+## Config resource
+
 Unlike most Kubernetes applications that store configuration in a `ConfigMap`, KuboCD uses a dedicated Custom Resource for this purpose:
 
 ``` { .bash .copy }

@@ -15,6 +15,7 @@ nav:
     - "KuboCD schema format": user-guide/190-alternate-schema-format.md
     - "More features (Redis)": user-guide/200-redis.md
     - "Cert-manager setup": user-guide/210-cert-manager.md
+    - "Deployment failure": user-guide/220-deployment-failure.md
   - "Reference":
     - "Package": reference/500-package.md
     - "Release": reference/510-release.md

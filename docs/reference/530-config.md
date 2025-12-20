@@ -40,6 +40,25 @@ this name exists in the namespace, it will be used, merged with default one(s) i
 
 Refer to [The Context Resource](../user-guide/160-the-context.md) for more explanation. 
 
+
+### OnFailureStrategies
+
+**list(onFailureStrategy), optional**
+
+A list of strategies to apply in case of HelmRelease deployment failure. Refer to the [Deployment failure](../user-guide/220-deployment-failure.md) chapter for more explanation.
+
+### DefaultOnFailureStrategy
+
+**string, optional**
+
+The failure strategy to use by default.
+
+### DefaultHelmTimeout
+
+**duration, default: 2mn
+
+will set the value of HelmRelease.spec.timeout by default.
+
 ### packageRedirects
 
 For future extension
@@ -47,3 +66,14 @@ For future extension
 ### imageRedirects
 
 For future extension
+
+---
+
+## onFailureStrategy
+
+### name
+
+### values
+
+
+
