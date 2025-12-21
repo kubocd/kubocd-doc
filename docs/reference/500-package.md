@@ -146,17 +146,29 @@ When set to false, the module is not deployed at all. See []() for an example.
 
 The namespace to deploy the application into.
 
-### timeout
-
-**Template(duration), default: {config.defaultHelmTimeout}**
-
-Will be set as 'spec.timeout' of the generated HelmRelease, thus providing timeout on Helm deployment.
-
 May be overridden at the release level
 
 ### onFailureStrategy
 
+**Template(string), optional**
+
 Define the strategy to use in case of Helm deployment failure. Strategies are defined in the KuboCD global configuration. See the [dedicated chapter](../user-guide/220-deployment-failure.md) 
+
+May be overridden at the release level
+
+### timeout
+
+**Template(duration), default: {config.defaultHelmTimeout}**
+
+Will be set as `spec.timeout` of the generated HelmRelease, thus providing timeout on Helm deployment.
+
+May be overridden at the release level
+
+### interval
+
+**Template(duration), default: {config.defaultHelmInterval}**
+
+Will be set as `spec.interval` of the generated HelmRelease, interval at which to reconcile the Helm release.
 
 May be overridden at the release level
 

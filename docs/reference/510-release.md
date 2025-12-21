@@ -1,6 +1,5 @@
 # The Release Kubernetes resources
 
-
 ## Release
 
 ### apiVersion
@@ -94,20 +93,13 @@ This list is appended to the [`Package.dependencies`](./500-package.md/#dependen
 If set, this `Release` will ignore the global default contexts as well as those defined at the namespace level.
 Only the contexts explicitly listed in the `Release` resource will be taken into account.
 
-### onFailureByModule
+### modulesOverrides
 
-**Map(onFailure), optional**
+**List(Release.spec.moduleOverride), optional**
 
-Define behavior on Helm deployment failure. Refer to [Release.spec.OnFailure[moduleName]](#releasespeconfailuremodulename)
+A list of subitems to modify some `HelmRelease` behavior, by overriding package provided values.
 
-### specPatchByModule
-
-**Map(Map), optional**
-
-A patch applied to the `spec` section of the Flux `HelmRelease` resource of the specified module.
-It allows you to set any parameters that are not exposed by KuboCD at the `Release` level
-
-You will find an example [here](https://github.com/kubocd/kubocd-doc/blob/main/samples/releases/redis3-basic.yaml)
+Refer to [Release.spec.moduleOverride](#releasespecmoduleoverride)
 
 ### debug
 
@@ -117,9 +109,15 @@ Refer to [Release.spec.debug](#releasespecdebug) below
 
 ---
 
-## Release.spec.OnFailure[moduleName]
+## Release.spec.moduleOverride
 
-### strategy 
+### module
+
+**string, required**
+
+The module these overriding values will apply on.
+
+### strategy
 
 **string, optional**
 
@@ -129,11 +127,28 @@ override Package provided value.
 
 ### timeout
 
-**Template(duration), default: {Package.spec.timeout}.**
+**Template(duration), default: {Package.module[X].timeout}.**
 
-Will be set as 'spec.timeout' of the generated HelmRelease, thus providing timeout on Helm deployment.
+Will be set as `spec.timeout` of the generated HelmRelease, thus providing timeout on Helm deployment.
 
 override Package provided value.
+
+### interval
+
+**Template(duration), default: {Package.module[X].intervale}.**
+
+Will be set as `spec.interval` of the generated HelmRelease, thus providing interval to which reconcile the helmRelease
+
+override Package provided value.
+
+### specPatch
+
+**Map, optional**
+
+A patch applied to the `spec` section of the Flux `HelmRelease` resource of the specified module.
+It allows you to set any parameters that are not exposed by KuboCD at the `Release` level
+
+You will find an example [here](https://github.com/kubocd/kubocd-doc/blob/main/samples/releases/redis3-basic.yaml)
 
 ---
 
