@@ -239,6 +239,32 @@ The tag to fetch
 
 The folder inside the Git repository of the Chart (Where is `Chart.yaml` is located)
 
+### extraFilePrefixes
+
+**String, optional**
+
+KuboCD packaging filter files to only include chart content, as defined [here](https://helm.sh/docs/v3/topics/charts){:target="_blank"}.
+
+Some helm charts require extra files to be included. This attribute defines a list of prefixes for files which should also be included. This starting from the `Path` referenced above, with a leading '/'.
+
+As an example, here is a extract from a package definition for [argo-workflows community Helm chart](https://github.com/argoproj/argo-helm/tree/main/charts/argo-workflows){:target="_blank"}.
+
+```
+apiVersion: v1alpha1
+name: argo-workflows
+....
+modules:
+  - name: noname
+    source:
+      git:
+        url: https://github.com/argoproj/argo-helm
+        tag: argo-workflows-0.46.2
+        path: /charts/argo-workflows
+        extraFilePrefixes:
+          - /ci
+          - /files
+```
+
 ---
 
 ## Package.module.source.oci

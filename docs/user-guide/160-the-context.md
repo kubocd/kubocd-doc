@@ -204,7 +204,6 @@ Here is the corresponding `Release` manifest:
       package:
         repository: quay.io/kubodoc/packages/podinfo
         tag: 6.7.1-p02
-        interval: 30m
       parameters:
         host: podinfo2
       contexts:
@@ -214,6 +213,7 @@ Here is the corresponding `Release` manifest:
 
 Key points:
 
+- `spec.package.interval` has been removed. Will be set to the global default value of 30m. (See [here](./xxxx) to configure this global default).
 - The `fqdn` parameter was replaced with `host`.
 - A new `spec.contexts` section lists the contexts to merge into a single object passed to the template engine.
 
@@ -386,7 +386,6 @@ Create a new `Release` for deployment:
       package:
         repository: quay.io/kubodoc/packages/podinfo
         tag: 6.7.1-p03
-        interval: 30m
       parameters:
         host: podinfo
       contexts:
@@ -522,7 +521,6 @@ Create and deploy a new `Release` object:
       package:
         repository: quay.io/kubodoc/packages/podinfo
         tag: 6.7.1-p02
-        interval: 30m
       parameters:
         host: podinfo
       contexts:

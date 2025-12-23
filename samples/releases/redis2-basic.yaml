@@ -10,7 +10,6 @@ spec:
   package:
     repository: quay.io/kubodoc/packages/redis
     tag: 20.6.1-p01
-    interval: 30m
   parameters:
     ui:
       enabled: false

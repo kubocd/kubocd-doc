@@ -40,7 +40,7 @@ KuboCD introduces two core concepts that form the foundation of its deployment m
   It serves as the standardized unit of deployment, encapsulating everything needed to describe and install an application.
 
 - **Release**
-  A Release is a custom Kubernetes resource that represents the deployment of a specific Package within a Kubernetes cluster. 
+  A Release is a Kubernetes custom resource (CRD) that represents the deployment of a specific Package within a Kubernetes cluster. 
   It defines how and where the application is deployed, and manages the lifecycle of that deployment.
 
 ## KuboCD, Flux, Helm and GitOps

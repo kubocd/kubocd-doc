@@ -14,6 +14,12 @@ spec:
   parameters:
     ui:
       host: redis1
-  specPatchByModule:
-    noname:
-      releaseName: redis-engine
+  moduleOverrides:
+    - module: noname
+      specPatch:
+        releaseName: redis-engine
+    - module: ui
+      specPatch:
+        values:
+          redis:
+            host: redis-engine-master

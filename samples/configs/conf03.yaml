@@ -3,9 +3,8 @@
 apiVersion: kubocd.kubotal.io/v1alpha1
 kind: Config
 metadata:
-  name: conf01
+  name: conf03
   namespace: kubocd
 spec:
-  defaultContexts:
-    - namespace: contexts
-      name: cluster
+  defaultNamespaceContexts:
+    - project

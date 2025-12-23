@@ -61,7 +61,7 @@ New key points compared to the `podinfo` Package:
 
 - `protected: true`: Prevents accidental deletion of the release. (Currently not enforced unless KuboCD webhook is installed.)
 - `modules[0].name`: The specific value `noname` prevent the module name to be appended to the Helm release name, and to all derivative objects. See previous chapter.
-- `modules[0].timeout: 4m`: Overrides the default deployment timeout (`2m`) because this Helm chart may take some time to deploy.
+- `modules[0].timeout: 4m`: Overrides the default deployment timeout (`3m`) because this Helm chart may take some time to deploy.
 - `modules[0].values`: This section is in proper YAML format (no '|': not a templated string), since it does not include any templating.
 - `roles`: Assigns the package to the `ingress` role. This is used for dependency management between releases. 
   This will be described later in this documentation
@@ -105,7 +105,6 @@ Then define the `Release` resource:
       package:
         repository: quay.io/kubodoc/packages/ingress-nginx
         tag: 4.12.1-p01
-        interval: 30m
       targetNamespace: ingress-nginx
       createNamespace: true
     ```
@@ -116,6 +115,7 @@ Key points:
 - `spec.protected: false`: Just to demonstrates that the package-level `protected` flag can be overridden at the release level.
 - `spec.targetNamespace: ingress-nginx`: Installs the ingress controller in its own namespace.
 - `spec.createNamespace: true`: Automatically creates the target namespace if it doesn't exist.
+- `spec.package.interval`: Not provided in this sample. Will be set to the global default value of 30m. (See [here](./xxxx) to configure this global default).
 
 Apply the release:
 

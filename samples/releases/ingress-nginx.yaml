@@ -12,7 +12,6 @@ spec:
   package:
     repository: quay.io/kubodoc/packages/ingress-nginx
     tag: 4.12.1-p01
-    interval: 30m
   targetNamespace: ingress-nginx
   createNamespace: true
 

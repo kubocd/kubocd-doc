@@ -38,7 +38,6 @@ schema:
                 name: { type: string, required: true}
 modules:
   - name: noname
-    timeout: 4m
     source:
       helmRepository:
         url: https://charts.jetstack.io

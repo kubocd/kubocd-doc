@@ -15,7 +15,7 @@ schema:
           className: { type: string, required: true }
           domain: { type: string, required: true }
 modules:
-  - name: main
+  - name: noname
     source:
       helmRepository:
         url: https://stefanprodan.github.io/podinfo

@@ -79,7 +79,6 @@ All of these components will be grouped into a single package, composed of three
                     name: { type: string, required: true}
     modules:
       - name: noname
-        timeout: 4m
         source:
           helmRepository:
             url: https://charts.jetstack.io
@@ -140,7 +139,7 @@ All of these components will be grouped into a single package, composed of three
 In addition to demonstrating KuboCD’s ability to deploy a relatively complex application stack, this example also 
 introduces a new type of source for Helm charts.
 
-The deployment of the self-signed CA and the Trust Bundle is handled by a small ad hoc Helm chart.
+The deployment of the self-signed CA and the Trust Bundle is handled by a small ad hoc Helm chart (`cert-issuers`).
 This chart is stored alongside the manifest and is referenced via `modules[3].source.local.path`, where the path is 
 relative to the location of the manifest.
 
@@ -175,9 +174,9 @@ kubocd pack packages/cert-manager-p01.yaml
 
 And deployed by creating a `Release` resource:
 
-???+ abstract "cert-manager-p01.yaml"
+???+ abstract "cert-manager.yaml"
 
-    ``` { .bash .copy } 
+    ``` { .yaml .copy } 
     ---
     apiVersion: kubocd.kubotal.io/v1alpha1
     kind: Release
@@ -189,7 +188,6 @@ And deployed by creating a `Release` resource:
       package:
         repository: quay.io/kubodoc/packages/cert-manager
         tag: 1.17.1-p01
-        interval: 30m
       parameters:
         issuers:
           selfSignedClusterIssuers:
@@ -207,7 +205,7 @@ And deployed by creating a `Release` resource:
     ```
 
 Like the ingress controller, the `Release` resource is deployed in the system namespace `kubocd`, while the deployment 
-itself takes place in the `cert-manager` namespace, which is created automatically.
+itself takes place in the `cert-manager` namespace, which is created automatically (`createNamespace: true`).
 
 Apply the `Release` manifest:
 
@@ -237,9 +235,9 @@ kubectl -n cert-manager get pods
 
 ``` { .bash  }
 NAME                                           READY   STATUS    RESTARTS   AGE
-cert-manager-main-6c8f6bf7bf-zwftl             1/1     Running   0          12m
-cert-manager-main-cainjector-ff8b5d695-hdv7z   1/1     Running   0          12m
-cert-manager-main-webhook-7d776cf7b8-6b5gh     1/1     Running   0          12m
+cert-manager-6c8f6bf7bf-zwftl             1/1     Running   0          12m
+cert-manager-cainjector-ff8b5d695-hdv7z   1/1     Running   0          12m
+cert-manager-webhook-7d776cf7b8-6b5gh     1/1     Running   0          12m
 trust-manager-54d8c969b5-xjjbz                 1/1     Running   0          10m
 ```
 
@@ -326,7 +324,7 @@ The following is an improved version of the package, which optionally adds TLS e
               className: { type: string, required: true }
               domain: { type: string, required: true }
     modules:
-      - name: main
+      - name: noname
         source:
           helmRepository:
             url: https://stefanprodan.github.io/podinfo
@@ -352,6 +350,8 @@ The following is an improved version of the package, which optionally adds TLS e
                   - {{  .Parameters.host }}.{{ .Context.ingress.domain }}
             {{- end }}
     ```
+
+> Note the usage of the `noname` module name
 
 As usual, this need to be packaged:
 
@@ -387,7 +387,6 @@ Here is the new version of the related `Release` resource:
       package:
         repository: quay.io/kubodoc/packages/podinfo
         tag: 6.7.1-p04
-        interval: 30m
       parameters:
         tls: true
         host: podinfo4
@@ -399,6 +398,17 @@ Deploy it:
 kubectl apply -f releases/podinfo4-tls.yaml
 ```
 
+Check the ingress:
+
+``` { .bash .copy }
+kubectl get ingresses podinfo4
+```
+
+```bash
+NAME       CLASS   HOSTS                            ADDRESS         PORTS     AGE
+podinfo4   nginx   podinfo4.ingress.kubodoc.local   10.96.226.123   80, 443   2m39s
+```
+
 And configure the DNS entry (Here if you use `/etc/hosts`)
 
 ``` { .bash .copy }
@@ -407,5 +417,7 @@ And configure the DNS entry (Here if you use `/etc/hosts`)
 
 You should now be able to access the secures 'podinfo` web server:
 
-👉 [http://podinfo4.ingress.kubodoc.local](http://podinfo4.ingress.kubodoc.local){:target="_blank"}.
+👉 [https://podinfo4.ingress.kubodoc.local](https://podinfo4.ingress.kubodoc.local){:target="_blank"}.
+
+> Of course, if you followed this manual, a self-signed certificate is used. So, you must accept some warning.
 

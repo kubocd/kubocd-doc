@@ -10,7 +10,6 @@ spec:
   package:
     repository: quay.io/kubodoc/packages/podinfo
     tag: 6.7.1-p02
-    interval: 30m
   parameters:
     host: podinfo
   contexts:

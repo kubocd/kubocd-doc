@@ -37,7 +37,7 @@ spec:
       retries: 10
 ```
 
-To apply these configuration through KuboCD, one can use the `module.specPath` attribute on the `Package` or the `specPatchByModule` on the `Release` object. But managing this for each release 
+To apply these configuration through KuboCD, one can use the `module.specPath` attribute on the `Package` or the `moduleOverrides[.].specPatch` on the `Release` object. But managing this for each release 
 will quickly be cumbersome.
 
 KuboCD provide a mechanism to simplify this configuration, while preserving flexibility. The global configuration (see [Context and configuration](./170-context-and-config.md) ) can host a set of
@@ -57,10 +57,10 @@ spec:
   defaultOnFailureStrategy: updateOnFailure
   onFailureStrategies:
     - name: stopOnFailure
-      values: {}
+      strategy: {}
 
     - name: reinstallOnFailure
-      values:
+      strategy:
         install:
           strategy:
             name: RemediateOnFailure
@@ -73,7 +73,7 @@ spec:
             retries: 10
 
     - name: updateOnFailure
-      values:
+      strategy:
         install:
           strategy:
             name: RetryOnFailure
@@ -98,9 +98,9 @@ Three strategies are defined here:
 
 There is also an `defaultOnFailureStrategy` which set the one used by default for all deployment. And a `defaultHelmTimeout` which will set the value of `HelmRelease.spec.timeout` by default.
 
-These values can be overridden at the package level for each module with the `package.module[X].onFailureStrategy` and `package.module[X].timeout` attribute.
+These values can be overridden at the package level for each module with the `package.module[X].onFailureStrategy.s` and `package.module[X].timeout` attribute.
 
-And they can be overridden at the release level, by using the `onFailureByModule` attribute, like the following sample:
+And they can be overridden at the release level, by using the `moduleOverrides` attribute, like the following sample:
 
 ```
 ---
@@ -117,8 +117,8 @@ spec:
     interval: 30m
   parameters:
     fqdn: podinfo1.ingress.kubodoc.local
-  onFailureByModule:
-    main:
-      strategy: reinstallOnFailure
-      timeout: 2m
+  moduleOverrides:
+    module: main
+    onFailureStrategy: reinstallOnFailure
+    timeout: 2m
 ```

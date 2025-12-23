@@ -28,30 +28,60 @@ Let's inspect its content:
 kubectl -n kubocd get Config.kubocd.kubotal.io conf01 -o yaml
 ```
 
-``` { .bash }
+``` { .yaml } 
 apiVersion: kubocd.kubotal.io/v1alpha1
 kind: Config
 metadata:
   annotations:
     meta.helm.sh/release-name: kubocd-ctrl
     meta.helm.sh/release-namespace: kubocd
-  creationTimestamp: "2025-04-16T12:29:27Z"
+  creationTimestamp: "2025-12-22T18:41:05Z"
   generation: 1
   labels:
     app.kubernetes.io/managed-by: Helm
   name: conf01
   namespace: kubocd
-  resourceVersion: "5191"
-  uid: 84ff9a8a-83ee-48e7-984d-c95a6a665d5b
+  resourceVersion: "748"
+  uid: 3932d4de-09b9-48de-bb32-e1549dd62566
 spec:
   clusterRoles: []
   defaultContexts: []
+  defaultHelmInterval: 30m0s
+  defaultHelmTimeout: 3m0s
   defaultNamespaceContexts: []
+  defaultOnFailureStrategy: updateOnFailure
+  defaultPackageInterval: 30m0s
   imageRedirects: []
+  onFailureStrategies:
+  - name: stopOnFailure
+    values: {}
+  - name: reinstallOnFailure
+    values:
+      install:
+        remediation:
+          retries: 10
+        strategy:
+          name: RemediateOnFailure
+      upgrade:
+        remediation:
+          retries: 10
+        strategy:
+          name: RemediateOnFailure
+  - name: updateOnFailure
+    values:
+      install:
+        strategy:
+          name: RetryOnFailure
+          retryInterval: 1m0s
+      upgrade:
+        strategy:
+          name: RetryOnFailure
+          retryInterval: 1m0s
   packageRedirects: []
+  specPatch: {}
 ```
 
-At this stage, the configuration is empty
+At this stage, the configuration has been populated by the KuboCD Helm chart. Most of theses values will be described in a subsequent chapter, or in the [Reference](../reference/530-config.md) part 
 
 !!! notes
     Using a Kubernetes resource for configuration has the following advantages:
@@ -61,14 +91,14 @@ At this stage, the configuration is empty
 
 Here is a new configuration manifest:
 
-???+ abstract "conf01-b.yaml"
+???+ abstract "conf02.yaml"
 
     ``` { .yaml .copy }
     ---
     apiVersion: kubocd.kubotal.io/v1alpha1
     kind: Config
     metadata:
-      name: conf01
+      name: conf02
       namespace: kubocd
     spec:
       defaultContexts:
@@ -81,14 +111,22 @@ It defines a list of default contexts, which here includes only the cluster cont
 Apply it:
 
 ``` { .bash .copy }
-kubectl apply -f configs/conf01-b.yaml 
+kubectl apply -f configs/conf02.yaml 
 ```
 
 > Don't worry about any warning messages
 
-!!! note 
-    For KuboCD to recognize the `Config` object, it must reside in the controller’s namespace (`kubocd`). However, its name does not matter.
+!!! note
 
+    As demonstrated here, the configuration may be built from a set of resources. All `configs.kubocd.kubotal.io` located in the  controller’s namespace (`kubocd`) 
+    are merged to build a global configuration referential.
+
+    The `configs` resources are loaded in alphebetic order, latest overriding the previous value.
+
+!!! tips
+
+    KuboCD provide a tool to display the resulting global configuration: [`kubocd dump config`](./180-kubocd-cli.md/#kubocd-dump-config) 
+    
 
 We can now create a new `Release` of the `podinfo` application using the context-enabled version, without explicitly specifying the context:
 
@@ -106,7 +144,6 @@ We can now create a new `Release` of the `podinfo` application using the context
       package:
         repository: quay.io/kubodoc/packages/podinfo
         tag: 6.7.1-p02
-        interval: 30m
       parameters:
         host: podinfo3
     ```
@@ -143,28 +180,25 @@ podinfo3-main   nginx   podinfo3.ingress.kubodoc.local   10.96.218.98   80      
 
 KuboCD also supports defining a default context per namespace.
 
-We modify our configuration resource again:
+We modify our configuration referential again, by adding a new resource 
 
-???+ abstract "conf01-c.yaml"
+???+ abstract "conf03.yaml"
 
     ``` { .yaml .copy }
     ---
     apiVersion: kubocd.kubotal.io/v1alpha1
     kind: Config
     metadata:
-      name: conf01
+      name: conf03
       namespace: kubocd
     spec:
-      defaultContexts:
-        - namespace: contexts
-          name: cluster
       defaultNamespaceContexts: 
         - project
     ```
 
 
 ``` { .bash .copy }
-kubectl apply -f configs/conf01-c.yaml 
+kubectl apply -f configs/conf03.yaml 
 ```
 
 Thanks to this setup, every `Release` will attempt to load a context named `project` from its own namespace,
@@ -267,6 +301,11 @@ Last ones will take precedence.
 !!! warning 
     Referencing a non-existent context results in an error, except for the namespace-level default context.
 
+
+!!! tips
+
+    KuboCD provide a tool to display the resulting context, depending of the namespace: [`kubocd dump context`](./180-kubocd-cli.md/#kubocd-dump-context) 
+
 If you've followed the full guide, your setup should look something like this:
 
 ``` { .bash .copy }
@@ -301,14 +340,16 @@ For example, by creating the following file:
 ???+ abstract "values1-ctrl.yaml"
 
     ``` { .yaml .copy }
-    config:
-      defaultContexts:
-        - name: cluster
-          namespace: contexts
-      defaultNamespaceContext: 
-        - project
     extraNamespaces:
       - name: contexts
+    config:
+      enabled: true
+      content:
+        defaultContexts:
+          - name: cluster
+            namespace: contexts
+        defaultNamespaceContexts:
+          - project
     contexts:
       - name: cluster
         namespace: contexts
@@ -321,11 +362,14 @@ For example, by creating the following file:
           storageClass:
             data: standard
             workspace: standard
+          certificateIssuer:
+            public: cluster-self
+            internal: cluster-self
     ```
 
-- - The `config` section is injected directly into the `Config` resource’s `spec`.
-- - The `extraNamespaces` list creates additional namespaces via the Helm chart.
-- - The `contexts` section defines context objects created automatically by the Helm chart.
+- The `extraNamespaces` list creates additional namespaces via the Helm chart.
+- The `config` section is combined with the Helm chart default values to create the `conf01` Config resource.
+- The `contexts` section defines context objects created automatically by the Helm chart.
 
 To upgrade the KuboCD deployment:
 
@@ -351,4 +395,13 @@ helm -n kubocd upgrade kubocd-ctrl oci://quay.io/kubocd/charts/kubocd-ctrl:v0.2.
 While performing this operation, `Releases` may temporarily enter the `ERROR` state before returning to `READY` once the context is recreated.
 However, the applications themselves (pods and ingress for `podinfo`, etc.) will remain unaffected.
 
+If you've followed the steps in this chapter, as the helm Chart has now included our specificities 
+(`defaultContexts` and `defaultNamespaceContext`) in `conf01`, we can remove `conf01` and `conf02`, which are duplicate.
 
+``` { .bash .copy }
+kubectl -n kubocd delete config.kubocd.kubotal.io conf02
+```
+
+``` { .bash .copy }
+kubectl -n kubocd delete config.kubocd.kubotal.io conf03
+```

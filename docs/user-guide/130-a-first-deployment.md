@@ -204,13 +204,13 @@ To deploy the application, define a KuboCD `Release` custom resource:
         fqdn: podinfo1.ingress.kubodoc.local
     ```
 
-Explanation of attributes:
+Description of attributes:
 
-- **`description`**: (Optional) A short description of this release.
-- **`package.repository`**: The OCI image repository that contains the package. This should match the registry used during package build.
-- **`package.tag`**: The image tag, which should match the one defined in the package manifest.
-- **`package.interval`**: Specifies how frequently KuboCD checks the registry for updates to the image.
-- **`parameters`**: The values required by the package schema. In this example, only a single parameter (`fqdn`) is needed.
+- **`spec.description`**: (Optional) A short description of this release.
+- **`spec.package.repository`**: The OCI image repository that contains the package. This should match the registry used during package build.
+- **`spec.package.tag`**: The image tag, which should match the one defined in the package manifest.
+- **`spec.package.interval`**: (Optional) Specifies how frequently KuboCD checks the registry for updates to the image.
+- **`spec.parameters`**: The values required by the package schema. In this example, only a single parameter (`fqdn`) is needed.
 
 Deploying the Application:
 

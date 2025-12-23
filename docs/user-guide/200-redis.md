@@ -33,7 +33,6 @@ We will use another example to demonstrate some of KuboCD’s more advanced feat
               domain: { type: string, required: true }
     modules:
       - name: noname
-        timeout: 4m
         source:
           oci:
             repository: registry-1.docker.io/bitnamicharts/redis
@@ -58,7 +57,7 @@ We will use another example to demonstrate some of KuboCD’s more advanced feat
         source:
           git:
             url: https://github.com/joeferner/redis-commander.git
-            path: ././k8s/helm-chart/redis-commander
+            path: ./k8s/helm-chart/redis-commander
             branch: master
         values: |
           fullnameOverride: {{ .Release.metadata.name }}-ui
@@ -239,7 +238,6 @@ A first deployment, including the front end:
       package:
         repository: quay.io/kubodoc/packages/redis
         tag: 20.6.1-p01
-        interval: 30m
       parameters:
         ui:
           host: redis1
@@ -288,8 +286,8 @@ kubectl get pods
 ``` { .bash }
 NAME                                                     READY   STATUS    RESTARTS   AGE
 .......
-redis1-main-master-0                                     1/1     Running   0          12m
-redis1-main-replicas-0                                   1/1     Running   0          12m
+redis1-master-0                                     1/1     Running   0          12m
+redis1-replicas-0                                   1/1     Running   0          12m
 redis1-ui-855cb8d656-rlqqh                               1/1     Running   0          11m
 .......
 ```
@@ -329,7 +327,6 @@ In this other deployment, only the Redis server is deployed.
       package:
         repository: quay.io/kubodoc/packages/redis
         tag: 20.6.1-p01
-        interval: 30m
       parameters:
         ui:
           enabled: false
@@ -362,15 +359,15 @@ kubectl get pods
 ``` { .bash }
 NAME                                                     READY   STATUS    RESTARTS   AGE
 .......
-redis1-main-master-0                                     1/1     Running   0          12m
-redis1-main-replicas-0                                   1/1     Running   0          12m
+redis1-master-0                                     1/1     Running   0          12m
+redis1-replicas-0                                   1/1     Running   0          12m
 redis1-ui-855cb8d656-rlqqh                               1/1     Running   0          11m
-redis2-main-master-0                                     1/1     Running   0          4m51s
-redis2-main-replicas-0                                   1/1     Running   0          4m51s
+redis2-master-0                                     1/1     Running   0          4m51s
+redis2-replicas-0                                   1/1     Running   0          4m51s
 .......
 ```
 
 !!! tip
     It is possible to define a more precise schema, without the `host: dummy` constraint, by using the normalized syntax.
-    You can find an implementation [here](https://github.com/kubocd/kubocd-doc/blob/main/samples/packages/redis-p09.yaml).
+    You can find an implementation [here](https://github.com/kubocd/kubocd-doc/blob/main/samples/packages/redis-p09.yaml){:target="_blank"}.
 

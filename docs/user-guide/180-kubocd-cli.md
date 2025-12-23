@@ -344,6 +344,82 @@ storageClass:
   data: standard
   workspace: standard
 ```
+ 
+---
+
+## kubocd dump config
+
+This command displays the global configuration as perceived by KuboCD. It requires access to the Kubernetes cluster.
+
+``` { .bash }
+Dump KuboCD global configuration
+
+Usage:
+  kubocd dump config [flags]
+
+Aliases:
+  config, Config
+
+Examples:
+        Display the global KuboCD configuration.
+        $ kubocd dump config
+
+Flags:
+  -h, --help                     help for config
+      --kubocdNamespace string   The namespace where the kubocd controller is installed in (To fetch configs resources) (default "kubocd")
+
+Global Flags:
+  -w, --workDir string   working directory. Default to $HOME/.kubocd
+```
+
+Example:
+
+
+``` { .bash .copy }
+kubocd dump config
+```
+
+``` { .yaml }
+---
+clusterRoles: []
+defaultContexts:
+- name: cluster
+  namespace: contexts
+defaultHelmInterval: 30m0s
+defaultHelmTimeout: 3m0s
+defaultNamespaceContexts:
+- project
+defaultOnFailureStrategy: updateOnFailure
+defaultPackageInterval: 30m0s
+imageRedirects: []
+onFailureStrategies:
+- name: stopOnFailure
+  strategy: {}
+- name: reinstallOnFailure
+  strategy:
+    install:
+      remediation:
+        retries: 10
+      strategy:
+        name: RemediateOnFailure
+    upgrade:
+      remediation:
+        retries: 10
+      strategy:
+        name: RemediateOnFailure
+- name: updateOnFailure
+  strategy:
+    install:
+      strategy:
+        name: RetryOnFailure
+        retryInterval: 1m0s
+    upgrade:
+      strategy:
+        name: RetryOnFailure
+        retryInterval: 1m0s
+packageRedirects: []
+specPatch: {}
+```
 
 ---
 

@@ -152,6 +152,7 @@ Deploy KuboCD using Helm:
 ```{ .bash .copy }
 helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl --version v0.2.3
 ```
+
 ---
 
 ## About Webhook-Based Features

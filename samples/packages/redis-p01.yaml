@@ -25,7 +25,6 @@ schema:
           domain: { type: string, required: true }
 modules:
   - name: noname
-    timeout: 2m
     source:
       oci:
         repository: registry-1.docker.io/bitnamicharts/redis
@@ -50,7 +49,7 @@ modules:
     source:
       git:
         url: https://github.com/joeferner/redis-commander.git
-        path: ././k8s/helm-chart/redis-commander
+        path: ./k8s/helm-chart/redis-commander
         branch: master
     values: |
       fullnameOverride: {{ .Release.metadata.name }}-ui
