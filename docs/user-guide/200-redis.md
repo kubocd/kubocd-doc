@@ -1,9 +1,7 @@
 
-# Advanced features: Redis sample
+# Advanced Features: Redis Sample
 
-
-We will use another example to demonstrate some of KuboCD’s more advanced features.
-
+This chapter demonstrates advanced KuboCD features using a Redis deployment example.
 
 ???+ abstract "redis-p01.yaml"
 
@@ -85,109 +83,76 @@ We will use another example to demonstrate some of KuboCD’s more advanced feat
       {{ end }}
     ```
 
-We will now explore the new features used in this package.
+---
+
+## Multiple Modules
+
+This package integrates two modules:
+1. **Redis Server**: The core database.
+2. **Redis Commander**: A web-based management UI.
+
+Both modules share a single data model, allowing easy variable sharing. Consequently, `schema.parameters` and `schema.context` are global to the package.
+
+When deployed, Flux creates one `OCIRepository`, one `HelmRepository`, and two `HelmReleases`.
+
+Note that the main module is named `noname` to simplify resource naming.
 
 ---
 
-## Integrate Multiple Modules
+## Mixed Source Types
 
-This package integrates two modules: the Redis server itself, and [Commander](https://github.com/joeferner/redis-commander), a Redis UI front end.
-
-There is a single data model used by both modules, which allows variables to be shared easily.
-
-Consequently, the `schema.parameters` and `schema.context` are also global.
-
-Regarding the related Flux objects, there will be one `OCIRepository`, one `HelmRepository`, and two `HelmReleases`.
-
-Note also the first, main module is named `noname`, to have a clean name of all related resources.
+- **Redis**: Published as an OCI image. The `source` section references the OCI registry.
+    > Note: The Bitnami Redis Docker image version in the chart is outdated, so we override the tag to `latest`.
+- **Redis Commander**: Only provides a chart via GitHub. The `source` section references the Git repository.
 
 ---
 
-## Configure Different Source Types
+## Conditional Deployment
 
-Redis publishes its Helm chart as an OCI image. Therefore, in the source section of the first module, the chart is 
-referenced in this form.
-
-> The bitnami Redis docker image defined by the Helm chart no longer exists. This is why the tag is set to `latest`.
-
-Redis Commander, on the other hand, provides its chart only through its GitHub repository. Thus, it is referenced
-in the source section of the second module accordingly.
+The `ui` module includes an `enabled` attribute. This allows its deployment to be toggleable via a `Release` parameter (`.Parameters.ui.enabled`).
 
 ---
 
-## Control Module Deployment
+## Dependency Management
 
-The `ui` module includes a `disabled` attribute, which can be templated. This allows the deployment of this module to be 
-conditionally triggered based on a choice made during deployment, using a parameter passed to the `Release` resource.
-
----
-
-## Manage Dependencies
-
-Usually, in the Kubernetes ecosystem, it is possible to ignore dependencies between applications, as they are typically 
-well-designed and operate with retry logic until they eventually reach a stable state.
-
-However, this approach has its limitations. To address them, KuboCD introduces a structured dependency system between 
-deployments.
-
-KuboCD manages dependencies:
-
-- Between modules within the same package
-- Between different packages
-
-These two types of dependencies rely on different mechanisms.
+While Kubernetes applications often rely on retry loops to handle dependencies, KuboCD offers a structured dependency system.
 
 ### Module Dependencies
 
-From the sample above:
+Dependencies between modules within the same package:
 
-```
-apiVersion: v1alpha1
-name: redis
-......
+```yaml
 modules:
   - name: noname
-    ........
+    ...
   - name: ui
-    ..........
+    ...
     dependsOn:
       - noname
 ```
 
-The `dependsOn` attribute lists other module names that the current module depends on. These modules must belong to the same `Package`
-
-In this example, it ensures that the deployment of the `ui` module will wait until the deployment of the `noname` module (redis itself) is complete.
-
-> This mechanism results in adding the `dependsOn` attribute to the Flux `HelmRelease` resource corresponding to the `ui` module.
+The `ui` module waits for the `noname` module (Redis) to become ready. This translates to a `dependsOn` rule in the underlying Flux `HelmRelease`.
 
 ### Release Dependencies and Roles
 
-For cross-Release dependencies, KuboCD introduces an abstraction: the concept of roles.
+For dependencies between different Releases, KuboCD uses **Roles**.
 
-A `Release` can fulfill one (or more) roles, and similarly, it can depend on one (or more) roles.
+- A `Release` can **fulfill** one or more roles.
+- A `Release` can **depend on** one or more roles.
 
-This abstraction offers much greater flexibility. For example, an application that exposes a web service outside the 
-cluster depends on the presence of an ingress controller. It would therefore depend on a role named `ingress`, 
-regardless of whether the controller is implemented by NGINX, Traefik, Kong, or another solution.
+This abstraction provides flexibility. For example, an application needing an ingress controller depends on the `ingress` role, regardless of the implementation (NGINX, Traefik, etc.).
 
-Roles can be defined at the `Package` level, as in this example, or directly at the `Release` level, using the `spec.roles` attribute.
+Roles and dependencies can be defined at:
+- **Package Level**: Static definitions (like in the example above).
+- **Release Level**: Dynamic definitions via `spec.roles` and `spec.dependencies`.
 
-Similarly, dependencies can be defined at either the `Package` level or the `Release` level, using the `spec.dependencies` attribute.
+During rendering, definitions from both levels are merged.
 
-> Note:
-    During rendering, both roles and dependencies defined at the Package and Release levels are concatenated.
-    This ensures that the final dependency graph combines all relevant definitions from both scopes.
+### Cluster Roles
 
-### Cluster roles
+If a role is fulfilled by an external system (e.g., a pre-installed Ingress Controller on a cloud provider), it is defined as a **ClusterRole**.
 
-The deployment of a package is conditioned on the availability of the roles it depends on, meaning that at least one 
-application fulfilling each required role must be successfully deployed.
-
-In some cases, a role may already be fulfilled by an application that was not deployed by KuboCD.
-For example, if you're using a cluster that already includes an Ingress controller and a Load Balancer, you need 
-to inform KuboCD that these roles are already satisfied externally.
-
-Such roles are called `ClusterRoles`, and their list is defined in the global [KuboCD configuration resource: `Config`](./170-context-and-config.md).
+ClusterRoles are configured in the global [`Config` resource](./170-context-and-config.md) to inform KuboCD that a dependency is externally satisfied.
 
 ---
 
@@ -195,35 +160,15 @@ Such roles are called `ClusterRoles`, and their list is defined in the global [K
 
 ### Packaging
 
-This new application must be packaged:
-
+Build the package:
 
 ``` { .bash .copy }
 kubocd pack packages/redis-p01.yaml 
 ```
 
-```
-====================================== Packaging package 'packages/redis-p01.yaml'
---- Handling module 'noname':
-    Pulling image 'registry-1.docker.io/bitnamicharts/redis:20.6.1'
-    Chart: redis:20.6.1
---- Handling module 'ui':
-    Cloning git repository 'https://github.com/joeferner/redis-commander.git'
-    Chart: redis-commander:0.6.0
---- Packaging
-    Generating index file
-    Wrap all in assembly.tgz
---- push OCI image: quay.io/kubodoc/packages/redis:20.6.1-p01
-    Successfully pushed
-```
+### Full Deployment
 
-### Full deployment
-
-!!! notes
-    As the redis package integrate reference to the default `context`, you must have performed related steps described 
-    previously ([The context resource](./160-the-context.md) and [Context and configuration](./170-context-and-config.md))   
-
-A first deployment, including the front end:
+Deploy both Redis and the UI:
 
 ???+ abstract "redis1-basic.yaml"
 
@@ -243,13 +188,11 @@ A first deployment, including the front end:
           host: redis1
     ```
 
-
 ``` { .bash .copy }
 kubectl apply -f releases/redis1-basic.yaml 
 ```
 
-You can now check the status of the deployment.
-Note that this may take some time, as the Redis deployment can be quite slow.
+Check status (Redis deployment may take time):
 
 ``` { .bash .copy }
 kubectl get release redis1
@@ -260,59 +203,14 @@ NAME     REPOSITORY                       TAG          CONTEXTS           STATUS
 redis1   quay.io/kubodoc/packages/redis   20.6.1-p01   contexts:cluster   READY    2/2            -     3m19s   Redis and a front UI
 ```
 
-Notice the 2/2 under the READY column, which corresponds to the two modules.
+Note `READY 2/2`, indicating two active modules.
 
-You can also inspect the status of the corresponding Flux `HelmRelease` resources:
+Access the UI at:
+[http://redis1.ingress.kubodoc.local](http://redis1.ingress.kubodoc.local) (Requires DNS/hosts configuration).
 
-``` { .bash .copy }
-kubectl get helmReleases 
-```
+### Redis-Only Deployment
 
-``` { .bash }
-NAME            AGE     READY   STATUS
-........
-redis1-redis    2m31s   True    Helm install succeeded for release default/redis1-redis.v1 with chart redis@20.6.1
-redis1-ui       2m31s   True    Helm install succeeded for release default/redis1-ui.v1 with chart redis-commander@0.6.0
-.......
-```
-
-And related `pods`:
-
-
-``` { .bash .copy }
-kubectl get pods
-```
-
-``` { .bash }
-NAME                                                     READY   STATUS    RESTARTS   AGE
-.......
-redis1-master-0                                     1/1     Running   0          12m
-redis1-replicas-0                                   1/1     Running   0          12m
-redis1-ui-855cb8d656-rlqqh                               1/1     Running   0          11m
-.......
-```
-
-And related ingress resource:
-
-``` { .bash .copy }
-kubectl get ingresses redis1-ui
-```
-
-``` { .bash }
-NAME        CLASS   HOSTS                          ADDRESS      PORTS   AGE
-redis1-ui   nginx   redis1.ingress.kubodoc.local   10.96.59.9   80      3m40s
-```
-
-!!! Notes
-
-    Of course, to access the Redis UI, its ingress entry must be defined in your DNS.
-
-
-### Redis only deployment
-
-In this other deployment, only the Redis server is deployed.
-
-> To satisfy the `schema.Parameters`, a dummy value must be provided for `ui.host`.
+Deploy only the Redis server:
 
 ???+ abstract "redis2-basic.yaml"
 
@@ -333,41 +231,13 @@ In this other deployment, only the Redis server is deployed.
           host: dummy
     ```
 
-Then:
+> Note: `host: dummy` is required to satisfy the schema validation, even though the UI is disabled.
 
 ``` { .bash .copy }
 kubectl apply -f releases/redis2-basic.yaml 
 ```
 
-
-``` { .bash .copy }
-kubectl get helmReleases 
-```
-
-``` { .bash }
-.......
-redis1-redis    10m     True    Helm install succeeded for release default/redis1-redis.v1 with chart redis@20.6.1
-redis1-ui       10m     True    Helm install succeeded for release default/redis1-ui.v1 with chart redis-commander@0.6.0
-redis2-redis    2m45s   True    Helm install succeeded for release default/redis2-redis.v1 with chart redis@20.6.1
-.......
-```
-
-``` { .bash .copy }
-kubectl get pods
-```
-
-``` { .bash }
-NAME                                                     READY   STATUS    RESTARTS   AGE
-.......
-redis1-master-0                                     1/1     Running   0          12m
-redis1-replicas-0                                   1/1     Running   0          12m
-redis1-ui-855cb8d656-rlqqh                               1/1     Running   0          11m
-redis2-master-0                                     1/1     Running   0          4m51s
-redis2-replicas-0                                   1/1     Running   0          4m51s
-.......
-```
+Verify that only the Redis pod is created for `redis2`.
 
 !!! tip
-    It is possible to define a more precise schema, without the `host: dummy` constraint, by using the normalized syntax.
-    You can find an implementation [here](https://github.com/kubocd/kubocd-doc/blob/main/samples/packages/redis-p09.yaml){:target="_blank"}.
-
+    To avoid the `host: dummy` workaround, you can refine the schema using the normalized syntax to make parameters conditional. [See sample implementation](https://github.com/kubocd/kubocd-doc/blob/main/samples/packages/redis-p09.yaml){:target="_blank"}.

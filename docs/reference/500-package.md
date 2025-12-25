@@ -1,21 +1,20 @@
-# The KuboCD Package
+# The KuboCD Package Resource
 
-A `Package` is an OCI-compliant container image that bundles an application descriptor along with one or more Helm charts. 
-It serves as the standardized unit of deployment, encapsulating everything needed to describe and install an application.
+A `Package` is an OCI-compliant container image that bundles an application descriptor and one or more Helm charts. As the standardized unit of deployment, it encapsulates everything needed to install and configure an application.
 
-Refer to [A first deployment](../user-guide/130-a-first-deployment.md) for an introductory example.
+See [A first deployment](../user-guide/130-a-first-deployment.md) for an introductory example.
 
-The OCI image is built from a manifest, whose structure is described below.
+The OCI image is built from a YAML manifest described below.
 
 ## Templating
 
-Some attributes can accept a template, rendering the final value. There are noted as the following:
+Some attributes support templating to render dynamic values. These are denoted as:
 
-- template(string): A template which must render a string.
-- template(bool): A template that must render a string convertible to a boolean value. (1, t, T, TRUE, true, True, 0, f, F, FALSE, false, False)
-- template(list(string)): A template which must render a list of string
-- template(map): A template which must render a map/object. 
-- template(duration): A template that must render a string convertible to a duration value.
+- **Template(string)**: Renders a string.
+- **Template(bool)**: Renders a string convertible to a boolean (e.g., `true`, `false`, `1`, `0`, `t`, `f`).
+- **Template(list(string))**: Renders a list of strings.
+- **Template(map)**: Renders a map/object.
+- **Template(duration)**: Renders a string convertible to a duration (e.g., `5m`, `1h`).
 
 ---
 
@@ -23,104 +22,103 @@ Some attributes can accept a template, rendering the final value. There are note
 
 ### *apiVersion*
 
-**String, required**
+**String, Required**
 
-The manifest version. Only allowed value is currently `v1alpha1`
+The API version. Currently, the only supported value is `v1alpha1`.
 
 ### *type*
 
-**String, optional**
+**String, Optional**
 
-The manifest type. Only allowed value is `Package`. May be omitted.
+The resource type. Must be `Package` if specified. Can be omitted.
 
 ### *name*
 
-**String, required**
+**String, Required**
 
-The name of the package. Will be used in the OCI repository name. Must be a valid DNS Subdomain name ([RFC 1123](https://tools.ietf.org/html/rfc1123){:target="_blank"}).
+The package name. Used in the OCI repository name. Must be a valid DNS Subdomain name ([RFC 1123](https://tools.ietf.org/html/rfc1123){:target="_blank"}).
 
 ### *tag*
 
-**String, required**
+**String, Required**
 
-The tag for the OCI image.
+The specific tag for the OCI image.
 
 ### description
 
-**Template(string), optional**
+**Template(string), Optional**
 
-A short description of the package. Will act as default for its `Release` counterpart. 
+A short description of the package. Acts as the default description for the corresponding `Release`.
 
 ### usage
 
-**Template(string), optional**
+**Template(string), Optional**
 
-A template aimed to be rendered on deployment. Intended to provide user with usage information (Access link, configuration, ....).
-
-To be exploited by some UI tool.
+Intended to provide usage information (e.g., access URLs, credentials) after deployment. Can be displayed by UI tools.
 
 ### protected
 
 **Bool, Default: false**
 
-Prevent deletion. Will act as default for its `Release` counterpart
+If true, prevents accidental deletion. Acts as the default for the corresponding `Release`.
 
 ### schema.parameters
 
 **Map, Optional**
 
-Allow validation or the `Parameters` defined in the `Release` object. It could be a JSON/OpenAPI 
-schema or a [KuboCD specific format](../user-guide/190-alternate-schema-format.md).
+A schema to validate the `Parameters` provided in the `Release`. Supports:
+- Standard JSON/OpenAPI schema.
+- [KuboCD simplified schema](../user-guide/190-alternate-schema-format.md).
 
-If none is provided, this means the `Release` will not accept any parameters.
+If omitted, the `Release` accepts no parameters.
 
 ### schema.context
 
-**Map, Optional** 
+**Map, Optional**
 
-Allow validation or the `Context` of the deployment. It could be a JSON/OpenAPI
-schema or a [KuboCD specific format](../user-guide/190-alternate-schema-format.md).
+A schema to validate the injected `Context`. Supports:
+- Standard JSON/OpenAPI schema.
+- [KuboCD simplified schema](../user-guide/190-alternate-schema-format.md).
 
-If none is provided, there will be no control on provided `Context`
+If omitted, no context validation is performed.
 
 ### modules
 
-**List([Modules](#packagemodule)), Required:**
+**List([Modules](#packagemodule)), Required**
 
-The list of [modules](#packagemodule) included in this package.
+The list of modules embedded in this package.
 
 ### roles
 
-**Template(List(string)), optional**
+**Template(List(string)), Optional**
 
-The roles this package aims to fulfill. See [Release Dependencies and Roles](../user-guide/200-redis.md/#release-dependencies-and-roles)
+The roles this application fulfills. See [Release Dependencies and Roles](../user-guide/200-redis.md/#release-dependencies-and-roles).
 
 ### dependencies
 
-**Template(List(string)), optional**
+**Template(List(string)), Optional**
 
-The roles this package depends on. See [Release Dependencies and Roles](../user-guide/200-redis.md/#release-dependencies-and-roles)
+The roles this application depends on. See [Release Dependencies and Roles](../user-guide/200-redis.md/#release-dependencies-and-roles).
 
 ---
 
-## Package.module 
+## Package.module
 
-A `Module` embed an Helm Chart
+A `Module` defines a Helm Chart deployment.
 
 ### name
 
-**String, required** 
+**String, Required**
 
-The module name. Must be unique for a package. Used as postfix for the name of the generated HelmRelease, 
-so it must be a valid DNS Subdomain name ([RFC 1123](https://tools.ietf.org/html/rfc1123)) 
+Unique name for the module within the package. Used as a suffix for the generated `HelmRelease` name. Must be a valid DNS Subdomain name.
 
-There is a specific value `noname`, which make the FluxCD `HelmRelease` name identical to the KuboCD `Release` name.
+- **Special Value**: `noname`. If used, the Flux `HelmRelease` name matches the KuboCD `Release` name exactly (no suffix).
 
 ### source
 
-**Map, required:**
+**Map, Required**
 
-Provide the location from which to fetch the Helm chart. Must contain of the following sub-elements:
+Defines where to fetch the Helm chart. Must contain exactly one of:
 
 - [helmRepository](#packagemodulesourcehelmrepository) 
 - [git](#packagemodulesourcegit)
@@ -131,174 +129,149 @@ Provide the location from which to fetch the Helm chart. Must contain of the fol
 
 **Template(map), Optional**
 
-The template rendering the 'values file' used to deploy the Helm Chart. Refer to
-[A first deployment](../user-guide/130-a-first-deployment.md) for an simple first example.
+A template for generating the Helm `values.yaml`. See [A first deployment](../user-guide/130-a-first-deployment.md).
 
 ### enabled
 
-**Template(bool), default: true**
+**Template(bool), Default: true**
 
-When set to false, the module is not deployed at all. See []() for an example.
+Conditional deployment. If `false`, the module is skipped entirely.
 
 ### targetNamespace
 
-**Template(string), default: {{ .Release.spec.targetNamespace }}**
+**Template(string), Default: {{ .Release.spec.targetNamespace }}**
 
-The namespace to deploy the application into.
-
-May be overridden at the release level
+The namespace where the module is deployed. Can be overridden at the `Release` level.
 
 ### onFailureStrategy
 
-**Template(string), optional**
+**Template(string), Optional**
 
-Define the strategy to use in case of Helm deployment failure. Strategies are defined in the KuboCD global configuration. See the [dedicated chapter](../user-guide/220-deployment-failure.md) 
-
-May be overridden at the release level
+Defines the strategy to use in case of failure. Strategies are defined in the global KuboCD configuration. See [Deployment Failure](../user-guide/220-deployment-failure.md).
 
 ### timeout
 
-**Template(duration), default: {config.defaultHelmTimeout}**
+**Template(duration), Default: {config.defaultHelmTimeout}**
 
-Will be set as `spec.timeout` of the generated HelmRelease, thus providing timeout on Helm deployment.
-
-May be overridden at the release level
+Sets `spec.timeout` in the generated `HelmRelease`.
 
 ### interval
 
-**Template(duration), default: {config.defaultHelmInterval}**
+**Template(duration), Default: {config.defaultHelmInterval}**
 
-Will be set as `spec.interval` of the generated HelmRelease, interval at which to reconcile the Helm release.
-
-May be overridden at the release level
+Sets `spec.interval` in the generated `HelmRelease` (reconciliation frequency).
 
 ### dependsOn
 
-**Template(list(string)), optional** 
+**Template(list(string)), Optional**
 
-A list of other modules of this package we depends on.
+A list of other module names within the same package that this module depends on.
 
 ### specPatch
 
-**Template(map), optional:**
+**Template(map), Optional**
 
-A patch applied to the `spec` section of the Flux `HelmRelease` resource. 
-It allows you to set any parameters that are not exposed by KuboCD.
+Arbitrary patch applied to the `spec` of the generated Flux `HelmRelease`. Useful for setting Flux properties not directly exposed by KuboCD.
 
 ---
 
 ## Package.module.source.helmRepository
 
-Use this section to fetch an Helm Chart stored on an Helm Repository.
+Fetches a Chart from an HTTP(S) Helm Repository.
 
 ### url
 
-**String, required**
+**String, Required**
 
-The URL of the Helm repository
+The repository URL.
 
 ### chart
 
-**String, required** 
+**String, Required**
 
-The Chart name
+The chart name.
 
 ### version
 
-**String, required**
+**String, Required**
 
-The Chart version
+The chart version.
 
 ---
 
 ## Package.module.source.git
 
-Use this section to fetch an Helm Chart stored on an Git Repository.
+Fetches a Chart from a Git Repository.
 
 ### url
 
-**String, required**
+**String, Required**
 
-The URL of the Git repository
+The repository URL.
 
 ### branch
 
-**String, required if tag is not defined**
+**String, Required if tag is omitted**
 
-The branch to fetch
+Git branch to fetch.
 
 ### tag
 
-**String, required if branch is not defined**
+**String, Required if branch is omitted**
 
-The tag to fetch
+Git tag to fetch.
 
 ### path
 
-**String, required**
+**String, Required**
 
-The folder inside the Git repository of the Chart (Where is `Chart.yaml` is located)
+Relative path to the chart directory (containing `Chart.yaml`).
 
 ### extraFilePrefixes
 
-**String, optional**
+**List(string), Optional**
 
-KuboCD packaging filter files to only include chart content, as defined [here](https://helm.sh/docs/v3/topics/charts){:target="_blank"}.
+KuboCD normally filters files to include only standard Chart content. This attribute allows including extra files/folders starting with the specified prefixes (relative to the chart path, leading `/` required).
 
-Some helm charts require extra files to be included. This attribute defines a list of prefixes for files which should also be included. This starting from the `Path` referenced above, with a leading '/'.
-
-As an example, here is a extract from a package definition for [argo-workflows community Helm chart](https://github.com/argoproj/argo-helm/tree/main/charts/argo-workflows){:target="_blank"}.
-
-```
-apiVersion: v1alpha1
-name: argo-workflows
-....
-modules:
-  - name: noname
-    source:
-      git:
-        url: https://github.com/argoproj/argo-helm
-        tag: argo-workflows-0.46.2
-        path: /charts/argo-workflows
-        extraFilePrefixes:
-          - /ci
-          - /files
+Example:
+```yaml
+extraFilePrefixes:
+  - /ci
+  - /files
 ```
 
 ---
 
 ## Package.module.source.oci
 
-Use this section to fetch an Helm Chart stored as an OCI image.
+Fetches a Chart stored as an OCI artifact.
 
 ### repository
 
-**String, required**
+**String, Required**
 
-The repository URL without `oci://` and `tag`.
+The repository URL (without `oci://` prefix or tag).
 
 ### tag
 
-**String, required**
+**String, Required**
 
 The image tag.
 
 ### insecure
 
-**Bool, default: false**
+**Bool, Default: false**
 
-Repository access is in clear text (non encrypted) 
+If true, allows unencrypted (HTTP) connections.
 
 ---
 
 ## Package.module.source.local
 
-Use this section to fetch an Helm Chart stored on your workstation, alongside the `Package` manifest.
-
+Fetches a Chart from the local filesystem (relative to the Package manifest).
 
 ### path
 
-**String, required**
+**String, Required**
 
-The local folder of the Chart (Where is `Chart.yaml` is located). Relative to the `Package`
-manifest location
+Relative path to the chart directory.

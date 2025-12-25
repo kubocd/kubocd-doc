@@ -1,30 +1,30 @@
-# The Release Kubernetes resources
+# The Release Kubernetes Resource
 
 ## Release
 
 ### apiVersion
 
-**String, required**
+**String, Required**
 
-Always `kubocd.kubotal.io/v1alpha1`
+Always `kubocd.kubotal.io/v1alpha1`.
 
 ### kind
 
-**String, required**
+**String, Required**
 
-Always `Release'
+Always `Release`.
 
 ### metadata
 
-**Map, required**
+**Map, Required**
 
-Refer to the Kubernetes API documentation for the fields of the metadata field.
+Standard Kubernetes metadata (name, namespace, labels, etc.).
 
 ### spec
 
-**Release.spec, required** 
+**Release.spec, Required**
 
-See [Release.spec](#releasespec) below
+See [Release.spec](#releasespec) below.
 
 ---
 
@@ -32,80 +32,77 @@ See [Release.spec](#releasespec) below
 
 ### description
 
-**String, default: {Package.description}**
+**String, Default: {Package.description}**
 
-A short description of the release 
+A short description of the deployment.
 
 ### package
 
-**Release.spec.package, required**
+**Release.spec.package, Required**
 
-Where to fetch the `Package` OCI image. Description in [Release.spec.package](#releasespecpackage)
+Defines the `Package` OCI image to deploy. See [Release.spec.package](#releasespecpackage).
 
 ### contexts
 
 **List(CrossNamespaceReference)**
 
-A list of supplementary contexts merged with the default ones. 
-If the `namespace` of the context is not defined, it will take the `Release.metadata.namespace` value.
+Additional contexts to merge with the defaults.
+If `namespace` is omitted, `Release.metadata.namespace` is used.
 
 ### protected
 
 **Bool, Default: {Package.protected}**
 
-If true, prevent deletion. Need the KuboCD webhook to be effective
+If true, prevents deletion of the Release (requires KuboCD webhook).
 
 ### parameters
 
-**Template(Map), optional**
+**Template(Map), Optional**
 
-The deployments parameters. Must comply to the `Package.parameters.schema`. 
-It is a template, thus allowing variable substitution. But, only the root elements `.Context` is present in the data model. 
+Deployment parameters matching `Package.parameters.schema`.
+> Note: Only the `.Context` root element is available for templating in this section.
 
 ### targetNamespace
 
-**String, default: {Release.metadata.namespace}**
+**String, Default: {Release.metadata.namespace}**
 
-The namespace to deploy the application into
+The namespace where the application workload is deployed.
 
 ### createNamespace
 
-**Bool, default: false**
+**Bool, Default: false**
 
-Allow `targetNamespace` creation if it does not exists.
+If true, creates `targetNamespace` if it does not exist.
 
 ### roles
 
-**List(string), default: []**
+**List(string), Default: []**
 
-This list is appended to the [`Package.roles`](./500-package.md/#roles) list
+Appended to the [`Package.roles`](./500-package.md/#roles) list.
 
 ### dependencies
 
-**List(string), default: []**
+**List(string), Default: []**
 
-This list is appended to the [`Package.dependencies`](./500-package.md/#dependencies) list
+Appended to the [`Package.dependencies`](./500-package.md/#dependencies) list.
 
 ### skipDefaultContext
 
-**Bool, default: false**
+**Bool, Default: false**
 
-If set, this `Release` will ignore the global default contexts as well as those defined at the namespace level.
-Only the contexts explicitly listed in the `Release` resource will be taken into account.
+If true, ignores global and namespace-level default contexts. Only explicit contexts in `spec.contexts` are used.
 
 ### modulesOverrides
 
-**List(Release.spec.moduleOverride), optional**
+**List(Release.spec.moduleOverride), Optional**
 
-A list of subitems to modify some `HelmRelease` behavior, by overriding package provided values.
-
-Refer to [Release.spec.moduleOverride](#releasespecmoduleoverride)
+Overrides specific settings for individual modules. See [Release.spec.moduleOverride](#releasespecmoduleoverride).
 
 ### debug
 
-**Bool, default: false**
+**Release.spec.debug, Default: false**
 
-Refer to [Release.spec.debug](#releasespecdebug) below
+See [Release.spec.debug](#releasespecdebug).
 
 ---
 
@@ -113,42 +110,33 @@ Refer to [Release.spec.debug](#releasespecdebug) below
 
 ### module
 
-**string, required**
+**String, Required**
 
-The module these overriding values will apply on.
+The name of the module to modify.
 
 ### strategy
 
-**string, optional**
+**String, Optional**
 
-Define the strategy to use in case of Helm deployment failure. Strategies are defined in the KuboCD global configuration. See the [dedicated chapter](../user-guide/220-deployment-failure.md)
-
-override Package provided value.
+Overrides the failure handling strategy. See [Deployment Failure](../user-guide/220-deployment-failure.md).
 
 ### timeout
 
-**Template(duration), default: {Package.module[X].timeout}.**
+**Template(duration), Optional**
 
-Will be set as `spec.timeout` of the generated HelmRelease, thus providing timeout on Helm deployment.
-
-override Package provided value.
+Overrides the Helm deployment timeout.
 
 ### interval
 
-**Template(duration), default: {Package.module[X].intervale}.**
+**Template(duration), Optional**
 
-Will be set as `spec.interval` of the generated HelmRelease, thus providing interval to which reconcile the helmRelease
-
-override Package provided value.
+Overrides the Helm reconciliation interval.
 
 ### specPatch
 
-**Map, optional**
+**Map, Optional**
 
-A patch applied to the `spec` section of the Flux `HelmRelease` resource of the specified module.
-It allows you to set any parameters that are not exposed by KuboCD at the `Release` level
-
-You will find an example [here](https://github.com/kubocd/kubocd-doc/blob/main/samples/releases/redis3-basic.yaml)
+A patch applied to the `spec` of the generated `HelmRelease` for this module.
 
 ---
 
@@ -156,36 +144,32 @@ You will find an example [here](https://github.com/kubocd/kubocd-doc/blob/main/s
 
 ### repository
 
-**String, required**
+**String, Required**
 
-Part of OCI url oci://<repository>:<tag>
+OCI repository URL (without `oci://` or tag).
 
 ### tag
 
-**String, required** 
+**String, Required**
 
-Part of OCI url oci://<repository>:<tag>
+Image tag.
 
-### Other attributes
+### forwarded properties
 
-When a `Release` resource is created, a Flux `OCIRepository` resource is also created to reference the Package's OCI image.
-This object supports many configuration attributes. These attributes can be overridden at the Release level and will be passed through as-is.
+The following Flux `OCIRepository` attributes can be overridden here:
 
-Refer to the [Flux documentation for OCIRepositorySpec](https://fluxcd.io/flux/components/source/api/v1/#source.toolkit.fluxcd.io/v1.OCIRepositorySpec){:target="_blank"}
-for full details.
+- `interval`
+- `timeout`
+- `secretRef`
+- `certSecretRef`
+- `proxySecretRef`
+- `provider`
+- `verify`
+- `serviceAccountName`
+- `insecure`
+- `suspend`
 
-Here is the list of supported forwarded attributes:
-
-- interval
-- timeout
-- secretRef
-- certSecretRef
-- proxySecretRef
-- provider
-- verify 
-- serviceAccountName
-- insecure
-- suspend
+See [Flux OCIRepositorySpec](https://fluxcd.io/flux/components/source/api/v1/#source.toolkit.fluxcd.io/v1.OCIRepositorySpec){:target="_blank"} for details.
 
 ---
 
@@ -193,16 +177,15 @@ Here is the list of supported forwarded attributes:
 
 ### dumpContext
 
-**Bool, default: false**
+**Bool, Default: false**
 
-If set, the computed context is saved in the `status` field. This can be useful for debugging. 
-Anyway, the context may become quite large. Use this debug mode sparingly. You may prefer to use the [’render`](../user-guide/180-kubocd-cli.md/#kubocd-render) CLI command.
+If true, saves the fully resolved context into the `status` field. Use sparingly as contexts can be large. (Prefer `kubocd render` for debugging).
 
 ### dumpParameters
 
-**Bool, default: false**
+**Bool, Default: false**
 
-If set, the computed parameters are saved in the `status` field. Useful in case `Release.spec.parameters` is a template.
+If true, saves resolved parameters into the `status` field.
 
 ---
 
@@ -210,8 +193,12 @@ If set, the computed parameters are saved in the `status` field. Useful in case 
 
 ### name
 
-**String, required:**
+**String, Required**
+
+Resource name.
 
 ### namespace
 
-**String, optional:**
+**String, Optional**
+
+Resource namespace. Defaults to local namespace if omitted.

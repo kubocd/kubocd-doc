@@ -1,24 +1,24 @@
-# The Context Kubernetes resource.
+# The Context Kubernetes Resource
 
-You can refer to [The context resource](../user-guide/160-the-context.md) for some example of usage.
+See [The Context Resource](../user-guide/160-the-context.md) for usage examples.
 
-## Release
+## Context
 
 ### apiVersion
 
-**String, required:** Always `kubocd.kubotal.io/v1alpha1`
+**String, Required:** Always `kubocd.kubotal.io/v1alpha1`.
 
 ### kind
 
-**String, required:** Always `Context'
+**String, Required:** Always `Context`.
 
 ### metadata
 
-**Map, required:** Refer to the Kubernetes API documentation for the fields of the metadata field.
+**Map, Required:** Standard Kubernetes metadata.
 
 ### spec
 
-**Context.spec, required:** See [Context.spec](#contextspec) below
+**Context.spec, Required:** See [Context.spec](#contextspec) below.
 
 ---
 
@@ -26,13 +26,12 @@ You can refer to [The context resource](../user-guide/160-the-context.md) for so
 
 ### description
 
-**String, optional:** A short description. 
+**String, Optional:** A short description.
 
 ### protected
 
-**Bool, Default: false:** If true, prevent deletion. Need the KuboCD webhook to be effective
+**Bool, Default: false:** If true, prevents deletion (requires KuboCD webhook).
 
 ### context
 
-**Map, required:** The context map value itself. Refer to [The Context resource](../user-guide/160-the-context.md)
-
+**Map, Required:** The free-form context data structure.

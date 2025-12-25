@@ -1,14 +1,14 @@
-# Getting started
+# Getting Started
 
-## How This Manual Is Structured
+## Documentation Structure
 
-The User Guide is organized as a step-by-step tutorial, designed to gradually introduce the various features of KuboCD.
+The User Guide is structured as a step-by-step tutorial, designed to progressively introduce KuboCD features.
 
-It is complemented by a 'Reference' section.
+The guide is complemented by a Reference section for detailed technical information.
 
-As a starting point, we recommend installing KuboCD:
+To get started, we recommend installing KuboCD using the method appropriate for your environment:
 
-- If you have a test cluster available: [Installing KuboCD on an Existing Cluster](user-guide/120-existing-cluster.md).
-- If you prefer to test locally on your workstation: [Installing KuboCD on a Local Kind Cluster](user-guide/110-kind.md)
+- **Existing Cluster**: [Installing KuboCD on an Existing Cluster](user-guide/120-existing-cluster.md)
+- **Local Workstation**: [Installing KuboCD on a Local Kind Cluster](user-guide/110-kind.md)
 
-Then continue with [A First Deployment](user-guide/130-a-first-deployment.md).
+Once installed, proceed to [A First Deployment](user-guide/130-a-first-deployment.md).

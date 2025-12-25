@@ -1,22 +1,22 @@
-# The Config Kubernetes resource.
+# The Config Kubernetes Resource
 
 ## Config
 
 ### apiVersion
 
-**String, required:** Always `kubocd.kubotal.io/v1alpha1`
+**String, Required:** Always `kubocd.kubotal.io/v1alpha1`.
 
 ### kind
 
-**String, required:** Always `Config'
+**String, Required:** Always `Config`.
 
 ### metadata
 
-**Map, required:** Refer to the Kubernetes API documentation for the fields of the metadata field.
+**Map, Required:** Standard Kubernetes metadata.
 
 ### spec
 
-**Config.spec, required:** See [Config.spec](#configspec) below
+**Config.spec, Required:** See [Config.spec](#configspec) below.
 
 ---
 
@@ -24,66 +24,65 @@
 
 ### clusterRoles
 
-**List(string), default: []:** List of roles fulfilled by non-KuboCD application. 
-See [Cluster roles](../user-guide/200-redis.md/#cluster-roles)
+**List(string), Default: []**
+
+List of roles fulfilled by external (non-KuboCD) applications. See [Cluster Roles](../user-guide/200-redis.md/#cluster-roles).
 
 ### defaultContexts
 
-**List(CrossNamespaceReference), default[]:** A list of context which will be used by all `Release`, except the one with the 
-`skipDefaultContext` flag.
-Refer to [The Context Resource](../user-guide/160-the-context.md) for more explanation. 
+**List(CrossNamespaceReference), Default: []**
+
+Global default contexts applied to all `Releases` (unless `skipDefaultContext` is used). See [The Context Resource](../user-guide/160-the-context.md).
 
 ### defaultNamespaceContexts
 
-**List(string), default: []:** A list of context name. When a `Release` is deployed in a namespace, if a context of 
-this name exists in the namespace, it will be used, merged with default one(s) if existing. This can be skipped with the `Release.skipDefautContext` flag
+**List(string), Default: []**
 
-Refer to [The Context Resource](../user-guide/160-the-context.md) for more explanation. 
+List of context names to automatically look up in the Release's namespace. If found, they are merged into the deployment context.
 
 ### onFailureStrategies
 
-**list(onFailureStrategy), optional**
+**List(onFailureStrategy), Optional**
 
-A list of strategies to apply in case of HelmRelease deployment failure. Refer to the [Deployment failure](../user-guide/220-deployment-failure.md) chapter for more explanation.
+Definitions of deployment failure strategies. See [Deployment Failure](../user-guide/220-deployment-failure.md).
 
 ### defaultOnFailureStrategy
 
-**string, optional**
+**String, Optional**
 
-The failure strategy to use by default.
+The name of the strategy to use by default.
 
 ### defaultHelmTimeout
 
-**duration, default: 2mn**
+**Duration, Default: 3m**
 
-will set the value of `HelmRelease.spec.timeout` by default, thus providing timeout on Helm deployment.
+Default timeout for Helm deployments (`HelmRelease.spec.timeout`).
 
 ### defaultHelmInterval
 
-**duration, default: 30mn**
+**Duration, Default: 30m**
 
-will set the value of `HelmRelease.spec.interval` by default, thus providing interval to which reconcile the helmRelease
+Default reconciliation interval for Helm releases (`HelmRelease.spec.interval`).
 
 ### defaultPackageInterval
 
-**duration, default: 30mn**
+**Duration, Default: 30m**
 
-Default value for `Release.spec.package.interval`. Interval applied to the `OciRepository`, to check against new package version
+Default interval for checking OCI package updates (`OCIRepository.spec.interval`).
 
 ### specPatch
 
-**Template(map), optional:**
+**Template(map), Optional**
 
-A patch applied to the `spec` section of all Flux `HelmRelease` resource.
-It allows you to set any parameters that are not exposed by KuboCD.
+Global patch applied to the `spec` section of all generated Flux `HelmRelease` resources.
 
 ### packageRedirects
 
-For future extension
+**Reserved for future extensions.**
 
 ### imageRedirects
 
-For future extension
+**Reserved for future extensions.**
 
 ---
 
@@ -91,7 +90,12 @@ For future extension
 
 ### name
 
+**String, Required**
+
+Unique strategy name.
+
 ### values
 
+**Map, Required**
 
-
+Flux-compatible configuration for `install` and `upgrade` strategies.

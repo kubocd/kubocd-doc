@@ -1,30 +1,23 @@
-# Deployment failure
+# Handling Deployment Failures
 
-This chapter is about how to handle failure on KuboCD `release` deployment.
+This chapter explains how to handle failures during KuboCD `Release` deployments.
 
-As stated in [Under the hood](140-under-the-hood.md) chapter, for each module of a deployed package, KuboCD generate a FluxCD `HelmRelease` resource.
+As described in [Under the hood](140-under-the-hood.md), KuboCD generates a FluxCD `HelmRelease` resource for each module in a package. The Flux `helm-controller` then executes the deployment using its embedded Helm instance.
 
-Then, the FluxCD `helm-controller` will handle the deployment, using its embedded Helm instance.
+The Flux `HelmRelease` resource provides several parameters to configure behavior when failures occur:
 
-The FluxCd `helmRelease` resource provide several configuration parameters to handle behavior in case of deployment failure:
+- **`HelmRelease.spec.timeout`**: The wait time for individual Kubernetes operations (e.g., Hooks) during a Helm action.
+- **`HelmRelease.spec.install`**: Configuration for Helm install actions.
+- **`HelmRelease.spec.upgrade`**: Configuration for Helm upgrade actions.
 
-- `HelmRelease.spec.timeout`<br>This is the time to wait for any individual Kubernetes operation (like Jobs for hooks) during the performance of a Helm action.
+For full details, refer to the Flux documentation for [install](https://fluxcd.io/flux/components/helm/helmreleases/#install-configuration){:target="_blank"} and [upgrade](https://fluxcd.io/flux/components/helm/helmreleases/#upgrade-configuration){:target="_blank"}.
 
-- `HelmRelease.spec.install`<br>Holds the configuration for Helm install actions for this HelmRelease.
+## Failure Strategies
 
-- `HelmRelease.spec.upgrade`<br>Holds the configuration for Helm upgrade actions for this HelmRelease.
-
-A more complete description can be found [here for install](https://fluxcd.io/flux/components/helm/helmreleases/#install-configuration){:target="_blank"} 
-and [here for upgrade](https://fluxcd.io/flux/components/helm/helmreleases/#upgrade-configuration){:target="_blank"}.
-
-Here is a small sample of a configuration which, in case of deployment failure will try to uninstall and re-install the release. This up to 10 times. 
+A common requirement is to automatically retry or remediate failed deployments. For example, a configuration that attempts to uninstall and re-install a failed release up to 10 times:
 
 ```yaml
-kind: HelmRelease
-metadata:
-  .....
 spec:
-  ....
   install:
     strategy:
       name: RemediateOnFailure
@@ -37,22 +30,18 @@ spec:
       retries: 10
 ```
 
-To apply these configuration through KuboCD, one can use the `module.specPath` attribute on the `Package` or the `moduleOverrides[.].specPatch` on the `Release` object. But managing this for each release 
-will quickly be cumbersome.
+To avoid manually defining these verbose configurations for every release, KuboCD allows you to define named strategies in the global configuration (`Config`).
 
-KuboCD provide a mechanism to simplify this configuration, while preserving flexibility. The global configuration (see [Context and configuration](./170-context-and-config.md) ) can host a set of
-predefined configuration values set, called `onFailureStrategy`
+### Configuring Global Strategies
 
-Here is a sample configuration resource: 
+Sample `Config` resource:
 
 ```yaml
----
 apiVersion: kubocd.kubotal.io/v1alpha1
 kind: Config
 metadata:
-  ....
+  name: global-config
 spec:
-  .....
   defaultHelmTimeout: 3m0s
   defaultOnFailureStrategy: updateOnFailure
   onFailureStrategies:
@@ -84,41 +73,41 @@ spec:
             retryInterval: 1m0s
 ```
 
-Three strategies are defined here:
+**Defined Strategies:**
 
-- `stopOnFailure`: Don't attempt any action?
-- `reinstallOnFailure`: Try to uninstall and re-install the release. This up to 10 times.
-- `updateOnFailure`: After 1 minute, try to update the release. This until success.
+- **`stopOnFailure`**: Do nothing on failure (default Flux behavior).
+- **`reinstallOnFailure`**: Uninstall and re-install up to 10 times.
+- **`updateOnFailure`**: Retry the update every minute until success.
 
-> For a complete explanation of the resulting behavior, please refer to the FluxCD documentation mentioned above. 
+**Default Settings:**
 
-!!! notes
+- **`defaultOnFailureStrategy`**: Sets the strategy used by default for all deployments (`updateOnFailure` in this example).
+- **`defaultHelmTimeout`**: Sets the default `HelmRelease.spec.timeout` (3 minutes).
 
-    These sample values are the initial dataset defined by the HelmChart. You can modify them, or create new strategies during Helm deployment.
+### Applying Strategies
 
-There is also an `defaultOnFailureStrategy` which set the one used by default for all deployment. And a `defaultHelmTimeout` which will set the value of `HelmRelease.spec.timeout` by default.
+Strategies can be applied or overridden at multiple levels:
 
-These values can be overridden at the package level for each module with the `package.module[X].onFailureStrategy.s` and `package.module[X].timeout` attribute.
+1. **Global Default**: As defined in `defaultOnFailureStrategy`.
+2. **Package Level**: Override per module using `package.module[X].onFailureStrategy` and `timeout`.
+3. **Release Level**: Override per module using `moduleOverrides`.
 
-And they can be overridden at the release level, by using the `moduleOverrides` attribute, like the following sample:
+**Example: Overriding at Release Level**
 
-```
----
+```yaml
 apiVersion: kubocd.kubotal.io/v1alpha1
 kind: Release
 metadata:
   name: podinfo1
   namespace: default
 spec:
-  description: A first sample release of podinfo
   package:
     repository: quay.io/kubodoc/packages/podinfo
     tag: 6.7.1-p01
-    interval: 30m
-  parameters:
-    fqdn: podinfo1.ingress.kubodoc.local
   moduleOverrides:
-    module: main
-    onFailureStrategy: reinstallOnFailure
-    timeout: 2m
+    main:
+      onFailureStrategy: reinstallOnFailure
+      timeout: 2m
 ```
+
+In this example, the `main` module will use the `reinstallOnFailure` strategy and a custom timeout of 2 minutes.

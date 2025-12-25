@@ -1,94 +1,77 @@
 # Alternate KuboCD Schema Format
 
-In our previous examples, we defined `schema.parameters` and `schema.context` using a standard OpenAPI/JSON schema. 
-While fully supported, it can be quite verbose.
+In previous examples, we defined `schema.parameters` and `schema.context` using standard OpenAPI/JSON schema. While fully supported, this syntax can be verbose.
 
-KuboCD also supports a more concise schema syntax, specifically designed for this use case.
+KuboCD provides a concise schema syntax specifically designed to simplify this definition.
 
-Here is one of our `podinfo` `Package` example from a previous chapter (Only the `schema` section) 
+Comparing the `schema` section of the `podinfo` Package:
 
-???+ abstract "podinfo-p02.yaml"
+**Standard OpenAPI:**
 
-    ```
-    apiVersion: v1alpha1
-    ........
-    schema:
-      parameters:
-        $schema: http://json-schema.org/schema#
+```yaml
+schema:
+  parameters:
+    $schema: http://json-schema.org/schema#
+    type: object
+    additionalProperties: false
+    properties:
+      host: { type: string }
+    required:
+      - host
+  context:
+    $schema: http://json-schema.org/schema#
+    additionalProperties: true
+    type: object
+    properties:
+      ingress:
         type: object
-        additionalProperties: false
-        properties:
-          host: { type: string }
-        required:
-          - host
-      context:
-        $schema: http://json-schema.org/schema#
         additionalProperties: true
-        type: object
         properties:
-          ingress:
-            type: object
-            additionalProperties: true
-            properties:
-              className: { type: string }
-              domain: { type: string }
-            required:
-              - domain
-              - className
+          className: { type: string }
+          domain: { type: string }
         required:
-          - ingress
-    modules:
-    .........
-    ```
+          - domain
+          - className
+    required:
+      - ingress
+```
 
-Here’s an identical version of this `Package` using the simplified KuboCD schema format:
+**KuboCD Simplified Format:**
 
-
-???+ abstract "podinfo-p02-alt.yaml"
-
-    ```
-    apiVersion: v1alpha1
-    ......
-    schema:
-      parameters:
+```yaml
+schema:
+  parameters:
+    properties:
+      host: { type: string, required: true }
+  context:
+    properties:
+      ingress:
+        required: true
         properties:
-          host: { type: string, required: true }
-      context:
-        properties:
-          ingress:
-            required: true
-            properties:
-              className: { type: string, required: true }
-              domain: { type: string, required: true }
-    modules:
-    .......
-    ```
+          className: { type: string, required: true }
+          domain: { type: string, required: true }
+```
 
-As you can see, the format is significantly more compact.
+The simplified format is significantly more compact.
 
 !!! info
-    This schema format is **NOT** standard OpenAPI
+    This format is **NOT** standard OpenAPI.
 
-The presence or absence of the `$schema:` key is what KuboCD uses to distinguish between standard and KuboCD schema formats.
+KuboCD distinguishes between the two formats by checking for the presence of the `$schema:` key.
 
-The difference are the following:
+**Key Differences:**
 
-- No `$schema:` key for the KuboCD format
-- The `required` fields are not in an array anymore, but are now an attribute of the node.
-- The flag `additionalProperties: false` is set on all object and sub-object of a `parameters` schema.
-- The flag `additionalProperties: true` is set on all object and sub-object of a `context` schema.
-- the `type: object` is now optional. It is deduced from the presence of the `properties` attribute.
-- the `type: array` is now optional. It is deduced from the presence of the `items` attribute.
-- All others attributes (`default`, `enums`, `pattern`, ....) are left unchanged.
+- **No `$schema:` key**.
+- **Required fields** are defined as boolean attributes on the node (`required: true`) rather than in a separate list.
+- **`additionalProperties: false`** is automatically implied for all objects in `schema.parameters`.
+- **`additionalProperties: true`** is automatically implied for all objects in `schema.context`.
+- **`type: object`** is inferred if `properties` is present.
+- **`type: array`** is inferred if `items` is present.
+- Other attributes (`default`, `enum`, `pattern`, etc.) remain unchanged.
 
-When a `Package` is build using this form, both schemas are converted to their standard OpenAPI/JSON and stored in this last form. 
-
-This normalized version will be accessible using `kubocd dump package...` or `kubocd render....` CLI tools.
+When building a Package with this simplified format, KuboCD automatically converts it to standard OpenAPI/JSON schema. This normalized version is stored in the artifact and is viewable via `kubocd dump package` or `kubocd render`.
 
 !!! warning
+    If you choose to use the standard form, remember to set `additionalProperties: false` on `schema.parameters` objects. Without it, typos in variable names will be ignored, leading to potential deployment issues.
 
-    If you still use the standard form, setting `additionalProperties: false` on all objects of `schema.parameters` is important. 
-    If not, any typo in a variable name will not be trapped and may lead tricky errors.
-
-For the remaining of this manuel, we will use the KuboCD schema. 
-
+For the remainder of this manual, we will use the simplified KuboCD schema format.

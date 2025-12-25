@@ -1,16 +1,14 @@
-# Under the Hood (KuboCD components)
+# Under the Hood (KuboCD Components)
 
-Behind the scenes, KuboCD creates several Flux resources to manage the deployment.
+Behind the scenes, KuboCD creates several Flux resources to manage deployments. You can inspect these resources to debug issues or understand the internal workings.
 
-You can inspect these resources to debug problems or understand the internals.
-
-Check the events bound to the `Release` which was previously created:
+Check the events for the `Release` created earlier:
 
 ``` { .bash .copy }
 kubectl describe release podinfo1
 ```
 
-There are `Events` for each Flux resources create:
+Events are generated for each Flux resource created:
 
 ``` { .bash }
 ......
@@ -22,13 +20,13 @@ Events:
   Normal  HelmReleaseCreated     44s   release  Created HelmRelease "podinfo1-main"
 ```
 
-All of these resources are created in the same namespace as the `Release` object (`default` in this sample).
+All resources are created in the same namespace as the `Release` object (in this case, `default`).
 
 ---
 
 ## The OCIRepository
 
-This Flux resource pulls the KuboCD package image:
+This Flux resource is responsible for pulling the KuboCD package image:
 
 ``` { .bash .copy }
 kubectl get OCIRepository
@@ -43,31 +41,26 @@ kcd-podinfo1   oci://quay.io/kubodoc/packages/podinfo   True    stored artifact 
     If the release is stuck in the `WAIT_OCI` state, check this resource and its events. Common issues include:
     
     - Incorrect URL
-    - Image still private (set to public or provide authentication)
+    - Image is private (needs to be public or have authentication configured)
 
-You can manually delete this resource to trigger a refresh:
+To force a refresh (e.g., to load a modified OCI image before the sync period expires), you can manually delete this resource:
 
 ``` { .bash .copy }
 kubectl delete ocirepository kcd-podinfo1
 ```
 
-KuboCD will recreate it.
-
-This can be useful to force a reload of a modified OCI image, without waiting for the sync period.
+KuboCD will automatically recreate it.
 
 ### Naming
 
-The `OCIRepository` is a namespaced resource, located in the same namespace as the `Release` object.
-
-Its name is the `Release` name, prefixed with `kcd-`.
+The `OCIRepository` is a namespaced resource located in the same namespace as the `Release`.
+Its name is derived from the `Release` name, prefixed with `kcd-`.
 
 ---
 
 ## The HelmRepository
 
-As the `podinfo` Helm the chart is embedded in the package, it must be served to Flux via an internal Helm repository.
-
-KuboCD creates a `HelmRepository` resource pointing to its internal server:
+Since the `podinfo` Helm chart is embedded in the package, it must be exposed to Flux via an internal Helm repository. KuboCD creates a `HelmRepository` resource pointing to its internal server:
 
 ``` { .bash .copy }
 kubectl get HelmRepository
@@ -82,15 +75,14 @@ This step rarely causes errors unless the internal controller is unreachable.
 
 ### Naming
 
-The `HelmRepository` is a namespaced resource, located in the same namespace as the `Release` object.
+The `HelmRepository` is located in the same namespace as the `Release`.
+Its name matches the `Release` name, prefixed with `kcd-`.
 
-Its name is the `Release` name, prefixed with `kcd-`.
-
---- 
+---
 
 ## The HelmRelease
 
-This Flux resource handles the actual Helm chart deployment.
+This Flux resource manages the actual Helm chart deployment.
 
 ``` { .bash .copy }
 kubectl get HelmRelease
@@ -102,7 +94,7 @@ podinfo1-main   7m29s   True    Helm install succeeded for release default/kcd-p
 ```
 
 !!! note
-    There will be one `HelmRelease` per module in the package.
+    One `HelmRelease` is created per module in the package.
 
 If the release is stuck in `WAIT_HREL`, inspect this resource:
 
@@ -119,10 +111,10 @@ Events:
   Normal  InstallSucceeded  4m37s  helm-controller  Helm install succeeded for release default/podinfo1-main.v1 with chart podinfo@6.7.1
 ```
 
-One of the point to check in case of problem is the generated `values` for the Helm chart deployment.
+A key troubleshooting step is to verify the generated `values` passed to the Helm chart:
 
 !!! note
-    You will need to install the [yq command](https://github.com/mikefarah/yq){:target="_blank"}.
+    This requires the [yq](https://github.com/mikefarah/yq){:target="_blank"} tool.
 
 ``` { .bash .copy }
 kubectl get HelmRelease podinfo1-main -o yaml | yq '.spec.values'
@@ -140,27 +132,24 @@ ingress:
 ```
 
 !!! note
-    If deployment fails, you may need to wait for the Helm timeout to expire (default: 2 minutes) to have the failure reason. 
-    You can configure this value in the `Package` or in the `Release`.
+    If a deployment fails, you may need to wait for the Helm timeout (default: 3 minutes) to see the failure reason. This timeout can be configured in the `Package` or the `Release`.
 
-
-!!! tips
-    Another way to check the generated `values` stanza is to use the 'kubocd render' command:
-
+!!! tip
+    You can also check the generated `values` using the CLI:
+    
     ```{ .bash .copy }
     kubocd render releases/podinfo1-basic.yaml
     ```
-
-    You will find a detailed description of this command in the [kubocd cli section](./180-kubocd-cli.md/#kubocd-render)
-
+    
+    See the [KuboCD CLI section](./180-kubocd-cli.md/#kubocd-render) for details.
 
 ### Naming
 
-The `HelmRelease` is a namespaced resource, located in the same namespace as the `Release` object.
+The `HelmRelease` resides in the same namespace as the `Release`.
 
-As stated above there is one HelmRelease object per module in the package. Its name is `<Release name>-<ModuleName>`
+Its name usually follows the pattern: `<Release name>-<ModuleName>`.
 
-The `HelmRelease` is a FluxCD object. It will perform an Helm deployment, which is stored as a kubernetes `secret` 
+The corresponding Helm deployment (stored as a Kubernetes Secret) also follows this naming convention:
 
 ```
 kubectl get secrets
@@ -168,22 +157,17 @@ NAME                                  TYPE                 DATA   AGE
 sh.helm.release.v1.podinfo1-main.v1   helm.sh/release.v1   1      66m
 ```
 
-As most of the Helm chart use the release name as base for the generated object naming, this will leads to have a lot of final resources name built from `<Release name>-<ModuleName>`
+Since many Helm charts use the release name as a base for resource naming, this can lead to redundant suffixes (e.g., `podinfo1-main-...`).
 
-For example, with our first deployment: 
-
-```{ .bash .copy }
-kubectl get pods
-```
-
+Example pod name:
 ```bash
 NAME                             READY   STATUS    RESTARTS   AGE
 podinfo1-main-779b6b9fd4-zbgbx   1/1     Running   0          8h
 ```
 
-To avoid this extra, useless name postfix, KuboCD implements a specific module name: `noname`, in the package definition. 
-When a module is named `noname`, the corresponding `HelmRelease` (And all its related components) will be named with only the `Release` name.
+To avoid this, KuboCD supports a special module name: **`noname`**.
+When a module is named `noname`, the corresponding `HelmRelease` (and derived resources) uses only the `Release` name.
 
-> As module name must be unique in a KuboCD package, there could be only one `noname` module in a package
+> Note: Since module names must be unique, a package can contain only one `noname` module.
 
-As an example, the next chapter use this feature.
+The next chapter demonstrates this feature.

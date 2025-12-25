@@ -1,10 +1,10 @@
 # Setting Up the Ingress Controller
 
 !!! warning
-    If you're using an existing cluster, there's likely already an ingress controller installed. **Do not install another one**.  
-    However, you should still read this section as several new features are described.
+    **Existing Clusters:** If you are using an existing cluster, an ingress controller is likely already installed. **Do not install another one.**
+    However, we recommend reading this section as it introduces several new features.
 
-If you're following the local `kind` cluster setup, you’ll need to install an ingress controller to make use of the deployed `Ingress` object.
+If you are following the local `kind` cluster guide, you must install an ingress controller to support the `Ingress` resources.
 
 Check the current `Ingress` object created by the `podinfo` deployment:
 
@@ -17,17 +17,16 @@ NAME            CLASS   HOSTS                            ADDRESS   PORTS   AGE
 podinfo1-main   nginx   podinfo1.ingress.kubodoc.local             80      6m33s
 ```
 
-At this point, the ingress is inactive since no ingress controller is installed.
+The ingress is currently inactive because no controller is running.
 
 ---
 
-## Build the ingress-nginx package:
+## Build the Ingress-Nginx Package
 
-Here is a sample package definition for the `ingress-nginx` controller:
+Below is a sample package definition for the `ingress-nginx` controller.
 
 !!! warning
-    This first version is dedicated to the configuration we set up the cluster, using the kind `portMapping` and `NodePorts`.
-
+    This configuration is specific to our local Kind cluster setup, leveraging `portMapping` and `NodePorts`.
 
 ???+ abstract "ingress-nginx-p01.yaml"
 
@@ -57,14 +56,13 @@ Here is a sample package definition for the `ingress-nginx` controller:
       - ingress
     ```
 
-New key points compared to the `podinfo` Package:
+**Key Differences from the `podinfo` Package:**
 
-- `protected: true`: Prevents accidental deletion of the release. (Currently not enforced unless KuboCD webhook is installed.)
-- `modules[0].name`: The specific value `noname` prevent the module name to be appended to the Helm release name, and to all derivative objects. See previous chapter.
-- `modules[0].timeout: 4m`: Overrides the default deployment timeout (`3m`) because this Helm chart may take some time to deploy.
-- `modules[0].values`: This section is in proper YAML format (no '|': not a templated string), since it does not include any templating.
-- `roles`: Assigns the package to the `ingress` role. This is used for dependency management between releases. 
-  This will be described later in this documentation
+- **`protected: true`**: Prevents accidental deletion of the release. (Requires the KuboCD webhook to be enforced).
+- **`modules[0].name`**: The value `noname` prevents appending the module name to the Helm release and derived objects.
+- **`modules[0].timeout: 4m`**: Overrides the default timeout (`3m`) to accommodate the Helm chart deployment time.
+- **`modules[0].values`**: Pure YAML is used here instead of a templated string since no dynamic parameters are needed.
+- **`roles`**: Assigns the package to the `ingress` role. This is used for dependency management (discussed later).
 
 Build the package:
 
@@ -86,9 +84,9 @@ Successfully pushed
 
 ---
 
-## Deploy the package
+## Deploy the Package
 
-Then define the `Release` resource:
+Define the `Release` resource:
 
 ???+ abstract "ingress-nginx.yaml"
 
@@ -109,13 +107,13 @@ Then define the `Release` resource:
       createNamespace: true
     ```
 
-Key points:
+**Key Features:**
 
-- `metadata.namespace: kubocd`: As it is a system components, deploy in a restricted namespace.
-- `spec.protected: false`: Just to demonstrates that the package-level `protected` flag can be overridden at the release level.
-- `spec.targetNamespace: ingress-nginx`: Installs the ingress controller in its own namespace.
-- `spec.createNamespace: true`: Automatically creates the target namespace if it doesn't exist.
-- `spec.package.interval`: Not provided in this sample. Will be set to the global default value of 30m. (See [here](./xxxx) to configure this global default).
+- **`metadata.namespace: kubocd`**: Deployed in a restricted system namespace.
+- **`spec.protected: false`**: Demonstrates overriding the package-level `protected` flag at the release level.
+- **`spec.targetNamespace: ingress-nginx`**: Installs the controller in its own dedicated namespace.
+- **`spec.createNamespace: true`**: Automatically creates the target namespace if missing.
+- **`spec.package.interval`**: Defaults to `30m`.
 
 Apply the release:
 
@@ -123,7 +121,7 @@ Apply the release:
 kubectl apply -f releases/ingress-nginx.yaml
 ```
 
-Check the release status:
+Check the status:
 
 ``` { .bash .copy }
 kubectl -n kubocd get release
@@ -134,7 +132,7 @@ NAME            REPOSITORY                               TAG          CONTEXTS  
 ingress-nginx   quay.io/kubodoc/packages/ingress-nginx   4.12.1-p01              READY    1/1            -     86s   The Ingress controller
 ```
 
-And check the resulting pod:
+Verify the pod:
 
 ``` { .bash .copy }
 kubectl -n ingress-nginx get pods
@@ -145,23 +143,22 @@ NAME                                        READY   STATUS    RESTARTS   AGE
 ingress-nginx-controller-658fbb96d5-hctqp   1/1     Running   0          4m12s
 ```
 
-> If the module name `noname` is still present in the pod name<br>(i.e. `ingress-nginx-noname-controller-79887b485d-hwn6j`)<br>this indicates you use a KuboCD version older than `v0.2.3`.
+> **Note:** If the pod name still includes `noname` (e.g., `ingress-nginx-noname-controller-...`), you may be using a KuboCD version older than `v0.2.3`.
 
 ---
 
-## Configure the DNS entry
+## Configure DNS
 
-To access the `podinfo` application, you'll need to define a DNS entry matching the `fqdn` parameter.
+To access `podinfo`, you need a DNS entry matching the `fqdn` parameter.
 
-The simplest way in our case is to use the `/etc/hosts` file:
+The simplest method is to add an entry to your `/etc/hosts` file:
 
 ``` { .text .copy }
 127.0.0.1 localhost podinfo1.ingress.kubodoc.local
 ```
 
-Make sure the fqdn matches **exactly** what was provided in the podinfo `Release` parameters.
+Ensure the FQDN matches **exactly** what was defined in the `Release` parameters.
 
-You should now be able to access the 'podinfo` web server:
+You should now be able to access the `podinfo` web server:
 
-👉 [http://podinfo1.ingress.kubodoc.local](http://podinfo1.ingress.kubodoc.local){:target="_blank"}.
-
+👉 [http://podinfo1.ingress.kubodoc.local](http://podinfo1.ingress.kubodoc.local){:target="_blank"}

@@ -1,12 +1,10 @@
 # Installing KuboCD on a Local Kind Cluster
 
-This section walks you through setting up a local Kubernetes cluster using Docker and **Kind**,
-then installing **FluxCD** and **KuboCD** on top of it.
+This guide details the process of setting up a local Kubernetes cluster using **Kind (Kubernetes in Docker)**, followed by the installation of **FluxCD** and **KuboCD**.
 
 !!! tip
-
-    **Already have a Kubernetes cluster?**  
-    You can skip the cluster creation and follow the instructions in [Installation on an existing cluster](120-existing-cluster.md).
+    **Existing Cluster?**  
+    If you already have a Kubernetes cluster, you can skip the cluster creation steps and proceed directly to [Installation on an Existing Cluster](120-existing-cluster.md).
 
 ---
 
@@ -14,26 +12,25 @@ then installing **FluxCD** and **KuboCD** on top of it.
 
 Ensure the following tools are installed on your workstation:
 
-- [Docker](https://www.docker.com/){:target="_blank"}.
-- [kubectl](https://kubernetes.io/docs/tasks/tools/){:target="_blank"}.
-- [Helm](https://helm.sh/){:target="_blank"}.
-- [Kind](https://kind.sigs.k8s.io/){:target="_blank"}.
-- [Flux CLI](https://fluxcd.io/flux/installation/#install-the-flux-cli){:target="_blank"}.
+- [Docker](https://www.docker.com/){:target="_blank"}
+- [kubectl](https://kubernetes.io/docs/tasks/tools/){:target="_blank"}
+- [Helm](https://helm.sh/){:target="_blank"}
+- [Kind](https://kind.sigs.k8s.io/){:target="_blank"}
+- [Flux CLI](https://fluxcd.io/flux/installation/#install-the-flux-cli){:target="_blank"}
 
-Make sure:
+Please ensure that:
 
-- Docker is running
-- You have an active internet connection
-- Ports **80** and **443** are available on your local machine
+- Docker is running.
+- You have an active internet connection.
+- Ports **80** and **443** are available on your local machine.
 
-You also need an access to an OCI-compatible container registry with permissions to push images.
-This is will be necessary for uploading and storing KuboCD Packages as OCI artifacts.
+You will also need access to an OCI-compatible container registry with push permissions. This is required for storing KuboCD Packages as OCI artifacts.
 
 ---
 
-## Create the Kind Cluster
+## Create a Kind Cluster
 
-Create a configuration file with ingress-compatible port mappings:
+First, create a configuration file that defines the necessary port mappings for the ingress controller:
 
 ```{ .bash .copy }
 cat >/tmp/kubodoc-config.yaml <<EOF
@@ -53,17 +50,17 @@ EOF
 ```
 
 !!! note
-    The `extraPortMappings` allow direct access to services like the ingress controller from your local machine.
+    The `extraPortMappings` configuration exposes services, such as the ingress controller, directly to your local machine.
 
-Then create the cluster:
+Next, create the cluster using the configuration file:
 
 ```{ .bash .copy }
 kind create cluster --config /tmp/kubodoc-config.yaml
 ```
 
-This will create a single-node cluster acting as both control plane and worker node.
+This command provisions a single-node cluster that functions as both the control plane and a worker node.
 
-Example output:
+**Example Output:**
 
 ```bash
 Creating cluster "kubodoc" ...
@@ -79,13 +76,13 @@ You can now use your cluster with:
 kubectl cluster-info --context kind-kubodoc
 ```
 
-Verify everything is running:
+Verify that the cluster is operational:
 
 ```{ .bash .copy }
 kubectl get pods -A
 ```
 
-```{ .bash }
+```text
 NAMESPACE            NAME                                            READY   STATUS    RESTARTS   AGE
 kube-system          coredns-668d6bf9bc-nwzqj                        1/1     Running   0          52s
 kube-system          coredns-668d6bf9bc-xgv9f                        1/1     Running   0          52s
@@ -104,17 +101,17 @@ local-path-storage   local-path-provisioner-7dc846544d-k8bhb         1/1     Run
 
 ### Install the Flux CLI
 
-If not already installed, follow the [Flux CLI installation guide](https://fluxcd.io/flux/installation/#install-the-flux-cli){:target="_blank"}..
+If not already installed, please refer to the [Flux CLI installation guide](https://fluxcd.io/flux/installation/#install-the-flux-cli){:target="_blank"}.
 
-### Deploy Flux (Basic Mode)
+### Deploy Flux (Standalone Mode)
 
-We’ll begin with a basic installation of Flux (no Git repository linked for now):
+Perform a standalone installation of Flux (without linking a Git repository initially):
 
 ```{ .bash .copy }
 flux install
 ```
 
-``` { .bash }
+```text
 ✚ generating manifests
 ✔ manifests build completed
 ► installing components in flux-system namespace
@@ -124,13 +121,13 @@ flux install
 ✔ install finished
 ```
 
-Verify deployment:
+Verify the deployment:
 
-``` { .bash .copy }
+```{ .bash .copy }
 kubectl -n flux-system get pods
 ```
 
-``` { .bash }
+```text
 NAME                                       READY   STATUS    RESTARTS   AGE
 helm-controller-b6767d66-q27gd             1/1     Running   0          14m
 kustomize-controller-5b56686fbc-hpkhl      1/1     Running   0          14m
@@ -139,8 +136,8 @@ source-controller-6ff87cb475-hnmxv         1/1     Running   0          14m
 ```
 
 !!! tip
-    **💡 Want a minimal install?**  
-    You can limit Flux to the required components for KuboCD:  
+    **Minimal Installation**  
+    For a lighter setup, you can install only the components required by KuboCD:  
     `flux install --components source-controller,helm-controller`
 
 ---
@@ -155,24 +152,23 @@ helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/chart
 
 ---
 
-## About Webhook-Based Features
+## Webhook-Based Features
 
-Some advanced features in **KuboCD** such as **Release protection** rely on a Kubernetes **validating webhook.**
+Certain advanced **KuboCD** features, such as **Release protection**, depend on a Kubernetes **validating webhook**.
 
-To enable these features, you need to deploy a webhook component alongside the controller. 
-
-But, this webhook requires [**cert-manager**](https://cert-manager.io/){:target="_blank"}. to be installed in your cluster to handle TLS certificate provisioning. 
-We’ll show you how to package and install it with KuboCD in a later section. After that, you will be able to deploy the KuboCD webhook. 
+Enabling this webhook requires [**cert-manager**](https://cert-manager.io/){:target="_blank"} for TLS certificate management. We will cover how to package and install cert-manager using KuboCD in a later section. Once cert-manager is available, you can proceed to deploy the KuboCD webhook.
 
 ---
 
 ## Install the KuboCD CLI
 
-Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.2.3){:target="_blank"}
-and rename it to `kubocd`. Then make it executable and move it to your path:
+Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.2.3){:target="_blank"}.
+
+Rename the binary to `kubocd`, make it executable, and move it to a directory in your system `$PATH`:
 
 ```{ .bash .copy }
-mv kubocd_*_* kubocd
+# Replace <binary-name> with the actual downloaded filename
+mv <binary-name> kubocd
 chmod +x kubocd
 sudo mv kubocd /usr/local/bin/
 ```
@@ -183,5 +179,4 @@ Verify the installation:
 kubocd version
 ```
 
-You can now move to [your first deployment with KuboCD](130-a-first-deployment.md)
-
+You are now ready for [your first deployment with KuboCD](130-a-first-deployment.md).
