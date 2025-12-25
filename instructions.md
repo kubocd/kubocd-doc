@@ -9,3 +9,8 @@ Don't touch the remaining of the manuel for now.
 now, rewrite docs/110-kind.md
 
 now, rewrite all other files in docs folder
+
+
+refactor the reference part, using some form of table for a prettiest layout. Refactor the 'Release' page only for now
+
+now, refactor all other reference pages.
