@@ -147,7 +147,7 @@ source-controller-6ff87cb475-hnmxv         1/1     Running   0          14m
 Deploy KuboCD using Helm:
 
 ```{ .bash .copy }
-helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl --version v0.3.0
+helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl --version v0.3.1-snapshot
 ```
 
 ---
@@ -162,7 +162,7 @@ Enabling this webhook requires [**cert-manager**](https://cert-manager.io/){:tar
 
 ## Install the KuboCD CLI
 
-Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.3.0){:target="_blank"}.
+Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.3.1-snapshot){:target="_blank"}.
 
 Rename the binary to `kubocd`, make it executable, and move it to a directory in your system `$PATH`:
 
