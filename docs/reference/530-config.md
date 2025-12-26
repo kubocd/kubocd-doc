@@ -31,10 +31,10 @@
 
 ## onFailureStrategy
 
-| Field | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `name` | String | **Yes** | Unique strategy name. |
-| `values` | Map | **Yes** | Flux-compatible configuration for `install` and `upgrade` strategies. |
+| Field      | Type | Required | Description |
+|:-----------| :--- | :--- | :--- |
+| `name`     | String | **Yes** | Unique strategy name. |
+| `strategy` | Map | **Yes** | Flux-compatible configuration for `install` and `upgrade` strategies. |
 
 ---
 

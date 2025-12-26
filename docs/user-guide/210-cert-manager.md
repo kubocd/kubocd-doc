@@ -283,6 +283,7 @@ kubectl get ingresses podinfo4
 ```
 
 Access the secured URL:
+
 👉 [https://podinfo4.ingress.kubodoc.local](https://podinfo4.ingress.kubodoc.local){:target="_blank"}
 
 > Note: You will encounter browser security warnings because we are using a self-signed certificate.

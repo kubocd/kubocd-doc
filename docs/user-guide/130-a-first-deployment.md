@@ -86,9 +86,11 @@ KuboCD uses an OCI-compatible container registry to store and distribute package
 
 - `quay.io` (Red Hat)
 - `ghcr.io` (GitHub)
-- [distribution registry](https://github.com/distribution/distribution)
+- [distribution registry](https://github.com/distribution/distribution){:target="_blank"}
 
-Other OCI-compliant registries should also work. **Docker Hub is currently not supported.**
+Other OCI-compliant registries should also work. 
+
+> **Docker Hub is currently not supported.**
 
 Ensure you are authenticated with your registry:
 

@@ -88,6 +88,7 @@ This chapter demonstrates advanced KuboCD features using a Redis deployment exam
 ## Multiple Modules
 
 This package integrates two modules:
+
 1. **Redis Server**: The core database.
 2. **Redis Commander**: A web-based management UI.
 
@@ -143,6 +144,7 @@ For dependencies between different Releases, KuboCD uses **Roles**.
 This abstraction provides flexibility. For example, an application needing an ingress controller depends on the `ingress` role, regardless of the implementation (NGINX, Traefik, etc.).
 
 Roles and dependencies can be defined at:
+
 - **Package Level**: Static definitions (like in the example above).
 - **Release Level**: Dynamic definitions via `spec.roles` and `spec.dependencies`.
 
