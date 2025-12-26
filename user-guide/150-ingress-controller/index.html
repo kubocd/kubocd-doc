@@ -414,7 +414,7 @@
   
   
   <span class="md-ellipsis">
-    Under the hood - debugging
+    Under the hood - Components
     
   </span>
   
@@ -484,7 +484,7 @@
         <li class="md-nav__item">
   <a href="#build-the-ingress-nginx-package" class="md-nav__link">
     <span class="md-ellipsis">
-      Build the ingress-nginx package:
+      Build the Ingress-Nginx Package
     </span>
   </a>
   
@@ -493,16 +493,16 @@
         <li class="md-nav__item">
   <a href="#deploy-the-package" class="md-nav__link">
     <span class="md-ellipsis">
-      Deploy the package
+      Deploy the Package
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#configure-the-dns-entry" class="md-nav__link">
+  <a href="#configure-dns" class="md-nav__link">
     <span class="md-ellipsis">
-      Configure the DNS entry
+      Configure DNS
     </span>
   </a>
   
@@ -645,6 +645,29 @@
   
   <span class="md-ellipsis">
     Cert-manager setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../220-deployment-failure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployment failure
     
   </span>
   
@@ -828,7 +851,7 @@
         <li class="md-nav__item">
   <a href="#build-the-ingress-nginx-package" class="md-nav__link">
     <span class="md-ellipsis">
-      Build the ingress-nginx package:
+      Build the Ingress-Nginx Package
     </span>
   </a>
   
@@ -837,16 +860,16 @@
         <li class="md-nav__item">
   <a href="#deploy-the-package" class="md-nav__link">
     <span class="md-ellipsis">
-      Deploy the package
+      Deploy the Package
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#configure-the-dns-entry" class="md-nav__link">
+  <a href="#configure-dns" class="md-nav__link">
     <span class="md-ellipsis">
-      Configure the DNS entry
+      Configure DNS
     </span>
   </a>
   
@@ -874,23 +897,23 @@
 <h1 id="setting-up-the-ingress-controller">Setting Up the Ingress Controller</h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If you're using an existing cluster, there's likely already an ingress controller installed. <strong>Do not install another one</strong>.<br />
-However, you should still read this section as several new features are described.</p>
+<p><strong>Existing Clusters:</strong> If you are using an existing cluster, an ingress controller is likely already installed. <strong>Do not install another one.</strong>
+However, we recommend reading this section as it introduces several new features.</p>
 </div>
-<p>If you're following the local <code>kind</code> cluster setup, you’ll need to install an ingress controller to make use of the deployed <code>Ingress</code> object.</p>
+<p>If you are following the local <code>kind</code> cluster guide, you must install an ingress controller to support the <code>Ingress</code> resources.</p>
 <p>Check the current <code>Ingress</code> object created by the <code>podinfo</code> deployment:</p>
 <div class="language-text copy highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl get ingresses
 </span></code></pre></div>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>NAME<span class="w">            </span>CLASS<span class="w">   </span>HOSTS<span class="w">                            </span>ADDRESS<span class="w">   </span>PORTS<span class="w">   </span>AGE
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>podinfo1-main<span class="w">   </span>nginx<span class="w">   </span>podinfo1.ingress.kubodoc.local<span class="w">             </span><span class="m">80</span><span class="w">      </span>6m33s
 </span></code></pre></div>
-<p>At this point, the ingress is inactive since no ingress controller is installed.</p>
+<p>The ingress is currently inactive because no controller is running.</p>
 <hr />
-<h2 id="build-the-ingress-nginx-package">Build the ingress-nginx package:</h2>
-<p>Here is a sample package definition for the <code>ingress-nginx</code> controller:</p>
+<h2 id="build-the-ingress-nginx-package">Build the Ingress-Nginx Package</h2>
+<p>Below is a sample package definition for the <code>ingress-nginx</code> controller.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This first version is dedicated to the configuration we set up the cluster, using the kind <code>portMapping</code> and <code>NodePorts</code>.</p>
+<p>This configuration is specific to our local Kind cluster setup, leveraging <code>portMapping</code> and <code>NodePorts</code>.</p>
 </div>
 <details class="abstract" open="open">
 <summary>ingress-nginx-p01.yaml</summary>
@@ -899,7 +922,7 @@ However, you should still read this section as several new features are describe
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4.12.1-p01</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nt">protected</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nt">modules</span><span class="p">:</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">noname</span>
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4m</span>
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="nt">source</span><span class="p">:</span>
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">      </span><span class="nt">helmRepository</span><span class="p">:</span>
@@ -919,19 +942,19 @@ However, you should still read this section as several new features are describe
 </span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress</span>
 </span></code></pre></div>
 </details>
-<p>New key points compared to the <code>podinfo</code> Package:</p>
+<p><strong>Key Differences from the <code>podinfo</code> Package:</strong></p>
 <ul>
-<li><code>protected: true</code>: Prevents accidental deletion of the release. (Currently not enforced unless KuboCD webhook is installed.)</li>
-<li><code>timeout: 4m</code>: Overrides the default deployment timeout (<code>2m</code>) because this Helm chart may take some time to deploy.</li>
-<li><code>values</code>: This section is in proper YAML format (no '|': not a templated string), since it does not include any templating.</li>
-<li><code>roles</code>: Assigns the package to the <code>ingress</code> role. This is used for dependency management between releases. 
-  This will be described later in this documentation</li>
+<li><strong><code>protected: true</code></strong>: Prevents accidental deletion of the release. (Requires the KuboCD webhook to be enforced).</li>
+<li><strong><code>modules[0].name</code></strong>: The value <code>noname</code> prevents appending the module name to the Helm release and derived objects.</li>
+<li><strong><code>modules[0].timeout: 4m</code></strong>: Overrides the default timeout (<code>3m</code>) to accommodate the Helm chart deployment time.</li>
+<li><strong><code>modules[0].values</code></strong>: Pure YAML is used here instead of a templated string since no dynamic parameters are needed.</li>
+<li><strong><code>roles</code></strong>: Assigns the package to the <code>ingress</code> role. This is used for dependency management (discussed later).</li>
 </ul>
 <p>Build the package:</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kubocd<span class="w"> </span>pack<span class="w"> </span>packages/ingress-nginx-p01.yaml
 </span></code></pre></div>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="o">======================================</span><span class="w"> </span>Packaging<span class="w"> </span>package<span class="w"> </span><span class="s1">&#39;ingress-nginx.yaml&#39;</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>---<span class="w"> </span>Handling<span class="w"> </span>module<span class="w"> </span><span class="s1">&#39;main&#39;</span>:
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>---<span class="w"> </span>Handling<span class="w"> </span>module<span class="w"> </span><span class="s1">&#39;noname&#39;</span>:
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Fetching<span class="w"> </span>chart<span class="w"> </span>ingress-nginx:4.12.1...
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Chart:<span class="w"> </span>ingress-nginx:4.12.1
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>---<span class="w"> </span>Packaging
@@ -941,8 +964,8 @@ However, you should still read this section as several new features are describe
 </span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>Successfully<span class="w"> </span>pushed
 </span></code></pre></div>
 <hr />
-<h2 id="deploy-the-package">Deploy the package</h2>
-<p>Then define the <code>Release</code> resource:</p>
+<h2 id="deploy-the-package">Deploy the Package</h2>
+<p>Define the <code>Release</code> resource:</p>
 <details class="abstract" open="open">
 <summary>ingress-nginx.yaml</summary>
 <div class="language-yaml copy highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nn">---</span>
@@ -957,37 +980,45 @@ However, you should still read this section as several new features are describe
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">  </span><span class="nt">package</span><span class="p">:</span>
 </span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/kubodoc/packages/ingress-nginx</span>
 </span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4.12.1-p01</span>
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30m</span>
-</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">  </span><span class="nt">targetNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx</span>
-</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">  </span><span class="nt">createNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">  </span><span class="nt">targetNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress-nginx</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">  </span><span class="nt">createNamespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span></code></pre></div>
 </details>
-<p>Key points:</p>
+<p><strong>Key Features:</strong></p>
 <ul>
-<li><code>metadata.namespace: kubocd</code>: As it is a system components, deploy in a restricted namespace.</li>
-<li><code>spec.protected: false</code>: Just to demonstrates that the package-level <code>protected</code> flag can be overridden at the release level.</li>
-<li><code>spec.targetNamespace: ingress-nginx</code>: Installs the ingress controller in its own namespace.</li>
-<li><code>spec.createNamespace: true</code>: Automatically creates the target namespace if it doesn't exist.</li>
+<li><strong><code>metadata.namespace: kubocd</code></strong>: Deployed in a restricted system namespace.</li>
+<li><strong><code>spec.protected: false</code></strong>: Demonstrates overriding the package-level <code>protected</code> flag at the release level.</li>
+<li><strong><code>spec.targetNamespace: ingress-nginx</code></strong>: Installs the controller in its own dedicated namespace.</li>
+<li><strong><code>spec.createNamespace: true</code></strong>: Automatically creates the target namespace if missing.</li>
+<li><strong><code>spec.package.interval</code></strong>: Defaults to <code>30m</code>.</li>
 </ul>
 <p>Apply the release:</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>releases/ingress-nginx.yaml
 </span></code></pre></div>
-<p>Check the release status:</p>
+<p>Check the status:</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>get<span class="w"> </span>release
 </span></code></pre></div>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>NAME<span class="w">            </span>REPOSITORY<span class="w">                               </span>TAG<span class="w">          </span>CONTEXTS<span class="w">   </span>STATUS<span class="w">   </span>READY<span class="w">   </span>WAIT<span class="w">   </span>PRT<span class="w">   </span>AGE<span class="w">   </span>DESCRIPTION
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ingress-nginx<span class="w">   </span>quay.io/kubodoc/packages/ingress-nginx<span class="w">   </span><span class="m">4</span>.12.1-p01<span class="w">              </span>READY<span class="w">    </span><span class="m">1</span>/1<span class="w">            </span>-<span class="w">     </span>86s<span class="w">   </span>The<span class="w"> </span>Ingress<span class="w"> </span>controller
 </span></code></pre></div>
-<hr />
-<h2 id="configure-the-dns-entry">Configure the DNS entry</h2>
-<p>To access the <code>podinfo</code> application, you'll need to define a DNS entry matching the <code>fqdn</code> parameter.</p>
-<p>The simplest way in our case is to use the <code>/etc/hosts</code> file:</p>
-<div class="language-text copy highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>127.0.0.1 localhost podinfo1.ingress.kubodoc.local
+<p>Verify the pod:</p>
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>ingress-nginx<span class="w"> </span>get<span class="w"> </span>pods
 </span></code></pre></div>
-<p>Make sure the fqdn matches <strong>exactly</strong> what was provided in the podinfo <code>Release</code> parameters.</p>
-<p>You should now be able to access the 'podinfo` web server:</p>
-<p>👉 <a href="http://podinfo1.ingress.kubodoc.local" target="_blank">http://podinfo1.ingress.kubodoc.local</a>.</p>
-<p>Of course, since we are using a CA that is not trusted by your workstation, you will need to bypass some security warnings.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>NAME<span class="w">                                        </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>ingress-nginx-controller-658fbb96d5-hctqp<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>4m12s
+</span></code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> If the pod name still includes <code>noname</code> (e.g., <code>ingress-nginx-noname-controller-...</code>), you may be using a KuboCD version older than <code>v0.2.3</code>.</p>
+</blockquote>
+<hr />
+<h2 id="configure-dns">Configure DNS</h2>
+<p>To access <code>podinfo</code>, you need a DNS entry matching the <code>fqdn</code> parameter.</p>
+<p>The simplest method is to add an entry to your <code>/etc/hosts</code> file:</p>
+<div class="language-text copy highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>127.0.0.1 localhost podinfo1.ingress.kubodoc.local
+</span></code></pre></div>
+<p>Ensure the FQDN matches <strong>exactly</strong> what was defined in the <code>Release</code> parameters.</p>
+<p>You should now be able to access the <code>podinfo</code> web server:</p>
+<p>👉 <a href="http://podinfo1.ingress.kubodoc.local" target="_blank">http://podinfo1.ingress.kubodoc.local</a></p>
 
 
 
@@ -1017,7 +1048,7 @@ However, you should still read this section as several new features are describe
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../140-under-the-hood/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Under the hood - debugging">
+          <a href="../140-under-the-hood/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Under the hood - Components">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1027,7 +1058,7 @@ However, you should still read this section as several new features are describe
                 Previous
               </span>
               <div class="md-ellipsis">
-                Under the hood - debugging
+                Under the hood - Components
               </div>
             </div>
           </a>

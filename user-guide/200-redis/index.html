@@ -414,7 +414,7 @@
   
   
   <span class="md-ellipsis">
-    Under the hood - debugging
+    Under the hood - Components
     
   </span>
   
@@ -597,40 +597,40 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#integrate-multiple-modules" class="md-nav__link">
+  <a href="#multiple-modules" class="md-nav__link">
     <span class="md-ellipsis">
-      Integrate Multiple Modules
+      Multiple Modules
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#configure-different-source-types" class="md-nav__link">
+  <a href="#mixed-source-types" class="md-nav__link">
     <span class="md-ellipsis">
-      Configure Different Source Types
+      Mixed Source Types
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#control-module-deployment" class="md-nav__link">
+  <a href="#conditional-deployment" class="md-nav__link">
     <span class="md-ellipsis">
-      Control Module Deployment
+      Conditional Deployment
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#manage-dependencies" class="md-nav__link">
+  <a href="#dependency-management" class="md-nav__link">
     <span class="md-ellipsis">
-      Manage Dependencies
+      Dependency Management
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Manage Dependencies">
+    <nav class="md-nav" aria-label="Dependency Management">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -654,7 +654,7 @@
           <li class="md-nav__item">
   <a href="#cluster-roles" class="md-nav__link">
     <span class="md-ellipsis">
-      Cluster roles
+      Cluster Roles
     </span>
   </a>
   
@@ -687,7 +687,7 @@
           <li class="md-nav__item">
   <a href="#full-deployment" class="md-nav__link">
     <span class="md-ellipsis">
-      Full deployment
+      Full Deployment
     </span>
   </a>
   
@@ -696,7 +696,7 @@
           <li class="md-nav__item">
   <a href="#redis-only-deployment" class="md-nav__link">
     <span class="md-ellipsis">
-      Redis only deployment
+      Redis-Only Deployment
     </span>
   </a>
   
@@ -729,6 +729,29 @@
   
   <span class="md-ellipsis">
     Cert-manager setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../220-deployment-failure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployment failure
     
   </span>
   
@@ -910,40 +933,40 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#integrate-multiple-modules" class="md-nav__link">
+  <a href="#multiple-modules" class="md-nav__link">
     <span class="md-ellipsis">
-      Integrate Multiple Modules
+      Multiple Modules
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#configure-different-source-types" class="md-nav__link">
+  <a href="#mixed-source-types" class="md-nav__link">
     <span class="md-ellipsis">
-      Configure Different Source Types
+      Mixed Source Types
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#control-module-deployment" class="md-nav__link">
+  <a href="#conditional-deployment" class="md-nav__link">
     <span class="md-ellipsis">
-      Control Module Deployment
+      Conditional Deployment
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#manage-dependencies" class="md-nav__link">
+  <a href="#dependency-management" class="md-nav__link">
     <span class="md-ellipsis">
-      Manage Dependencies
+      Dependency Management
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Manage Dependencies">
+    <nav class="md-nav" aria-label="Dependency Management">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -967,7 +990,7 @@
           <li class="md-nav__item">
   <a href="#cluster-roles" class="md-nav__link">
     <span class="md-ellipsis">
-      Cluster roles
+      Cluster Roles
     </span>
   </a>
   
@@ -1000,7 +1023,7 @@
           <li class="md-nav__item">
   <a href="#full-deployment" class="md-nav__link">
     <span class="md-ellipsis">
-      Full deployment
+      Full Deployment
     </span>
   </a>
   
@@ -1009,7 +1032,7 @@
           <li class="md-nav__item">
   <a href="#redis-only-deployment" class="md-nav__link">
     <span class="md-ellipsis">
-      Redis only deployment
+      Redis-Only Deployment
     </span>
   </a>
   
@@ -1039,8 +1062,8 @@
   
 
 
-<h1 id="advanced-features-redis-sample">Advanced features: Redis sample</h1>
-<p>We will use another example to demonstrate some of KuboCD’s more advanced features.</p>
+<h1 id="advanced-features-redis-sample">Advanced Features: Redis Sample</h1>
+<p>This chapter demonstrates advanced KuboCD features using a Redis deployment example.</p>
 <details class="abstract" open="open">
 <summary>redis-p01.yaml</summary>
 <div class="language-yaml copy highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1alpha1</span>
@@ -1067,14 +1090,14 @@
 </span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">          </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> type</span><span class="p">:</span><span class="w"> </span><span class="nv">string</span><span class="p p-Indicator">,</span><span class="nt"> default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nginx&quot;</span><span class="p p-Indicator">}</span>
 </span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">          </span><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> type</span><span class="p">:</span><span class="w"> </span><span class="nv">string</span><span class="p p-Indicator">,</span><span class="nt"> required</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="w"> </span><span class="p p-Indicator">}</span>
 </span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="nt">modules</span><span class="p">:</span>
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis</span>
-</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4m</span>
-</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">    </span><span class="nt">source</span><span class="p">:</span>
-</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">      </span><span class="nt">oci</span><span class="p">:</span>
-</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">        </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry-1.docker.io/bitnamicharts/redis</span>
-</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">        </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.6.1</span>
-</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">      </span><span class="no">fullnameOverride: {{ .Release.metadata.name }}-main</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">noname</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">    </span><span class="nt">source</span><span class="p">:</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">      </span><span class="nt">oci</span><span class="p">:</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">        </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry-1.docker.io/bitnamicharts/redis</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">        </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.6.1</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">      </span><span class="no">image:</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">        </span><span class="no">tag: latest</span>
 </span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">      </span><span class="no">global:</span>
 </span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="w">        </span><span class="no">redis:</span>
 </span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="w">          </span><span class="no">password: {{ .Parameters.redis.password }}</span>
@@ -1092,7 +1115,7 @@
 </span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="w">    </span><span class="nt">source</span><span class="p">:</span>
 </span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="w">      </span><span class="nt">git</span><span class="p">:</span>
 </span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="w">        </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/joeferner/redis-commander.git</span>
-</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">././k8s/helm-chart/redis-commander</span>
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./k8s/helm-chart/redis-commander</span>
 </span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a><span class="w">        </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master</span>
 </span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a><span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 </span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a><span class="w">      </span><span class="no">fullnameOverride: {{ .Release.metadata.name }}-ui</span>
@@ -1108,7 +1131,7 @@
 </span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a><span class="w">            </span><span class="no">paths:</span>
 </span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a><span class="w">              </span><span class="no">- &quot;/&quot;</span>
 </span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a><span class="w">    </span><span class="nt">dependsOn</span><span class="p">:</span>
-</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis</span>
+</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">noname</span>
 </span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a><span class="nt">roles</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 </span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a><span class="w">  </span><span class="no">- redis</span>
 </span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a><span class="w">  </span><span class="no">{{ if .Parameters.ui.enabled }}</span>
@@ -1120,197 +1143,117 @@
 </span><span id="__span-0-75"><a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a><span class="w">  </span><span class="no">{{ end }}</span>
 </span></code></pre></div>
 </details>
-<p>We will now explore the new features used in this package.</p>
 <hr />
-<h2 id="integrate-multiple-modules">Integrate Multiple Modules</h2>
-<p>This package integrates two modules: the Redis server itself, and <a href="https://github.com/joeferner/redis-commander">Commander</a>, a Redis UI front end.</p>
-<p>There is a single data model used by both modules, which allows variables to be shared easily.</p>
-<p>Consequently, the <code>schema.parameters</code> and <code>schema.context</code> are also global.</p>
-<p>Regarding the related Flux objects, there will be one <code>OCIRepository</code>, one <code>HelmRepository</code>, and two <code>HelmReleases</code>.</p>
+<h2 id="multiple-modules">Multiple Modules</h2>
+<p>This package integrates two modules:
+1. <strong>Redis Server</strong>: The core database.
+2. <strong>Redis Commander</strong>: A web-based management UI.</p>
+<p>Both modules share a single data model, allowing easy variable sharing. Consequently, <code>schema.parameters</code> and <code>schema.context</code> are global to the package.</p>
+<p>When deployed, Flux creates one <code>OCIRepository</code>, one <code>HelmRepository</code>, and two <code>HelmReleases</code>.</p>
+<p>Note that the main module is named <code>noname</code> to simplify resource naming.</p>
 <hr />
-<h2 id="configure-different-source-types">Configure Different Source Types</h2>
-<p>Redis publishes its Helm chart as an OCI image. Therefore, in the source section of the first module, the chart is 
-referenced in this form.</p>
-<p>Redis Commander, on the other hand, provides its chart only through its GitHub repository. Thus, it is referenced
-in the source section of the second module accordingly.</p>
-<hr />
-<h2 id="control-module-deployment">Control Module Deployment</h2>
-<p>The <code>ui</code> module includes a <code>disabled</code> attribute, which can be templated. This allows the deployment of this module to be 
-conditionally triggered based on a choice made during deployment, using a parameter passed to the <code>Release</code> resource.</p>
-<hr />
-<h2 id="manage-dependencies">Manage Dependencies</h2>
-<p>Usually, in the Kubernetes ecosystem, it is possible to ignore dependencies between applications, as they are typically 
-well-designed and operate with retry logic until they eventually reach a stable state.</p>
-<p>However, this approach has its limitations. To address them, KuboCD introduces a structured dependency system between 
-deployments.</p>
-<p>KuboCD manages dependencies:</p>
+<h2 id="mixed-source-types">Mixed Source Types</h2>
 <ul>
-<li>Between modules within the same package</li>
-<li>Between different packages</li>
+<li><strong>Redis</strong>: Published as an OCI image. The <code>source</code> section references the OCI registry.
+    &gt; Note: The Bitnami Redis Docker image version in the chart is outdated, so we override the tag to <code>latest</code>.</li>
+<li><strong>Redis Commander</strong>: Only provides a chart via GitHub. The <code>source</code> section references the Git repository.</li>
 </ul>
-<p>These two types of dependencies rely on different mechanisms.</p>
+<hr />
+<h2 id="conditional-deployment">Conditional Deployment</h2>
+<p>The <code>ui</code> module includes an <code>enabled</code> attribute. This allows its deployment to be toggleable via a <code>Release</code> parameter (<code>.Parameters.ui.enabled</code>).</p>
+<hr />
+<h2 id="dependency-management">Dependency Management</h2>
+<p>While Kubernetes applications often rely on retry loops to handle dependencies, KuboCD offers a structured dependency system.</p>
 <h3 id="module-dependencies">Module Dependencies</h3>
-<p>From the sample above:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>apiVersion: v1alpha1
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>name: redis
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>......
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>modules:
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  - name: redis
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    ........
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  - name: ui
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    ..........
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    dependsOn:
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>      - redis
+<p>Dependencies between modules within the same package:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">modules</span><span class="p">:</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">noname</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ui</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="nt">dependsOn</span><span class="p">:</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">noname</span>
 </span></code></pre></div>
-<p>The <code>dependsOn</code> attribute lists other module names that the current module depends on. These modules must belong to the same <code>Package</code></p>
-<p>In this example, it ensures that the deployment of the <code>ui</code> module will wait until the deployment of the <code>redis</code> module is complete.</p>
-<blockquote>
-<p>This mechanism results in adding the <code>dependsOn</code> attribute to the Flux <code>HelmRelease</code> resource corresponding to the <code>ui</code> module.</p>
-</blockquote>
+<p>The <code>ui</code> module waits for the <code>noname</code> module (Redis) to become ready. This translates to a <code>dependsOn</code> rule in the underlying Flux <code>HelmRelease</code>.</p>
 <h3 id="release-dependencies-and-roles">Release Dependencies and Roles</h3>
-<p>For cross-Release dependencies, KuboCD introduces an abstraction: the concept of roles.</p>
-<p>A <code>Release</code> can fulfill one (or more) roles, and similarly, it can depend on one (or more) roles.</p>
-<p>This abstraction offers much greater flexibility. For example, an application that exposes a web service outside the 
-cluster depends on the presence of an ingress controller. It would therefore depend on a role named <code>ingress</code>, 
-regardless of whether the controller is implemented by NGINX, Traefik, Kong, or another solution.</p>
-<p>Roles can be defined at the <code>Package</code> level, as in this example, or directly at the <code>Release</code> level, using the <code>spec.roles</code> attribute.</p>
-<p>Similarly, dependencies can be defined at either the <code>Package</code> level or the <code>Release</code> level, using the <code>spec.dependencies</code> attribute.</p>
-<blockquote>
-<p>Note:
-    During rendering, both roles and dependencies defined at the Package and Release levels are concatenated.
-    This ensures that the final dependency graph combines all relevant definitions from both scopes.</p>
-</blockquote>
-<h3 id="cluster-roles">Cluster roles</h3>
-<p>The deployment of a package is conditioned on the availability of the roles it depends on, meaning that at least one 
-application fulfilling each required role must be successfully deployed.</p>
-<p>In some cases, a role may already be fulfilled by an application that was not deployed by KuboCD.
-For example, if you're using a cluster that already includes an Ingress controller and a Load Balancer, you need 
-to inform KuboCD that these roles are already satisfied externally.</p>
-<p>Such roles are called <code>ClusterRoles</code>, and their list is defined in the global <a href="../170-context-and-config/">KuboCD configuration resource: <code>Config</code></a>.</p>
+<p>For dependencies between different Releases, KuboCD uses <strong>Roles</strong>.</p>
+<ul>
+<li>A <code>Release</code> can <strong>fulfill</strong> one or more roles.</li>
+<li>A <code>Release</code> can <strong>depend on</strong> one or more roles.</li>
+</ul>
+<p>This abstraction provides flexibility. For example, an application needing an ingress controller depends on the <code>ingress</code> role, regardless of the implementation (NGINX, Traefik, etc.).</p>
+<p>Roles and dependencies can be defined at:
+- <strong>Package Level</strong>: Static definitions (like in the example above).
+- <strong>Release Level</strong>: Dynamic definitions via <code>spec.roles</code> and <code>spec.dependencies</code>.</p>
+<p>During rendering, definitions from both levels are merged.</p>
+<h3 id="cluster-roles">Cluster Roles</h3>
+<p>If a role is fulfilled by an external system (e.g., a pre-installed Ingress Controller on a cloud provider), it is defined as a <strong>ClusterRole</strong>.</p>
+<p>ClusterRoles are configured in the global <a href="../170-context-and-config/"><code>Config</code> resource</a> to inform KuboCD that a dependency is externally satisfied.</p>
 <hr />
 <h2 id="deployment">Deployment</h2>
 <h3 id="packaging">Packaging</h3>
-<p>This new application must be packaged:</p>
+<p>Build the package:</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubocd<span class="w"> </span>pack<span class="w"> </span>packages/redis-p01.yaml<span class="w"> </span>
 </span></code></pre></div>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>====================================== Packaging package &#39;packages/redis-p01.yaml&#39;
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>--- Handling module &#39;redis&#39;:
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    Pulling image &#39;registry-1.docker.io/bitnamicharts/redis:20.6.1&#39;
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    Chart: redis:20.6.1
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>--- Handling module &#39;ui&#39;:
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    Cloning git repository &#39;https://github.com/joeferner/redis-commander.git&#39;
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    Chart: redis-commander:0.6.0
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>--- Packaging
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    Generating index file
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    Wrap all in assembly.tgz
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>--- push OCI image: quay.io/kubodoc/packages/redis:20.6.1-p01
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    Successfully pushed
-</span></code></pre></div>
-<h3 id="full-deployment">Full deployment</h3>
-<p>A first deployment, including the front end:</p>
+<h3 id="full-deployment">Full Deployment</h3>
+<p>Deploy both Redis and the UI:</p>
 <details class="abstract" open="open">
 <summary>redis1-basic.yaml</summary>
-<div class="language-yaml copy highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nn">---</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubocd.kubotal.io/v1alpha1</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Release</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis1</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="nt">package</span><span class="p">:</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/kubodoc/packages/redis</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.6.1-p01</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30m</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="nt">ui</span><span class="p">:</span>
-</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">      </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis1</span>
+<div class="language-yaml copy highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nn">---</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubocd.kubotal.io/v1alpha1</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Release</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis1</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="nt">package</span><span class="p">:</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/kubodoc/packages/redis</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.6.1-p01</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="nt">ui</span><span class="p">:</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">      </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis1</span>
 </span></code></pre></div>
 </details>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>releases/redis1-basic.yaml<span class="w"> </span>
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>releases/redis1-basic.yaml<span class="w"> </span>
 </span></code></pre></div>
-<p>You can now check the status of the deployment.
-Note that this may take some time, as the Redis deployment can be quite slow.</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>release<span class="w"> </span>redis1
+<p>Check status (Redis deployment may take time):</p>
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>release<span class="w"> </span>redis1
 </span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>NAME<span class="w">     </span>REPOSITORY<span class="w">                       </span>TAG<span class="w">          </span>CONTEXTS<span class="w">           </span>STATUS<span class="w">   </span>READY<span class="w">   </span>WAIT<span class="w">   </span>PRT<span class="w">   </span>AGE<span class="w">     </span>DESCRIPTION
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>redis1<span class="w">   </span>quay.io/kubodoc/packages/redis<span class="w">   </span><span class="m">20</span>.6.1-p01<span class="w">   </span>contexts:cluster<span class="w">   </span>READY<span class="w">    </span><span class="m">2</span>/2<span class="w">            </span>-<span class="w">     </span>3m19s<span class="w">   </span>Redis<span class="w"> </span>and<span class="w"> </span>a<span class="w"> </span>front<span class="w"> </span>UI
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>NAME<span class="w">     </span>REPOSITORY<span class="w">                       </span>TAG<span class="w">          </span>CONTEXTS<span class="w">           </span>STATUS<span class="w">   </span>READY<span class="w">   </span>WAIT<span class="w">   </span>PRT<span class="w">   </span>AGE<span class="w">     </span>DESCRIPTION
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>redis1<span class="w">   </span>quay.io/kubodoc/packages/redis<span class="w">   </span><span class="m">20</span>.6.1-p01<span class="w">   </span>contexts:cluster<span class="w">   </span>READY<span class="w">    </span><span class="m">2</span>/2<span class="w">            </span>-<span class="w">     </span>3m19s<span class="w">   </span>Redis<span class="w"> </span>and<span class="w"> </span>a<span class="w"> </span>front<span class="w"> </span>UI
 </span></code></pre></div>
-<p>Notice the 2/2 under the READY column, which corresponds to the two modules.</p>
-<p>You can also inspect the status of the corresponding Flux <code>HelmRelease</code> resources:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>helmReleases<span class="w"> </span>
-</span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>NAME<span class="w">            </span>AGE<span class="w">     </span>READY<span class="w">   </span>STATUS
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>........
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>redis1-redis<span class="w">    </span>2m31s<span class="w">   </span>True<span class="w">    </span>Helm<span class="w"> </span>install<span class="w"> </span>succeeded<span class="w"> </span><span class="k">for</span><span class="w"> </span>release<span class="w"> </span>default/redis1-redis.v1<span class="w"> </span>with<span class="w"> </span>chart<span class="w"> </span>redis@20.6.1
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>redis1-ui<span class="w">       </span>2m31s<span class="w">   </span>True<span class="w">    </span>Helm<span class="w"> </span>install<span class="w"> </span>succeeded<span class="w"> </span><span class="k">for</span><span class="w"> </span>release<span class="w"> </span>default/redis1-ui.v1<span class="w"> </span>with<span class="w"> </span>chart<span class="w"> </span>redis-commander@0.6.0
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>.......
-</span></code></pre></div>
-<p>And related <code>pods</code>:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods
-</span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>NAME<span class="w">                                                     </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>.......
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>redis1-main-master-0<span class="w">                                     </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>12m
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>redis1-main-replicas-0<span class="w">                                   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>12m
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>redis1-ui-855cb8d656-rlqqh<span class="w">                               </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>11m
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>.......
-</span></code></pre></div>
-<p>And related ingress resource:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>ingresses<span class="w"> </span>redis1-ui
-</span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>NAME<span class="w">        </span>CLASS<span class="w">   </span>HOSTS<span class="w">                          </span>ADDRESS<span class="w">      </span>PORTS<span class="w">   </span>AGE
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>redis1-ui<span class="w">   </span>nginx<span class="w">   </span>redis1.ingress.kubodoc.local<span class="w">   </span><span class="m">10</span>.96.59.9<span class="w">   </span><span class="m">80</span><span class="w">      </span>3m40s
-</span></code></pre></div>
-<h3 id="redis-only-deployment">Redis only deployment</h3>
-<p>In this other deployment, only the Redis server is deployed.</p>
-<blockquote>
-<p>To satisfy the <code>schema.Parameters</code>, a dummy value must be provided for <code>ui.host</code>.</p>
-</blockquote>
+<p>Note <code>READY 2/2</code>, indicating two active modules.</p>
+<p>Access the UI at:
+<a href="http://redis1.ingress.kubodoc.local">http://redis1.ingress.kubodoc.local</a> (Requires DNS/hosts configuration).</p>
+<h3 id="redis-only-deployment">Redis-Only Deployment</h3>
+<p>Deploy only the Redis server:</p>
 <details class="abstract" open="open">
 <summary>redis2-basic.yaml</summary>
-<div class="language-yaml copy highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nn">---</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubocd.kubotal.io/v1alpha1</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Release</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis2</span>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">  </span><span class="nt">package</span><span class="p">:</span>
-</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/kubodoc/packages/redis</span>
-</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.6.1-p01</span>
-</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">    </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30m</span>
-</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
-</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">    </span><span class="nt">ui</span><span class="p">:</span>
-</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="w">      </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dummy</span>
+<div class="language-yaml copy highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nn">---</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubocd.kubotal.io/v1alpha1</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Release</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis2</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="nt">package</span><span class="p">:</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/kubodoc/packages/redis</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.6.1-p01</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="nt">ui</span><span class="p">:</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">      </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dummy</span>
 </span></code></pre></div>
 </details>
-<p>Then:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>releases/redis2-basic.yaml<span class="w"> </span>
+<blockquote>
+<p>Note: <code>host: dummy</code> is required to satisfy the schema validation, even though the UI is disabled.</p>
+</blockquote>
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>releases/redis2-basic.yaml<span class="w"> </span>
 </span></code></pre></div>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>helmReleases<span class="w"> </span>
-</span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>.......
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>redis1-redis<span class="w">    </span>10m<span class="w">     </span>True<span class="w">    </span>Helm<span class="w"> </span>install<span class="w"> </span>succeeded<span class="w"> </span><span class="k">for</span><span class="w"> </span>release<span class="w"> </span>default/redis1-redis.v1<span class="w"> </span>with<span class="w"> </span>chart<span class="w"> </span>redis@20.6.1
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>redis1-ui<span class="w">       </span>10m<span class="w">     </span>True<span class="w">    </span>Helm<span class="w"> </span>install<span class="w"> </span>succeeded<span class="w"> </span><span class="k">for</span><span class="w"> </span>release<span class="w"> </span>default/redis1-ui.v1<span class="w"> </span>with<span class="w"> </span>chart<span class="w"> </span>redis-commander@0.6.0
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>redis2-redis<span class="w">    </span>2m45s<span class="w">   </span>True<span class="w">    </span>Helm<span class="w"> </span>install<span class="w"> </span>succeeded<span class="w"> </span><span class="k">for</span><span class="w"> </span>release<span class="w"> </span>default/redis2-redis.v1<span class="w"> </span>with<span class="w"> </span>chart<span class="w"> </span>redis@20.6.1
-</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>.......
-</span></code></pre></div>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods
-</span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>NAME<span class="w">                                                     </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>.......
-</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>redis1-main-master-0<span class="w">                                     </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>12m
-</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>redis1-main-replicas-0<span class="w">                                   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>12m
-</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>redis1-ui-855cb8d656-rlqqh<span class="w">                               </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>11m
-</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>redis2-main-master-0<span class="w">                                     </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>4m51s
-</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>redis2-main-replicas-0<span class="w">                                   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>4m51s
-</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>.......
-</span></code></pre></div>
+<p>Verify that only the Redis pod is created for <code>redis2</code>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>It is possible to define a more precise schema, without the <code>host: dummy</code> constraint, by using the normalized syntax.
-You can find an implementation <a href="https://github.com/kubocd/kubocd-doc/blob/main/samples/packages/redis-p09.yaml">here</a>.</p>
+<p>To avoid the <code>host: dummy</code> workaround, you can refine the schema using the normalized syntax to make parameters conditional. <a href="https://github.com/kubocd/kubocd-doc/blob/main/samples/packages/redis-p09.yaml" target="_blank">See sample implementation</a>.</p>
 </div>
 
 

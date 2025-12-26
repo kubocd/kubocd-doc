@@ -442,6 +442,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Package Definition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attribute-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attribute Description
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -457,6 +472,39 @@
   <a href="#releasing-the-application" class="md-nav__link">
     <span class="md-ellipsis">
       Releasing the Application
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Releasing the Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attribute-description_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attribute Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      deploy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preflight-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preflight Check
     </span>
   </a>
   
@@ -483,7 +531,7 @@
   
   
   <span class="md-ellipsis">
-    Under the hood - debugging
+    Under the hood - Components
     
   </span>
   
@@ -645,6 +693,29 @@
   
   <span class="md-ellipsis">
     Cert-manager setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../220-deployment-failure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployment failure
     
   </span>
   
@@ -832,6 +903,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Package Definition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attribute-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attribute Description
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -847,6 +933,39 @@
   <a href="#releasing-the-application" class="md-nav__link">
     <span class="md-ellipsis">
       Releasing the Application
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Releasing the Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attribute-description_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attribute Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      deploy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preflight-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preflight Check
     </span>
   </a>
   
@@ -873,7 +992,7 @@
 
 <h1 id="a-first-deployment-with-kubocd">A First Deployment with KuboCD</h1>
 <h2 id="package-definition">Package Definition</h2>
-<p>For this initial deployment, we’ll use a simple and illustrative example: a tiny web application called <a href="https://github.com/stefanprodan/podinfo" target="_blank"><strong>podinfo</strong></a>.</p>
+<p>For this initial deployment, we will use a simple example: a lightweight web application called <a href="https://github.com/stefanprodan/podinfo" target="_blank"><strong>podinfo</strong></a>.</p>
 <p>A <strong>Package</strong> in KuboCD is defined using a YAML manifest. Below is an example that wraps the <code>podinfo</code> application:</p>
 <details class="abstract" open="open">
 <summary>podinfo-p01.yaml</summary>
@@ -915,30 +1034,31 @@
 <blockquote>
 <p>A KuboCD Package is <strong>NOT</strong> a native Kubernetes resource.</p>
 </blockquote>
-<div class="admonition tips">
-<p class="admonition-title">Tips</p>
-<p>You will find most on the samples used in this documentation at the <a href="https://github.com/kubocd/kubocd-doc/tree/main/samples" target="_blank">following location</a></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can find most samples used in this documentation in the <a href="https://github.com/kubocd/kubocd-doc/tree/main/samples" target="_blank">samples directory</a>.</p>
 </div>
-<p>Description of the sample Package attributes:</p>
+<h3 id="attribute-description">Attribute Description</h3>
 <ul>
-<li><strong><code>apiVersion</code></strong> (Required): Defines the version of the KuboCD Package format. The only supported value currently is <code>v1alpha1</code>.</li>
-<li><strong><code>type</code></strong>: Specifies the resource type. It must be <code>Package</code>, which is also the default and can be omitted.</li>
-<li><strong><code>name</code></strong>: The name of the package. This will be used as the OCI image name.</li>
-<li><strong><code>tag</code></strong> (Required): Specifies the version tag of the OCI image. While technically flexible, we will use the following convention:<ul>
-<li>Use the Helm chart version of the main module as a base, followed by <code>-pXX</code> where <code>XX</code> denotes the packaging revision (e.g. different configurations for the same chart).</li>
+<li><strong><code>apiVersion</code></strong> (Required): Defines the version of the KuboCD Package format. Currently, the only supported value is <code>v1alpha1</code>.</li>
+<li><strong><code>type</code></strong>: Specifies the resource type. Must be <code>Package</code> (default).</li>
+<li><strong><code>name</code></strong>: The package name. This is used as the OCI image name.</li>
+<li><strong><code>tag</code></strong> (Required): The version tag of the OCI image. We recommend the following convention:<ul>
+<li>Use the Helm chart version of the main module as a base.</li>
+<li>Append <code>-pXX</code>, where <code>XX</code> denotes the packaging revision (e.g., configuration changes for the same chart version).</li>
 </ul>
 </li>
-<li><strong><code>schema.parameters</code></strong>: Defines input parameters for the package, using a standard OpenAPI/JSON Schema. This enables validation and documentation of parameters at deployment time.<ul>
-<li>If not defined, the release will not accept parameters.</li>
+<li><strong><code>schema.parameters</code></strong>: Defines input parameters for the package using standard OpenAPI/JSON Schema. This enables validation and documentation at deployment time.<ul>
+<li>If omitted, the release will not accept parameters.</li>
 </ul>
 </li>
-<li><strong><code>modules</code></strong> (Required): A package contains one or more Helm charts, each represented as a module.<ul>
-<li><strong><code>modules[X].name</code></strong> (Required): A unique name for the module. In this example, there's only one module, called <code>main</code>.</li>
-<li><strong><code>modules[X].source</code></strong> (Required): Defines where to find the Helm chart. In this example, it's in a Helm repository, but it could also come from an OCI registry, Git repository, or local chart.</li>
-<li><strong><code>values</code></strong>: This is a template rendered into a <code>values.yaml</code> for Helm. <ul>
-<li>The templating engine is the same as Helm’s.</li>
-<li>The data model, however, differs. It includes a <code>.Parameters</code> object containing the values provided during deployment (via the <code>Release</code> object).</li>
-<li>Though it appears as YAML, it is actually a string, allowing full templating flexibility.</li>
+<li><strong><code>modules</code></strong> (Required): A package contains one or more Helm charts, each defined as a module.<ul>
+<li><strong><code>modules[X].name</code></strong> (Required): A unique name for the module. Here, we use <code>main</code>.</li>
+<li><strong><code>modules[X].source</code></strong> (Required): The source of the Helm chart. This example uses a Helm repository, but OCI registries, Git repositories, or local charts are also supported.</li>
+<li><strong><code>values</code></strong>: A template rendered into <code>values.yaml</code> for Helm.<ul>
+<li>Uses the same templating engine as Helm.</li>
+<li>The data model includes a <code>.Parameters</code> object containing values provided during deployment (via the <code>Release</code> object).</li>
+<li>Although strictly a string, it is written as YAML block to allow full templating flexibility.</li>
 </ul>
 </li>
 </ul>
@@ -946,7 +1066,7 @@
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Required Fields</p>
-<p>Any attribute marked with <strong>(Required)</strong> must be specified for the package to be valid.</p>
+<p>Attributes marked <strong>(Required)</strong> are mandatory.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -954,42 +1074,45 @@
 </div>
 <hr />
 <h2 id="package-build">Package Build</h2>
-<p>Now that the package definition is complete, it’s time to generate the corresponding OCI image.</p>
-<p>As mentioned earlier, KuboCD uses an OCI-compatible container registry to store and distribute packages. You'll need access to one with permission to push images.</p>
-<p>Tested registry</p>
+<p>Once the package definition is complete, the next step is to generate the OCI image.</p>
+<p>KuboCD uses an OCI-compatible container registry to store and distribute packages. You must have push access to a registry.</p>
+<p><strong>Tested registries:</strong></p>
 <ul>
 <li><code>quay.io</code> (Red Hat)</li>
 <li><code>ghcr.io</code> (GitHub)</li>
 <li><a href="https://github.com/distribution/distribution">distribution registry</a></li>
 </ul>
-<p>Others should works. Except <strong><code>Docker Hub</code></strong> which is not supported at the moment.</p>
-<p>Make sure you're authenticated with the registry, e.g.:</p>
+<p>Other OCI-compliant registries should also work. <strong>Docker Hub is currently not supported.</strong></p>
+<p>Ensure you are authenticated with your registry:</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>login<span class="w"> </span>quay.io
 </span></code></pre></div>
 <p>or</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>login<span class="w"> </span>ghcr.io
 </span></code></pre></div>
-<div class="admonition tips">
-<p class="admonition-title">Tips</p>
-<p>If you encounter issues authenticating with a registry, KuboCD provides an alternative method.
-You can supply your credentials through two environment variables: <code>KCD_OCI_USER</code> and <code>KCD_OCI_SECRET</code>.</p>
-<p>This method is also useful in CI/CD pipelines or scripts, where interactive authentication is not possible.</p>
-<p>Be sure to handle these variables securely, especially when used in shared environments.</p>
+<div class="admonition tip">
+<p class="admonition-title">Authentication</p>
+<p>If interactive authentication is not possible (e.g., in CI/CD pipelines), KuboCD allows providing credentials via environment variables: <code>KCD_OCI_{REGISTRY}_USER</code> and <code>KCD_OCI_{REGISTRY}_SECRET</code>.</p>
+<p>Replace <code>{REGISTRY}</code> with an identifier for the target registry, constructed as follows:
+- Replace characters <code>.</code>, <code>:</code>, <code>/</code>, and <code>-</code> with <code>_</code>
+- Convert to uppercase</p>
+<p>For example, for <code>quay.io</code>, use <code>KCD_OCI_QUAY_IO_USER</code> and <code>KCD_OCI_QUAY_IO_SECRET</code>.</p>
+<p><em>Note: The older <code>KCD_OCI_USER</code> and <code>KCD_OCI_SECRET</code> variables are deprecated.</em></p>
+<p><strong>Tip:</strong> Run the <code>package</code> command with <code>--logLevel debug</code> to see the expected environment variable names.</p>
 </div>
-<p>Depending on the registry, the image may be pushed under an organization or namespace. For this example, we'll use <code>quay.io/kubodoc</code>.</p>
+<p>Depending on the registry, the image may be pushed under an organization or namespace. Here, we use <code>quay.io/kubodoc</code>.</p>
 <p>To build and push the package image:</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kubocd<span class="w"> </span>package<span class="w"> </span>packages/podinfo-p01.yaml<span class="w"> </span>--ociRepoPrefix<span class="w"> </span>quay.io/kubodoc/packages
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Adjust <code>--ociRepoPrefix</code> to your own registry setup.<br>The <code>packages</code> suffix is arbitrary. You can use any subpath or omit it.</p>
+<p>Adjust <code>--ociRepoPrefix</code> to match your registry setup.<br>The <code>packages</code> suffix is optional.</p>
 </div>
-<p>The resulting repository and tag are determined from the package manifest:</p>
+<p>The resulting repository and tag are derived from the package manifest:</p>
 <ul>
 <li>Repository = <code>--ociRepoPrefix</code> + package <code>name</code></li>
 <li>Tag = package <code>tag</code></li>
 </ul>
-<p>Expected Output:</p>
+<p><strong>Expected Output:</strong></p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="o">======================================</span><span class="w"> </span>Packaging<span class="w"> </span>package<span class="w"> </span><span class="s1">&#39;podinfo-p01.yaml&#39;</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>---<span class="w"> </span>Handling<span class="w"> </span>module<span class="w"> </span><span class="s1">&#39;main&#39;</span>:
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Fetching<span class="w"> </span>chart<span class="w"> </span>podinfo:6.7.1...
@@ -1000,71 +1123,71 @@ You can supply your credentials through two environment variables: <code>KCD_OCI
 </span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>---<span class="w"> </span>push<span class="w"> </span>OCI<span class="w"> </span>image:<span class="w"> </span>quay.io/kubodoc/packages/podinfo:6.7.1-p01
 </span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>Successfully<span class="w"> </span>pushed
 </span></code></pre></div>
-<p>You can also set the repository prefix globally via an environment variable:</p>
+<p>You can set the repository prefix globally via an environment variable to avoid repeating the flag:</p>
 <div class="language-bash bash copy highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OCI_REPO_PREFIX</span><span class="o">=</span>quay.io/kubodoc/packages
 </span></code></pre></div>
-<p>Or for other registries:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OCI_REPO_PREFIX</span><span class="o">=</span>ghcr.io/kubodoc/packages
-</span></code></pre></div>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OCI_REPO_PREFIX</span><span class="o">=</span>localhost:5000/packages
-</span></code></pre></div>
-<p>Then: </p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>kubocd<span class="w"> </span>package<span class="w"> </span>packages/podinfo-p01.yaml
+<p>Then simply run:</p>
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>kubocd<span class="w"> </span>package<span class="w"> </span>packages/podinfo-p01.yaml
 </span></code></pre></div>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>By default, pushed images may be private. To make them accessible for deployment, ensure the image is set to <strong>public</strong>.
+<p class="admonition-title">Image Visibility</p>
+<p>By default, pushed images may be private. To allow deployment without extra configuration, ensure the image is <strong>public</strong>.
 <br>
-If you prefer to keep the image private, you will need to provide authentication credentials in the <code>Release</code> configuration. This will be explained later in the documentation.</p>
+If you keep the image private, you must provide authentication credentials in the <code>Release</code> configuration (explained later).</p>
 </div>
 <hr />
 <h2 id="releasing-the-application">Releasing the Application</h2>
 <p>To deploy the application, define a KuboCD <code>Release</code> custom resource:</p>
 <details class="abstract" open="open">
 <summary>podinfo1-basic.yaml</summary>
-<div class="language-yaml copy highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nn">---</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubocd.kubotal.io/v1alpha1</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Release</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">podinfo1</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A first sample release of podinfo</span>
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">  </span><span class="nt">package</span><span class="p">:</span>
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/kubodoc/packages/podinfo</span>
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.7.1-p01</span>
-</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">    </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30m</span>
-</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
-</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">    </span><span class="nt">fqdn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">podinfo1.ingress.kubodoc.local</span>
+<div class="language-yaml copy highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nn">---</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubocd.kubotal.io/v1alpha1</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Release</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">podinfo1</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A first sample release of podinfo</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span><span class="nt">package</span><span class="p">:</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/kubodoc/packages/podinfo</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.7.1-p01</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30m</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">    </span><span class="nt">fqdn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">podinfo1.ingress.kubodoc.local</span>
 </span></code></pre></div>
 </details>
-<p>Explanation of attributes:</p>
+<h3 id="attribute-description_1">Attribute Description</h3>
 <ul>
-<li><strong><code>description</code></strong>: (Optional) A short description of this release.</li>
-<li><strong><code>package.repository</code></strong>: The OCI image repository that contains the package. This should match the registry used during package build.</li>
-<li><strong><code>package.tag</code></strong>: The image tag, which should match the one defined in the package manifest.</li>
-<li><strong><code>package.interval</code></strong>: Specifies how frequently KuboCD checks the registry for updates to the image.</li>
-<li><strong><code>parameters</code></strong>: The values required by the package schema. In this example, only a single parameter (<code>fqdn</code>) is needed.</li>
+<li><strong><code>spec.description</code></strong>: (Optional) A short description.</li>
+<li><strong><code>spec.package.repository</code></strong>: The OCI image repository containing the package.</li>
+<li><strong><code>spec.package.tag</code></strong>: The image tag, matching the package manifest.</li>
+<li><strong><code>spec.package.interval</code></strong>: (Optional) How frequently KuboCD checks for updates (e.g., <code>30m</code>).</li>
+<li><strong><code>spec.parameters</code></strong>: The values required by the package schema. Here, only <code>fqdn</code> is needed.</li>
 </ul>
-<p>Deploying the Application:</p>
+<h3 id="deploy">deploy</h3>
 <ol>
-<li>Adjust the repository and parameters (if needed) to match your environment.</li>
+<li>Adjust the repository and parameters manifest if needed.</li>
 <li>Apply the Release:</li>
 </ol>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>releases/podinfo1-basic.yaml
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>releases/podinfo1-basic.yaml
 </span></code></pre></div>
-<p>Once deployed, monitor the status:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>releases
+<p>Monitor the status:</p>
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>releases
 </span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>NAME<span class="w">       </span>REPOSITORY<span class="w">                         </span>TAG<span class="w">         </span>CONTEXTS<span class="w">   </span>STATUS<span class="w">   </span>READY<span class="w">   </span>WAIT<span class="w">   </span>PRT<span class="w">   </span>AGE<span class="w">     </span>DESCRIPTION
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>podinfo1<span class="w">   </span>quay.io/kubodoc/packages/podinfo<span class="w">   </span><span class="m">6</span>.7.1-p01<span class="w">              </span>READY<span class="w">    </span><span class="m">1</span>/1<span class="w">            </span>-<span class="w">     </span>6m40s<span class="w">   </span>A<span class="w"> </span>first<span class="w"> </span>sample<span class="w"> </span>release<span class="w"> </span>of<span class="w"> </span>podinfo
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>NAME<span class="w">       </span>REPOSITORY<span class="w">                         </span>TAG<span class="w">         </span>CONTEXTS<span class="w">   </span>STATUS<span class="w">   </span>READY<span class="w">   </span>WAIT<span class="w">   </span>PRT<span class="w">   </span>AGE<span class="w">     </span>DESCRIPTION
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>podinfo1<span class="w">   </span>quay.io/kubodoc/packages/podinfo<span class="w">   </span><span class="m">6</span>.7.1-p01<span class="w">              </span>READY<span class="w">    </span><span class="m">1</span>/1<span class="w">            </span>-<span class="w">     </span>6m40s<span class="w">   </span>A<span class="w"> </span>first<span class="w"> </span>sample<span class="w"> </span>release<span class="w"> </span>of<span class="w"> </span>podinfo
 </span></code></pre></div>
-<p>You can also verify the pod:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods
+<p>Verify the pod is running:</p>
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods
 </span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>NAME<span class="w">                             </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>podinfo1-main-779b6b9fd4-zbgbx<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>8h
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>NAME<span class="w">                             </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>podinfo1-main-779b6b9fd4-zbgbx<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>8h
 </span></code></pre></div>
+<h2 id="preflight-check">Preflight Check</h2>
+<p>Before deploying, it is good practice to test the <code>Release</code> using the <code>render</code> CLI command:</p>
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>kubocd<span class="w"> </span>render<span class="w"> </span>releases/podinfo1-basic.yaml
+</span></code></pre></div>
+<p>See the <a href="../180-kubocd-cli/#kubocd-render">KuboCD CLI section</a> for details.</p>
 
 
 
@@ -1111,13 +1234,13 @@ If you prefer to keep the image private, you will need to provide authentication
         
         
           
-          <a href="../140-under-the-hood/" class="md-footer__link md-footer__link--next" aria-label="Next: Under the hood - debugging">
+          <a href="../140-under-the-hood/" class="md-footer__link md-footer__link--next" aria-label="Next: Under the hood - Components">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Under the hood - debugging
+                Under the hood - Components
               </div>
             </div>
             <div class="md-footer__button md-icon">

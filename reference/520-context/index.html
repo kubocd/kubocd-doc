@@ -412,7 +412,7 @@
   
   
   <span class="md-ellipsis">
-    Under the hood - debugging
+    Under the hood - Components
     
   </span>
   
@@ -584,6 +584,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/220-deployment-failure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployment failure
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -734,53 +757,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#release" class="md-nav__link">
+  <a href="#context" class="md-nav__link">
     <span class="md-ellipsis">
-      Release
+      Context
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Release">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#apiversion" class="md-nav__link">
-    <span class="md-ellipsis">
-      apiVersion
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#kind" class="md-nav__link">
-    <span class="md-ellipsis">
-      kind
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#metadata" class="md-nav__link">
-    <span class="md-ellipsis">
-      metadata
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#spec" class="md-nav__link">
-    <span class="md-ellipsis">
-      spec
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -790,39 +771,6 @@
       Context.spec
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Context.spec">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    <span class="md-ellipsis">
-      description
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#protected" class="md-nav__link">
-    <span class="md-ellipsis">
-      protected
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#context" class="md-nav__link">
-    <span class="md-ellipsis">
-      context
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -892,53 +840,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#release" class="md-nav__link">
+  <a href="#context" class="md-nav__link">
     <span class="md-ellipsis">
-      Release
+      Context
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Release">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#apiversion" class="md-nav__link">
-    <span class="md-ellipsis">
-      apiVersion
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#kind" class="md-nav__link">
-    <span class="md-ellipsis">
-      kind
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#metadata" class="md-nav__link">
-    <span class="md-ellipsis">
-      metadata
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#spec" class="md-nav__link">
-    <span class="md-ellipsis">
-      spec
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -948,39 +854,6 @@
       Context.spec
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Context.spec">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#description" class="md-nav__link">
-    <span class="md-ellipsis">
-      description
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#protected" class="md-nav__link">
-    <span class="md-ellipsis">
-      protected
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#context" class="md-nav__link">
-    <span class="md-ellipsis">
-      context
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1003,25 +876,77 @@
   
 
 
-<h1 id="the-context-kubernetes-resource">The Context Kubernetes resource.</h1>
-<p>You can refer to <a href="../../user-guide/160-the-context/">The context resource</a> for some example of usage.</p>
-<h2 id="release">Release</h2>
-<h3 id="apiversion">apiVersion</h3>
-<p><strong>String, required:</strong> Always <code>kubocd.kubotal.io/v1alpha1</code></p>
-<h3 id="kind">kind</h3>
-<p><strong>String, required:</strong> Always `Context'</p>
-<h3 id="metadata">metadata</h3>
-<p><strong>Map, required:</strong> Refer to the Kubernetes API documentation for the fields of the metadata field.</p>
-<h3 id="spec">spec</h3>
-<p><strong>Context.spec, required:</strong> See <a href="#contextspec">Context.spec</a> below</p>
+<h1 id="the-context-kubernetes-resource">The Context Kubernetes Resource</h1>
+<p>See <a href="../../user-guide/160-the-context/">The Context Resource</a> for usage examples.</p>
+<h2 id="context">Context</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>apiVersion</code></td>
+<td style="text-align: left;">String</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">Always <code>kubocd.kubotal.io/v1alpha1</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>kind</code></td>
+<td style="text-align: left;">String</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">Always <code>Context</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>metadata</code></td>
+<td style="text-align: left;">Map</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">Standard Kubernetes metadata.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>spec</code></td>
+<td style="text-align: left;"><a href="#contextspec">Context.spec</a></td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">The context specification.</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="contextspec">Context.spec</h2>
-<h3 id="description">description</h3>
-<p><strong>String, optional:</strong> A short description. </p>
-<h3 id="protected">protected</h3>
-<p><strong>Bool, Default: false:</strong> If true, prevent deletion. Need the KuboCD webhook to be effective</p>
-<h3 id="context">context</h3>
-<p><strong>Map, required:</strong> The context map value itself. Refer to <a href="../../user-guide/160-the-context/">The Context resource</a></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>description</code></td>
+<td style="text-align: left;">String</td>
+<td style="text-align: left;"><code>null</code></td>
+<td style="text-align: left;">A short description.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>protected</code></td>
+<td style="text-align: left;">Bool</td>
+<td style="text-align: left;"><code>false</code></td>
+<td style="text-align: left;">If <code>true</code>, prevents deletion (requires KuboCD webhook).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>context</code></td>
+<td style="text-align: left;">Map</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;"><strong>Required.</strong> The free-form context data structure.</td>
+</tr>
+</tbody>
+</table>
 
 
 

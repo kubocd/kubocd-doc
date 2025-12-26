@@ -441,9 +441,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#deploy-flux-basic-mode" class="md-nav__link">
+  <a href="#deploy-flux-standalone-mode" class="md-nav__link">
     <span class="md-ellipsis">
-      Deploy Flux (Basic Mode)
+      Deploy Flux (Standalone Mode)
     </span>
   </a>
   
@@ -464,9 +464,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#enabling-webhook-based-features" class="md-nav__link">
+  <a href="#enable-webhook-based-features" class="md-nav__link">
     <span class="md-ellipsis">
-      Enabling Webhook-Based Features
+      Enable Webhook-Based Features
     </span>
   </a>
   
@@ -525,7 +525,7 @@
   
   
   <span class="md-ellipsis">
-    Under the hood - debugging
+    Under the hood - Components
     
   </span>
   
@@ -687,6 +687,29 @@
   
   <span class="md-ellipsis">
     Cert-manager setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../220-deployment-failure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployment failure
     
   </span>
   
@@ -896,9 +919,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#deploy-flux-basic-mode" class="md-nav__link">
+  <a href="#deploy-flux-standalone-mode" class="md-nav__link">
     <span class="md-ellipsis">
-      Deploy Flux (Basic Mode)
+      Deploy Flux (Standalone Mode)
     </span>
   </a>
   
@@ -919,9 +942,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#enabling-webhook-based-features" class="md-nav__link">
+  <a href="#enable-webhook-based-features" class="md-nav__link">
     <span class="md-ellipsis">
-      Enabling Webhook-Based Features
+      Enable Webhook-Based Features
     </span>
   </a>
   
@@ -955,90 +978,90 @@
   
 
 
-<h1 id="installing-kubocd-on-an-existing-cluster">Installing KuboCD on an existing cluster.</h1>
-<p>If you have an existing cluster, you can use it to test KuboCD</p>
+<h1 id="installing-kubocd-on-an-existing-cluster">Installing KuboCD on an Existing Cluster</h1>
+<p>If you already manage a Kubernetes cluster, you can use it to test KuboCD.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>If you don't have one, you can <a href="../110-kind/">use a Kind cluster</a> on your local workstation</p>
+<p><strong>No cluster?</strong>
+If you do not have a cluster available, you can <a href="../110-kind/">install a Kind cluster on your local workstation</a>.</p>
 </div>
 <hr />
 <h2 id="prerequisites">Prerequisites</h2>
 <p>Ensure the following tools are installed on your workstation:</p>
 <ul>
-<li><a href="https://www.docker.com/" target="_blank">Docker</a>.</li>
-<li><a href="https://kubernetes.io/docs/tasks/tools/" target="_blank">kubectl</a>.</li>
-<li><a href="https://helm.sh/" target="_blank">Helm</a>.</li>
-<li><a href="https://fluxcd.io/flux/installation/#install-the-flux-cli" target="_blank">Flux CLI</a>.</li>
+<li><a href="https://www.docker.com/" target="_blank">Docker</a></li>
+<li><a href="https://kubernetes.io/docs/tasks/tools/" target="_blank">kubectl</a></li>
+<li><a href="https://helm.sh/" target="_blank">Helm</a></li>
+<li><a href="https://fluxcd.io/flux/installation/#install-the-flux-cli" target="_blank">Flux CLI</a></li>
 </ul>
-<p>Make sure:</p>
+<p>Please ensure that:</p>
 <ul>
-<li>Docker is running</li>
-<li>You have an active internet connection</li>
-<li>You have full admin rights on the target cluster.</li>
+<li>Docker is running.</li>
+<li>You have an active internet connection.</li>
+<li>You have full administrative privileges on the target cluster.</li>
 </ul>
-<p>You also need an access to an OCI-compatible container registry with permissions to push images.
-This is will be necessary for uploading and storing KuboCD Packages as OCI artifacts.</p>
+<p>You will also need access to an OCI-compatible container registry with push permissions. This is required for storing KuboCD Packages as OCI artifacts.</p>
 <hr />
 <h2 id="install-flux">Install Flux</h2>
 <h3 id="install-the-flux-cli">Install the Flux CLI</h3>
-<p>If not already installed, follow the <a href="https://fluxcd.io/flux/installation/#install-the-flux-cli" target="_blank">Flux CLI installation guide</a>..</p>
-<h3 id="deploy-flux-basic-mode">Deploy Flux (Basic Mode)</h3>
-<p>If Flux is not already installed on your cluster, we’ll begin with a basic installation (no Git repository linked for now):</p>
+<p>If not already installed, please refer to the <a href="https://fluxcd.io/flux/installation/#install-the-flux-cli" target="_blank">Flux CLI installation guide</a>.</p>
+<h3 id="deploy-flux-standalone-mode">Deploy Flux (Standalone Mode)</h3>
+<p>If Flux is not installed on your cluster, perform a standalone installation (without linking a Git repository initially):</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>flux<span class="w"> </span>install
 </span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>✚<span class="w"> </span>generating<span class="w"> </span>manifests
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>✔<span class="w"> </span>manifests<span class="w"> </span>build<span class="w"> </span>completed
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>►<span class="w"> </span>installing<span class="w"> </span>components<span class="w"> </span><span class="k">in</span><span class="w"> </span>flux-system<span class="w"> </span>namespace
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>✚ generating manifests
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>✔ manifests build completed
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>► installing components in flux-system namespace
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>...
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>✔<span class="w"> </span>notification-controller:<span class="w"> </span>deployment<span class="w"> </span>ready
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>✔<span class="w"> </span>source-controller:<span class="w"> </span>deployment<span class="w"> </span>ready
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>✔<span class="w"> </span>install<span class="w"> </span>finished
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>✔ notification-controller: deployment ready
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>✔ source-controller: deployment ready
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>✔ install finished
 </span></code></pre></div>
-<p>Verify deployment:</p>
+<p>Verify the deployment:</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>flux-system<span class="w"> </span>get<span class="w"> </span>pods
 </span></code></pre></div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>NAME<span class="w">                                       </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>helm-controller-b6767d66-q27gd<span class="w">             </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>kustomize-controller-5b56686fbc-hpkhl<span class="w">      </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>notification-controller-58ffd586f7-bbvwv<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>source-controller-6ff87cb475-hnmxv<span class="w">         </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>14m
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>NAME                                       READY   STATUS    RESTARTS   AGE
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>helm-controller-b6767d66-q27gd             1/1     Running   0          14m
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>kustomize-controller-5b56686fbc-hpkhl      1/1     Running   0          14m
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>notification-controller-58ffd586f7-bbvwv   1/1     Running   0          14m
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>source-controller-6ff87cb475-hnmxv         1/1     Running   0          14m
 </span></code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p><strong>💡 Want a minimal install?</strong><br />
-You can limit Flux to the required components for KuboCD:<br />
+<p><strong>Minimal Installation</strong><br />
+For a lighter setup, you can install only the components required by KuboCD:<br />
 <code>flux install --components source-controller,helm-controller</code></p>
 </div>
 <hr />
 <h2 id="install-kubocd">Install KuboCD</h2>
 <p>Deploy the KuboCD controller using Helm:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-ctrl<span class="w"> </span>--create-namespace<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-ctrl<span class="w"> </span>--version<span class="w"> </span>v0.2.2
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-ctrl<span class="w"> </span>--create-namespace<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-ctrl<span class="w"> </span>--version<span class="w"> </span>v0.3.0
 </span></code></pre></div>
 <hr />
-<h2 id="enabling-webhook-based-features">Enabling Webhook-Based Features</h2>
-<p>Some advanced features in <strong>KuboCD</strong> such as <strong>Release protection</strong> rely on a Kubernetes <strong>validating webhook.</strong></p>
-<p>To enable these features, you need to deploy a webhook component alongside the controller. This webhook requires 
-<a href="https://cert-manager.io/" target="_blank"><strong>cert-manager</strong></a>. to be installed in your cluster to handle TLS certificate provisioning.</p>
-<p>If you already have <code>cert-manager</code> installed, you can deploy the webhook with the following command:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-wh<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-wh<span class="w"> </span>--version<span class="w"> </span>v0.2.2
+<h2 id="enable-webhook-based-features">Enable Webhook-Based Features</h2>
+<p>Certain advanced <strong>KuboCD</strong> features, such as <strong>Release protection</strong>, depend on a Kubernetes <strong>validating webhook</strong>.</p>
+<p>To enable these features, you must deploy the webhook component alongside the controller. This webhook requires <a href="https://cert-manager.io/" target="_blank"><strong>cert-manager</strong></a> to handle TLS certificate provisioning.</p>
+<p>If <code>cert-manager</code> is already installed on your cluster, you can deploy the webhook using:</p>
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-wh<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-wh<span class="w"> </span>--version<span class="w"> </span>v0.3.0
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Don’t have <code>cert-manager</code> yet? No problem !
-<br>We’ll show you how to package and install it with KuboCD in a later section.</p>
+<p><strong>No cert-manager?</strong>
+If you don't have <code>cert-manager</code> installed, don't worry. We will cover how to package and install it using KuboCD in a later section.</p>
 </div>
 <hr />
 <h2 id="install-the-kubocd-cli">Install the KuboCD CLI</h2>
-<p>Download the KuboCD CLI from the <a href="https://github.com/kubocd/kubocd/releases/tag/v0.2.2" target="_blank">GitHub releases page</a>
-and rename it to <code>kubocd</code>. Then make it executable and move it to your path:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>mv<span class="w"> </span>kubocd_*_*<span class="w"> </span>kubocd
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>kubocd
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>sudo<span class="w"> </span>mv<span class="w"> </span>kubocd<span class="w"> </span>/usr/local/bin/
+<p>Download the KuboCD CLI from the <a href="https://github.com/kubocd/kubocd/releases/tag/v0.3.0" target="_blank">GitHub releases page</a>.</p>
+<p>Rename the binary to <code>kubocd</code>, make it executable, and move it to a directory in your system <code>$PATH</code>:</p>
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Replace &lt;binary-name&gt; with the downloaded filename</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>mv<span class="w"> </span>&lt;binary-name&gt;<span class="w"> </span>kubocd
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>chmod<span class="w"> </span>+x<span class="w"> </span>kubocd
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>sudo<span class="w"> </span>mv<span class="w"> </span>kubocd<span class="w"> </span>/usr/local/bin/
 </span></code></pre></div>
 <p>Verify the installation:</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>kubocd<span class="w"> </span>version
 </span></code></pre></div>
-<p>You can now move to <a href="../130-a-first-deployment/">your first deployment with KuboCD</a></p>
+<p>You are now ready for <a href="../130-a-first-deployment/">your first deployment with KuboCD</a>.</p>
 
 
 
