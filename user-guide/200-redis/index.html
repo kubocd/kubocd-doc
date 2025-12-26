@@ -1145,9 +1145,11 @@
 </details>
 <hr />
 <h2 id="multiple-modules">Multiple Modules</h2>
-<p>This package integrates two modules:
-1. <strong>Redis Server</strong>: The core database.
-2. <strong>Redis Commander</strong>: A web-based management UI.</p>
+<p>This package integrates two modules:</p>
+<ol>
+<li><strong>Redis Server</strong>: The core database.</li>
+<li><strong>Redis Commander</strong>: A web-based management UI.</li>
+</ol>
 <p>Both modules share a single data model, allowing easy variable sharing. Consequently, <code>schema.parameters</code> and <code>schema.context</code> are global to the package.</p>
 <p>When deployed, Flux creates one <code>OCIRepository</code>, one <code>HelmRepository</code>, and two <code>HelmReleases</code>.</p>
 <p>Note that the main module is named <code>noname</code> to simplify resource naming.</p>
@@ -1182,9 +1184,11 @@
 <li>A <code>Release</code> can <strong>depend on</strong> one or more roles.</li>
 </ul>
 <p>This abstraction provides flexibility. For example, an application needing an ingress controller depends on the <code>ingress</code> role, regardless of the implementation (NGINX, Traefik, etc.).</p>
-<p>Roles and dependencies can be defined at:
-- <strong>Package Level</strong>: Static definitions (like in the example above).
-- <strong>Release Level</strong>: Dynamic definitions via <code>spec.roles</code> and <code>spec.dependencies</code>.</p>
+<p>Roles and dependencies can be defined at:</p>
+<ul>
+<li><strong>Package Level</strong>: Static definitions (like in the example above).</li>
+<li><strong>Release Level</strong>: Dynamic definitions via <code>spec.roles</code> and <code>spec.dependencies</code>.</li>
+</ul>
 <p>During rendering, definitions from both levels are merged.</p>
 <h3 id="cluster-roles">Cluster Roles</h3>
 <p>If a role is fulfilled by an external system (e.g., a pre-installed Ingress Controller on a cloud provider), it is defined as a <strong>ClusterRole</strong>.</p>
