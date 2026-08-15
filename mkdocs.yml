@@ -21,6 +21,7 @@ nav:
     - "Release": reference/510-release.md
     - "Context": reference/520-context.md
     - "Config": reference/530-config.md
+    - "Connection (experimental)": reference/540-connection.md
 
 theme:
 #  name: readthedocs

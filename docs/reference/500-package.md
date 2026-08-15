@@ -34,6 +34,8 @@ Some attributes support templating to render dynamic values. These are denoted a
 | `modules` | List([Module](#packagemodule)) | **Yes** | The list of modules embedded in this package. |
 | `roles` | Template(List(String)) | No | The roles this application fulfills. See [Release Dependencies](../user-guide/200-redis.md/#release-dependencies-and-roles). |
 | `dependencies` | Template(List(String)) | No | The roles this application depends on. See [Release Dependencies](../user-guide/200-redis.md/#release-dependencies-and-roles). |
+| `outputs` | Template(List([Output](#packageoutputs))) | No | The connections this package publishes once deployed. Experimental. |
+| `inputs` | Template(List([Input](#packageinputs))) | No | The connections this package consumes. Experimental. |
 
 ---
 
@@ -101,3 +103,95 @@ Fetches a Chart from the local filesystem (relative to the Package manifest).
 | Field | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
 | `path` | String | **Yes** | Relative path to the chart directory. |
+
+---
+
+## Package.outputs
+
+!!! experimental "Experimental"
+
+    Outputs, inputs and the `connectionRef` parameter type belong to the
+    [Connection subsystem](540-connection.md), which is experimental. Their field names and
+    behaviour may change in a future release.
+
+Each entry produces one `Connection` (or `ClusterConnection`) when the Release is deployed, so
+other Releases can consume what this one exposes. The whole stanza is a template, which is how a
+package publishes one connection per item of a list parameter.
+
+| Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `name` | String | No (Default: `connectionType`) | Identifies the output inside the package, and must be unique across them. Reported on the produced connection as `spec.outputName`. |
+| `connectionType` | String | **Yes** | The `ConnectionType` or `ClusterConnectionType` the produced connection complies with. |
+| `values` | Map | No | What the connection carries. Must validate against the schema of its type. |
+| `kind` | String | No (Default: `Connection`) | `Connection` or `ClusterConnection`. Any other value fails the build. |
+| `connectionName` | String | No | Name of the produced connection. Defaults to `kcd-<release>-<output>`, which two Releases of the same package would collide on when they mean to publish the same thing. |
+| `labels` | Map | No | Labels set on the produced connection, for operators selecting connections rather than naming them. |
+| `displayName` | String | No (Default: `name`) | A human oriented name. |
+| `priority` | Int | No (Default: `100`) | Ranks this connection against others of the same type. The highest wins. |
+| `description` | String | No | A short description. |
+
+```yaml
+outputs: |
+  {{- range .Parameters.databases }}
+  - name: "{{ .name }}"
+    connectionType: database-server
+    values:
+      host: "{{ $.Release.metadata.name }}-rw.{{ $.Release.spec.targetNamespace }}.svc.cluster.local"
+      port: 5432
+      dbName: "{{ .name }}"
+  {{- end }}
+```
+
+---
+
+## Package.inputs
+
+Each entry declares one connection the package needs. The resolved values are exposed to the
+module templates under `.Inputs.<alias>`.
+
+| Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `alias` | String | **Yes** | The key the input is exposed under in `.Inputs`. |
+| `connectionType` | String | **Yes** | The type the chosen connection must comply with. |
+| `kind` | String | No | Restricts the lookup to `Connection` or `ClusterConnection`. Absent means both. |
+| `optional` | Bool | No (Default: `false`) | The Release deploys even with no connection matching. |
+| `allowMultiple` | Bool | No (Default: `false`) | Accept several matching connections instead of electing one. |
+| `connectionTypeLookup.namespace` | String | No | Namespace to resolve the connection type in. |
+| `namedConnection.name` / `.namespace` | String | No | Wire this input to one connection by name. |
+| `release.name` / `.namespace` / `.output` | String | No | Wire this input to a named output of a given Release. |
+
+When several connections match and `allowMultiple` is false, the one with the highest `priority`
+wins, ties broken by ascending name.
+
+---
+
+## The connectionRef parameter type
+
+A `connectionRef` types a parameter (or a context variable) that carries the **name** of a
+connection. It replaces the `inputs` stanza for the common case: the input is generated from the
+declaration, and the resolved connection is substituted in place, so templates read
+`.Parameters.<path>` and never `.Inputs`.
+
+```yaml
+schema:
+  parameters:
+    properties:
+      db: { type: connectionRef, connectionType: database-server, required: true }
+```
+
+| Property | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `type` | String | **Yes** | Always `connectionRef`. |
+| `connectionType` | String | **Yes** | The type the referenced connection must comply with. |
+| `kind` | String | No | `Connection` or `ClusterConnection`. Absent means both, which is ambiguous only when the same name is carried by one of each. |
+| `required` | Bool | No | Standard schema semantics. |
+| `default` | Template(String) | No | Must be a template string rendered against the Context. A literal is rejected, because it would hardcode a wiring target inside the package. |
+| `title`, `description` | String | No | Standard schema annotations. |
+
+Two positions forbid a `default`, and both fail the build rather than passing silently:
+
+- inside `schema.context`, where the name always comes from the Context,
+- inside array `items`, which the defaulter never descends into.
+
+An all-digit property name is also rejected on the path leading to a `connectionRef`, because the
+substitution machinery tells map keys from array indices by their digit-only shape.
