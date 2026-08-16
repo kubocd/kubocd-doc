@@ -34,7 +34,7 @@ A connection is **managed** when a Release produced it from one of its `outputs`
 
 | Field | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `schema` | Map | `null` | Validates the `values` of every connection of this type. Either a JSON/OpenAPI schema or the [KuboCD simplified schema format](../user-guide/190-alternate-schema-format.md). With no schema, values are accepted as they come. |
+| `schema` | Map | `null` | Validates the `values` of every connection of this type. Either a JSON/OpenAPI schema or the [KuboCD simplified schema format](../user-guide/alternate-schema-format.md). With no schema, values are accepted as they come. |
 | `description` | String | `null` | A short description. |
 
 ### ConnectionType.status

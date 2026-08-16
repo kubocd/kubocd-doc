@@ -83,7 +83,7 @@ In this example, the context includes:
 - **`ingress.className`**: The ingress controller type.
 - **`ingress.domain`**: The suffix for ingress URLs.
 - **`storageClass`**: Definitions for `data` and `workspace` storage profiles (set to `standard` for Kind).
-- **`certificateIssuer`**: Identifiers for public and internal certificate issuers. (We will configure a self-signed CA in the [cert-manager section](./210-cert-manager.md)).
+- **`certificateIssuer`**: Identifiers for public and internal certificate issuers. (We will configure a self-signed CA in the [cert-manager section](./cert-manager.md)).
 
 Cluster-wide contexts should be placed in a dedicated namespace:
 

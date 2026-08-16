@@ -2,7 +2,7 @@
 
 This chapter explains how to handle failures during KuboCD `Release` deployments.
 
-As described in [Under the hood](140-under-the-hood.md), KuboCD generates a FluxCD `HelmRelease` resource for each module in a package. The Flux `helm-controller` then executes the deployment using its embedded Helm instance.
+As described in [Under the hood](under-the-hood.md), KuboCD generates a FluxCD `HelmRelease` resource for each module in a package. The Flux `helm-controller` then executes the deployment using its embedded Helm instance.
 
 The Flux `HelmRelease` resource provides several parameters to configure behavior when failures occur:
 

@@ -45,7 +45,7 @@ spec:
   ...
 ```
 
-Attributes like `defaultContexts` and `defaultPackageInterval` are managed here. These will be detailed further in the [Reference section](../reference/530-config.md).
+Attributes like `defaultContexts` and `defaultPackageInterval` are managed here. These will be detailed further in the [Reference section](../reference/config.md).
 
 !!! note
     Using a Custom Resource for configuration provides immediate validation (structural errors are rejected) and allows KuboCD to watch for and instantly apply changes.
@@ -83,7 +83,7 @@ kubectl apply -f configs/conf02.yaml
     Resources are processed in **alphabetic order**, with later values overriding earlier ones.
 
 !!! tip
-    Use [`kubocd dump config`](./180-kubocd-cli.md/#kubocd-dump-config) to view the final merged configuration.
+    Use [`kubocd dump config`](./kubocd-cli.md/#kubocd-dump-config) to view the final merged configuration.
 
 Now, we can create a `Release` without explicitly specifying the context:
 
@@ -232,7 +232,7 @@ The order in which contexts are merged is critical, as later values override ear
     Referencing a non-existent context in `spec.contexts` results in an error. Missing namespace default contexts are ignored silently.
 
 !!! tip
-    Use [`kubocd dump context`](./180-kubocd-cli.md/#kubocd-dump-context) to inspect the resolved context for a specific namespace.
+    Use [`kubocd dump context`](./kubocd-cli.md/#kubocd-dump-context) to inspect the resolved context for a specific namespace.
 
 ### Disabling Default Contexts
 

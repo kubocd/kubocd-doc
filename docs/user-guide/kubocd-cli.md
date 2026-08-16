@@ -4,7 +4,7 @@
 
 Creates a KuboCD package from a manifest and stores it in an OCI image repository.
 
-See [A First Deployment / Package Build](130-a-first-deployment.md/#package-build) for usage examples.
+See [A First Deployment / Package Build](a-first-deployment.md/#package-build) for usage examples.
 
 ```text
 Assemble a KuboCD Package from a manifest to an OCI image

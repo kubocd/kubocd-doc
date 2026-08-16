@@ -4,7 +4,7 @@ If you already manage a Kubernetes cluster, you can use it to test KuboCD.
 
 !!! tip
     **No cluster?**
-    If you do not have a cluster available, you can [install a Kind cluster on your local workstation](./110-kind.md).
+    If you do not have a cluster available, you can [install a Kind cluster on your local workstation](./kind.md).
 
 ---
 
@@ -119,4 +119,4 @@ Verify the installation:
 kubocd version
 ```
 
-You are now ready for [your first deployment with KuboCD](130-a-first-deployment.md).
+You are now ready for [your first deployment with KuboCD](a-first-deployment.md).

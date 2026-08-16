@@ -1,6 +1,6 @@
 # The Context Kubernetes Resource
 
-See [The Context Resource](../user-guide/160-the-context.md) for usage examples.
+See [The Context Resource](../user-guide/the-context.md) for usage examples.
 
 ## Context
 

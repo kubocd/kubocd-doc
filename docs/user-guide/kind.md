@@ -4,7 +4,7 @@ This guide details the process of setting up a local Kubernetes cluster using **
 
 !!! tip
     **Existing Cluster?**  
-    If you already have a Kubernetes cluster, you can skip the cluster creation steps and proceed directly to [Installation on an Existing Cluster](120-existing-cluster.md).
+    If you already have a Kubernetes cluster, you can skip the cluster creation steps and proceed directly to [Installation on an Existing Cluster](existing-cluster.md).
 
 ---
 
@@ -179,4 +179,4 @@ Verify the installation:
 kubocd version
 ```
 
-You are now ready for [your first deployment with KuboCD](130-a-first-deployment.md).
+You are now ready for [your first deployment with KuboCD](a-first-deployment.md).

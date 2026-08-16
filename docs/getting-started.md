@@ -8,7 +8,7 @@ The guide is complemented by a Reference section for detailed technical informat
 
 To get started, we recommend installing KuboCD using the method appropriate for your environment:
 
-- **Existing Cluster**: [Installing KuboCD on an Existing Cluster](user-guide/120-existing-cluster.md)
-- **Local Workstation**: [Installing KuboCD on a Local Kind Cluster](user-guide/110-kind.md)
+- **Existing Cluster**: [Installing KuboCD on an Existing Cluster](user-guide/existing-cluster.md)
+- **Local Workstation**: [Installing KuboCD on a Local Kind Cluster](user-guide/kind.md)
 
-Once installed, proceed to [A First Deployment](user-guide/130-a-first-deployment.md).
+Once installed, proceed to [A First Deployment](user-guide/a-first-deployment.md).

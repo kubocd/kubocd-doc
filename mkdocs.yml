@@ -4,24 +4,48 @@ nav:
   - Home: index.md
   - "Getting started": getting-started.md
   - "User guide":
-    - "Installation: Kind": user-guide/110-kind.md
-    - "Installation: Existing Cluster": user-guide/120-existing-cluster.md
-    - "A first deployment": user-guide/130-a-first-deployment.md
-    - "Under the hood - Components": user-guide/140-under-the-hood.md
-    - "Ingress controller setup": user-guide/150-ingress-controller.md
-    - "The Context resource": user-guide/160-the-context.md
-    - "Context and configuration": user-guide/170-context-and-config.md
-    - "The kuboCD CLI": user-guide/180-kubocd-cli.md
-    - "KuboCD schema format": user-guide/190-alternate-schema-format.md
-    - "More features (Redis)": user-guide/200-redis.md
-    - "Cert-manager setup": user-guide/210-cert-manager.md
-    - "Deployment failure": user-guide/220-deployment-failure.md
+    - "Installation: Kind": user-guide/kind.md
+    - "Installation: Existing Cluster": user-guide/existing-cluster.md
+    - "A first deployment": user-guide/a-first-deployment.md
+    - "Under the hood - Components": user-guide/under-the-hood.md
+    - "Ingress controller setup": user-guide/ingress-controller.md
+    - "The Context resource": user-guide/the-context.md
+    - "Context and configuration": user-guide/context-and-config.md
+    - "The kuboCD CLI": user-guide/kubocd-cli.md
+    - "KuboCD schema format": user-guide/alternate-schema-format.md
+    - "More features (Redis)": user-guide/redis.md
+    - "Cert-manager setup": user-guide/cert-manager.md
+    - "Deployment failure": user-guide/deployment-failure.md
   - "Reference":
-    - "Package": reference/500-package.md
-    - "Release": reference/510-release.md
-    - "Context": reference/520-context.md
-    - "Config": reference/530-config.md
-    - "Connection (experimental)": reference/540-connection.md
+    - "Package": reference/package.md
+    - "Release": reference/release.md
+    - "Context": reference/context.md
+    - "Config": reference/config.md
+    - "Connection (experimental)": reference/connection.md
+
+plugins:
+  - search
+  # The numeric prefixes used to order the files leaked into the published
+  # URLs. Ordering now comes from nav alone, and the old addresses redirect.
+  - redirects:
+      redirect_maps:
+        user-guide/110-kind.md: user-guide/kind.md
+        user-guide/120-existing-cluster.md: user-guide/existing-cluster.md
+        user-guide/130-a-first-deployment.md: user-guide/a-first-deployment.md
+        user-guide/140-under-the-hood.md: user-guide/under-the-hood.md
+        user-guide/150-ingress-controller.md: user-guide/ingress-controller.md
+        user-guide/160-the-context.md: user-guide/the-context.md
+        user-guide/170-context-and-config.md: user-guide/context-and-config.md
+        user-guide/180-kubocd-cli.md: user-guide/kubocd-cli.md
+        user-guide/190-alternate-schema-format.md: user-guide/alternate-schema-format.md
+        user-guide/200-redis.md: user-guide/redis.md
+        user-guide/210-cert-manager.md: user-guide/cert-manager.md
+        user-guide/220-deployment-failure.md: user-guide/deployment-failure.md
+        reference/500-package.md: reference/package.md
+        reference/510-release.md: reference/release.md
+        reference/520-context.md: reference/context.md
+        reference/530-config.md: reference/config.md
+        reference/540-connection.md: reference/connection.md
 
 theme:
 #  name: readthedocs

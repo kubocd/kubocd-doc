@@ -2,7 +2,7 @@
 
 A `Package` is an OCI-compliant container image that bundles an application descriptor and one or more Helm charts. As the standardized unit of deployment, it encapsulates everything needed to install and configure an application.
 
-See [A first deployment](../user-guide/130-a-first-deployment.md) for an introductory example.
+See [A first deployment](../user-guide/a-first-deployment.md) for an introductory example.
 
 The OCI image is built from a YAML manifest described below.
 
@@ -29,11 +29,11 @@ Some attributes support templating to render dynamic values. These are denoted a
 | `description` | Template(String) | No | A short description of the package. Default description for the `Release`. |
 | `usage` | Map(String, Template(String)) | No | Usage information (e.g., access URLs) displayed after deployment. Each key names one entry, so a package can publish several, and each value is templated. Rendered into `Release.status.usage`. |
 | `protected` | Bool | No (Default: `false`) | If `true`, prevents accidental deletion. Default for the `Release`. |
-| `schema.parameters` | Map | No | Schema to validate `Release.parameters`. Supports standard JSON/OpenAPI or [KuboCD simplified schema](../user-guide/190-alternate-schema-format.md). |
-| `schema.context` | Map | No | Schema to validate the injected `Context`. Supports standard JSON/OpenAPI or [KuboCD simplified schema](../user-guide/190-alternate-schema-format.md). |
+| `schema.parameters` | Map | No | Schema to validate `Release.parameters`. Supports standard JSON/OpenAPI or [KuboCD simplified schema](../user-guide/alternate-schema-format.md). |
+| `schema.context` | Map | No | Schema to validate the injected `Context`. Supports standard JSON/OpenAPI or [KuboCD simplified schema](../user-guide/alternate-schema-format.md). |
 | `modules` | List([Module](#packagemodule)) | **Yes** | The list of modules embedded in this package. |
-| `roles` | Template(List(String)) | No | The roles this application fulfills. See [Release Dependencies](../user-guide/200-redis.md/#release-dependencies-and-roles). |
-| `dependencies` | Template(List(String)) | No | The roles this application depends on. See [Release Dependencies](../user-guide/200-redis.md/#release-dependencies-and-roles). |
+| `roles` | Template(List(String)) | No | The roles this application fulfills. See [Release Dependencies](../user-guide/redis.md/#release-dependencies-and-roles). |
+| `dependencies` | Template(List(String)) | No | The roles this application depends on. See [Release Dependencies](../user-guide/redis.md/#release-dependencies-and-roles). |
 | `outputs` | Template(List([Output](#packageoutputs))) | No | The connections this package publishes once deployed. Experimental. |
 | `inputs` | Template(List([Input](#packageinputs))) | No | The connections this package consumes. Experimental. |
 
@@ -50,7 +50,7 @@ A `Module` defines a Helm Chart deployment.
 | `values` | Template(Map) | `null` | Template for generating the Helm `values.yaml`. |
 | `enabled` | Template(Bool) | `true` | Conditional deployment. If `false`, the module is skipped. |
 | `targetNamespace` | Template(String) | `{{ .Release.spec.targetNamespace }}` | The namespace where the module is deployed. |
-| `onFailureStrategy` | Template(String) | `null` | Strategy for failure handling. See [Deployment Failure](../user-guide/220-deployment-failure.md). |
+| `onFailureStrategy` | Template(String) | `null` | Strategy for failure handling. See [Deployment Failure](../user-guide/deployment-failure.md). |
 | `timeout` | Template(Duration) | `{config.defaultHelmTimeout}` | Sets `spec.timeout` in the generated `HelmRelease`. |
 | `interval` | Template(Duration) | `{config.defaultHelmInterval}` | Sets `spec.interval` in the generated `HelmRelease` (reconciliation frequency). |
 | `dependsOn` | Template(List(String)) | `null` | List of other module names this module depends on. |
@@ -111,7 +111,7 @@ Fetches a Chart from the local filesystem (relative to the Package manifest).
 !!! experimental "Experimental"
 
     Outputs, inputs and the `connectionRef` parameter type belong to the
-    [Connection subsystem](540-connection.md), which is experimental. Their field names and
+    [Connection subsystem](connection.md), which is experimental. Their field names and
     behaviour may change in a future release.
 
 Each entry produces one `Connection` (or `ClusterConnection`) when the Release is deployed, so

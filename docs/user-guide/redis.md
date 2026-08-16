@@ -154,7 +154,7 @@ During rendering, definitions from both levels are merged.
 
 If a role is fulfilled by an external system (e.g., a pre-installed Ingress Controller on a cloud provider), it is defined as a **ClusterRole**.
 
-ClusterRoles are configured in the global [`Config` resource](./170-context-and-config.md) to inform KuboCD that a dependency is externally satisfied.
+ClusterRoles are configured in the global [`Config` resource](./context-and-config.md) to inform KuboCD that a dependency is externally satisfied.
 
 ---
 

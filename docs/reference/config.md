@@ -15,10 +15,10 @@
 
 | Field | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `clusterRoles` | List(String) | `[]` | List of roles fulfilled by external (non-KuboCD) applications. See [Cluster Roles](../user-guide/200-redis.md/#cluster-roles). |
-| `defaultContexts` | List([CrossNamespaceReference](#crossnamespacereference)) | `[]` | Global default contexts applied to all `Releases`. See [The Context Resource](../user-guide/160-the-context.md). |
+| `clusterRoles` | List(String) | `[]` | List of roles fulfilled by external (non-KuboCD) applications. See [Cluster Roles](../user-guide/redis.md/#cluster-roles). |
+| `defaultContexts` | List([CrossNamespaceReference](#crossnamespacereference)) | `[]` | Global default contexts applied to all `Releases`. See [The Context Resource](../user-guide/the-context.md). |
 | `defaultNamespaceContexts` | List(String) | `[]` | Context names to automatically look up in the Release's namespace. |
-| `onFailureStrategies` | List([onFailureStrategy](#onfailurestrategy)) | `[]` | Definitions of deployment failure strategies. See [Deployment Failure](../user-guide/220-deployment-failure.md). |
+| `onFailureStrategies` | List([onFailureStrategy](#onfailurestrategy)) | `[]` | Definitions of deployment failure strategies. See [Deployment Failure](../user-guide/deployment-failure.md). |
 | `defaultOnFailureStrategy` | String | `null` | The name of the strategy to use by default. |
 | `defaultHelmTimeout` | Duration | `3m` | Default timeout for Helm deployments (`HelmRelease.spec.timeout`). |
 | `defaultHelmInterval` | Duration | `30m` | Default reconciliation interval for Helm releases (`HelmRelease.spec.interval`). |
