@@ -11,8 +11,8 @@ publishes without hardcoding a host, a port or a secret name. Four resources tak
 
 | Resource | Scope | Short name | Role |
 | :--- | :--- | :--- | :--- |
-| `ConnectionType` | Namespaced | `cnxtype` | Names a kind of service and validates what a connection of that kind carries. |
-| `ClusterConnectionType` | Cluster | `ccnxtype` | Same, shared by every namespace. |
+| `Contract` | Namespaced | `cnxtype` | Names a kind of service and validates what a connection of that kind carries. |
+| `ClusterContract` | Cluster | `ccnxtype` | Same, shared by every namespace. |
 | `Connection` | Namespaced | `cnx` | One concrete service, described by the values its type allows. |
 | `ClusterConnection` | Cluster | `ccnx` | Same, visible from every namespace. |
 
@@ -21,23 +21,23 @@ A connection is **managed** when a Release produced it from one of its `outputs`
 
 ---
 
-## ConnectionType
+## Contract
 
 | Field | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
 | `apiVersion` | String | **Yes** | Always `kubocd.kubotal.io/v1alpha1`. |
-| `kind` | String | **Yes** | Always `ConnectionType`. |
+| `kind` | String | **Yes** | Always `Contract`. |
 | `metadata` | Map | **Yes** | Standard Kubernetes metadata. The name is what connections reference. |
-| `spec` | [ConnectionType.spec](#connectiontypespec) | **Yes** | The type specification. |
+| `spec` | [Contract.spec](#contractspec) | **Yes** | The type specification. |
 
-### ConnectionType.spec
+### Contract.spec
 
 | Field | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
 | `schema` | Map | `null` | Validates the `values` of every connection of this type. Either a JSON/OpenAPI schema or the [KuboCD simplified schema format](../user-guide/alternate-schema-format.md). With no schema, values are accepted as they come. |
 | `description` | String | `null` | A short description. |
 
-### ConnectionType.status
+### Contract.status
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
@@ -46,10 +46,10 @@ A connection is **managed** when a Release produced it from one of its `outputs`
 
 ---
 
-## ClusterConnectionType
+## ClusterContract
 
-Identical to [ConnectionType](#connectiontype) in both spec and status, with `kind` set to
-`ClusterConnectionType` and a cluster scope. Declaring the types a platform offers at cluster level
+Identical to [Contract](#contract) in both spec and status, with `kind` set to
+`ClusterContract` and a cluster scope. Declaring the types a platform offers at cluster level
 is the usual setup, so every namespace names the same thing the same way.
 
 ---
@@ -67,7 +67,7 @@ is the usual setup, so every namespace names the same thing the same way.
 
 | Field | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `connectionType` | String | - | **Required.** The name of the `ConnectionType` or `ClusterConnectionType` this connection complies with. See [Type resolution](#type-resolution). |
+| `contract` | String | - | **Required.** The name of the `Contract` or `ClusterContract` this connection complies with. See [Type resolution](#type-resolution). |
 | `values` | Map | `null` | What the connection carries. Must validate against the schema of its type. |
 | `priority` | Int | `100` | Ranks candidates when several connections of the same type could satisfy one input. The **highest** value wins, ties broken by ascending name. |
 | `description` | String | `null` | A short description. |
@@ -80,9 +80,9 @@ is the usual setup, so every namespace names the same thing the same way.
 | `phase` | String | `READY` or `ERROR`. |
 | `message` | String | The reason behind an `ERROR` phase. |
 | `parent` | String | The Release owning this connection, empty when standalone. |
-| `connectionTypeKind` | String | `ConnectionType` or `ClusterConnectionType`, whichever answered the resolution. |
-| `connectionTypeDisplay` | String | The type name for display: bare for a `ConnectionType`, bracketed as `[name]` for a `ClusterConnectionType`, suffixed with `?` when no type answered. |
-| `connectionTypeGeneration` | Int | The `metadata.generation` of the type this connection was last validated against. |
+| `contractKind` | String | `Contract` or `ClusterContract`, whichever answered the resolution. |
+| `contractDisplay` | String | The type name for display: bare for a `Contract`, bracketed as `[name]` for a `ClusterContract`, suffixed with `?` when no type answered. |
+| `contractGeneration` | Int | The `metadata.generation` of the type this connection was last validated against. |
 
 ---
 
@@ -94,18 +94,18 @@ Same fields as [Connection](#connection), with a cluster scope and two differenc
 | :--- | :--- | :--- |
 | `spec.parentRelease` | Map | `{name, namespace}` of the owning Release on a managed cluster connection. A namespaced `Connection` carries that link as an owner reference instead, a cluster-scoped object cannot. |
 
-Its status carries `phase`, `message`, `parent` and `connectionTypeGeneration`, but neither
-`connectionTypeKind` nor `connectionTypeDisplay`. The `Cnx type` print column therefore reads
-`spec.connectionType` directly.
+Its status carries `phase`, `message`, `parent` and `contractGeneration`, but neither
+`contractKind` nor `contractDisplay`. The `Cnx type` print column therefore reads
+`spec.contract` directly.
 
 ---
 
 ## Type resolution
 
-The controller resolves `spec.connectionType` by name, in this order:
+The controller resolves `spec.contract` by name, in this order:
 
-1. a `ConnectionType` of that name **in the namespace of the connection**,
-2. otherwise a `ClusterConnectionType` of that name.
+1. a `Contract` of that name **in the namespace of the connection**,
+2. otherwise a `ClusterContract` of that name.
 
 A namespaced type shadows a cluster one of the same name, which is how a namespace overrides the
 schema the platform ships.
@@ -113,7 +113,7 @@ schema the platform ships.
 When neither exists, the outcome depends on the connection itself:
 
 - with **no** `values`, the connection is `READY`. Nothing was claimed, so nothing can be wrong.
-- with `values`, the connection is `ERROR` with `ConnectionType or ClusterConnectionType '<name>' missing`,
+- with `values`, the connection is `ERROR` with `Contract or ClusterContract '<name>' missing`,
   because the values it carries could not be checked against anything.
 
 This is what keeps the subsystem inert on a cluster that declares no type at all.

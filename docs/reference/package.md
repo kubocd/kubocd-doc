@@ -120,8 +120,8 @@ package publishes one connection per item of a list parameter.
 
 | Field | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `name` | String | No (Default: `connectionType`) | Identifies the output inside the package, and must be unique across them. Reported on the produced connection as `spec.outputName`. |
-| `connectionType` | String | **Yes** | The `ConnectionType` or `ClusterConnectionType` the produced connection complies with. |
+| `name` | String | No (Default: `contract`) | Identifies the output inside the package, and must be unique across them. Reported on the produced connection as `spec.outputName`. |
+| `contract` | String | **Yes** | The `Contract` or `ClusterContract` the produced connection complies with. |
 | `values` | Map | No | What the connection carries. Must validate against the schema of its type. |
 | `kind` | String | No (Default: `Connection`) | `Connection` or `ClusterConnection`. Any other value fails the build. |
 | `connectionName` | String | No | Name of the produced connection. Defaults to `kcd-<release>-<output>`, which two Releases of the same package would collide on when they mean to publish the same thing. |
@@ -134,7 +134,7 @@ package publishes one connection per item of a list parameter.
 outputs: |
   {{- range .Parameters.databases }}
   - name: "{{ .name }}"
-    connectionType: database-server
+    contract: database-server
     values:
       host: "{{ $.Release.metadata.name }}-rw.{{ $.Release.spec.targetNamespace }}.svc.cluster.local"
       port: 5432
@@ -152,11 +152,11 @@ module templates under `.Inputs.<alias>`.
 | Field | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
 | `alias` | String | **Yes** | The key the input is exposed under in `.Inputs`. |
-| `connectionType` | String | **Yes** | The type the chosen connection must comply with. |
+| `contract` | String | **Yes** | The type the chosen connection must comply with. |
 | `kind` | String | No | Restricts the lookup to `Connection` or `ClusterConnection`. Absent means both. |
 | `optional` | Bool | No (Default: `false`) | The Release deploys even with no connection matching. |
 | `allowMultiple` | Bool | No (Default: `false`) | Accept several matching connections instead of electing one. |
-| `connectionTypeLookup.namespace` | String | No | Namespace to resolve the connection type in. |
+| `contractLookup.namespace` | String | No | Namespace to resolve the contract in. |
 | `namedConnection.name` / `.namespace` | String | No | Wire this input to one connection by name. |
 | `release.name` / `.namespace` / `.output` | String | No | Wire this input to a named output of a given Release. |
 
@@ -176,13 +176,13 @@ declaration, and the resolved connection is substituted in place, so templates r
 schema:
   parameters:
     properties:
-      db: { type: connectionRef, connectionType: database-server, required: true }
+      db: { type: connectionRef, contract: database-server, required: true }
 ```
 
 | Property | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
 | `type` | String | **Yes** | Always `connectionRef`. |
-| `connectionType` | String | **Yes** | The type the referenced connection must comply with. |
+| `contract` | String | **Yes** | The type the referenced connection must comply with. |
 | `kind` | String | No | `Connection` or `ClusterConnection`. Absent means both, which is ambiguous only when the same name is carried by one of each. |
 | `required` | Bool | No | Standard schema semantics. |
 | `default` | Template(String) | No | Must be a template string rendered against the Context. A literal is rejected, because it would hardcode a wiring target inside the package. |
