@@ -25,7 +25,7 @@
 | `roles`              | List(String) | `[]` | Appended to the [`Package.roles`](./500-package.md/#roles) list. |
 | `dependencies`       | List(String) | `[]` | Appended to the [`Package.dependencies`](./500-package.md/#dependencies) list. |
 | `skipDefaultContext` | Bool | `false` | If `true`, ignores global and namespace-level default contexts. Only explicit contexts in `spec.contexts` are used. |
-| `modulesOverrides`   | List([Release.spec.moduleOverride](#releasespecmoduleoverride)) | `[]` | Overrides specific settings for individual modules. |
+| `moduleOverrides`    | List([Release.spec.moduleOverride](#releasespecmoduleoverride)) | `[]` | Overrides specific settings for individual modules. |
 | `debug`              | [Release.spec.debug](#releasespecdebug) | `false` | Debugging options. |
 
 ---
@@ -35,7 +35,7 @@
 | Field | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
 | `module` | String | - | **Required.** The name of the module to modify. |
-| `strategy` | String | `null` | Overrides the failure handling strategy. See [Deployment Failure](../user-guide/220-deployment-failure.md). |
+| `onFailureStrategy` | String | `null` | Overrides the failure handling strategy. See [Deployment Failure](../user-guide/220-deployment-failure.md). |
 | `timeout` | Template(Duration) | `null` | Overrides the Helm deployment timeout. |
 | `interval` | Template(Duration) | `null` | Overrides the Helm reconciliation interval. |
 | `specPatch` | Map | `null` | A patch applied to the `spec` of the generated `HelmRelease` for this module. |

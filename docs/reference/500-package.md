@@ -27,7 +27,7 @@ Some attributes support templating to render dynamic values. These are denoted a
 | `name` | String | **Yes** | The package name. Used in the OCI repository name. Must be a valid DNS Subdomain name. |
 | `tag` | String | **Yes** | The specific tag for the OCI image. |
 | `description` | Template(String) | No | A short description of the package. Default description for the `Release`. |
-| `usage` | Template(String) | No | Usage information (e.g., access URLs) displayed after deployment. |
+| `usage` | Map(String, Template(String)) | No | Usage information (e.g., access URLs) displayed after deployment. Each key names one entry, so a package can publish several, and each value is templated. Rendered into `Release.status.usage`. |
 | `protected` | Bool | No (Default: `false`) | If `true`, prevents accidental deletion. Default for the `Release`. |
 | `schema.parameters` | Map | No | Schema to validate `Release.parameters`. Supports standard JSON/OpenAPI or [KuboCD simplified schema](../user-guide/190-alternate-schema-format.md). |
 | `schema.context` | Map | No | Schema to validate the injected `Context`. Supports standard JSON/OpenAPI or [KuboCD simplified schema](../user-guide/190-alternate-schema-format.md). |
