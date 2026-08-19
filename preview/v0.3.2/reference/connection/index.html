@@ -1336,7 +1336,7 @@ publishes without hardcoding a host, a port or a secret name. Four resources tak
 <td style="text-align: left;"><code>schema</code></td>
 <td style="text-align: left;">Map</td>
 <td style="text-align: left;"><code>null</code></td>
-<td style="text-align: left;">Validates the <code>values</code> of every connection of this type. Either a JSON/OpenAPI schema or the <a href="../../user-guide/alternate-schema-format/">KuboCD simplified schema format</a>. With no schema, values are accepted as they come.</td>
+<td style="text-align: left;">Validates the <code>values</code> of every connection of this type. Either a JSON/OpenAPI schema or the <a href="../../user-guide/alternate-schema-format/">KuboCD simplified schema format</a>. A schema is closed: a value the schema does not declare is refused, and a contract with <strong>no</strong> schema therefore accepts no value at all.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>description</code></td>
@@ -1438,7 +1438,7 @@ is the usual setup, so every namespace names the same thing the same way.</p>
 <td style="text-align: left;"><code>priority</code></td>
 <td style="text-align: left;">Int</td>
 <td style="text-align: left;"><code>100</code></td>
-<td style="text-align: left;">Ranks candidates when several connections of the same type could satisfy one input. The <strong>highest</strong> value wins, ties broken by descending name.</td>
+<td style="text-align: left;">Ranks candidates on the <code>allowMultiple</code> path of an input: the <strong>highest</strong> value feeds <code>.Inputs.&lt;alias&gt;</code>, ties broken by descending name. An input that does not allow multiple refuses more than one candidate instead of arbitrating, so <code>priority</code> decides nothing there.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>description</code></td>
@@ -1520,7 +1520,7 @@ is the usual setup, so every namespace names the same thing the same way.</p>
 <code>spec.contract</code> directly.</p>
 <hr />
 <h2 id="type-resolution">Type resolution</h2>
-<p>The controller resolves <code>spec.contract</code> by name, in this order:</p>
+<p>For a namespaced <code>Connection</code>, the controller resolves <code>spec.contract</code> by name, in this order:</p>
 <ol>
 <li>a <code>Contract</code> of that name <strong>in the namespace of the connection</strong>,</li>
 <li>otherwise a <code>ClusterContract</code> of that name.</li>
@@ -1534,6 +1534,9 @@ schema the platform ships.</p>
   because the values it carries could not be checked against anything.</li>
 </ul>
 <p>This is what keeps the subsystem inert on a cluster that declares no type at all.</p>
+<p>A <code>ClusterConnection</code> resolves differently: being cluster-scoped, it only ever looks up a
+<code>ClusterContract</code>, never a namespaced <code>Contract</code>, and reports <code>ClusterContract '&lt;name&gt;' missing</code>
+when none answers.</p>
 
 
 

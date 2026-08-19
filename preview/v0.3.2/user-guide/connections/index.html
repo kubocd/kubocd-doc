@@ -1205,6 +1205,9 @@ with the reason.</p>
 <p>At render time the controller resolves the name to a <code>Connection</code> (or <code>ClusterConnection</code>)
 complying with the contract, and substitutes its values. Renaming a database then touches one
 Connection, not every Release consuming it.</p>
+<p>The name is looked up <strong>in the namespace of the Release</strong>, so the Release above belongs to the
+<code>demo</code> namespace too. A connection shared across namespaces is declared as a <code>ClusterConnection</code>
+instead, which the same parameter resolves without a namespace.</p>
 <h2 id="publish-a-connection-from-a-package">Publish a connection from a package</h2>
 <p>A connection does not have to be written by hand. A package can publish what it deploys, through
 its <code>outputs</code>. Here a Trino package, publishing the endpoint its own consumers need:</p>
@@ -1212,7 +1215,7 @@ its <code>outputs</code>. Here a Trino package, publishing the endpoint its own 
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">endpoint</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">contract</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trino</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="nt">values</span><span class="p">:</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">"https://trino-{{</span><span class="nv"> </span><span class="s">.Release.spec.targetNamespace</span><span class="nv"> </span><span class="s">}}.{{</span><span class="nv"> </span><span class="s">.Context.ingress.suffix</span><span class="nv"> </span><span class="s">}}"</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">"https://trino-{{</span><span class="nv"> </span><span class="s">.Release.spec.targetNamespace</span><span class="nv"> </span><span class="s">}}.{{</span><span class="nv"> </span><span class="s">.Context.ingress.domain</span><span class="nv"> </span><span class="s">}}"</span>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">      </span><span class="nt">internalUri</span><span class="p">:</span><span class="w"> </span><span class="s">"trino://trino@{{</span><span class="nv"> </span><span class="s">.Release.metadata.name</span><span class="nv"> </span><span class="s">}}-main-trino.{{</span><span class="nv"> </span><span class="s">.Release.spec.targetNamespace</span><span class="nv"> </span><span class="s">}}.svc.cluster.local:8080"</span>
 </span></code></pre></div>
 <p>Each entry produces one connection when the Release is deployed, addresses rendered from the

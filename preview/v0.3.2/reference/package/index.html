@@ -1579,7 +1579,7 @@ package publishes one connection per item of a list parameter.</p>
 <td style="text-align: left;"><code>name</code></td>
 <td style="text-align: left;">String</td>
 <td style="text-align: left;">No (Default: <code>contract</code>)</td>
-<td style="text-align: left;">Identifies the output inside the package, and must be unique across them. Reported on the produced connection as <code>spec.outputName</code>.</td>
+<td style="text-align: left;">Identifies the output inside the package, and must be unique across them. Reported on the produced connection as <code>spec.outputName</code>, and part of its name: <code>kcd-&lt;release&gt;-&lt;output&gt;</code> for a <code>Connection</code>, <code>kcd-&lt;namespace&gt;-&lt;release&gt;-&lt;output&gt;</code> for a <code>ClusterConnection</code>. Nothing overrides that name.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>contract</code></td>
@@ -1600,18 +1600,6 @@ package publishes one connection per item of a list parameter.</p>
 <td style="text-align: left;"><code>Connection</code> or <code>ClusterConnection</code>. Any other value fails the build.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>connectionName</code></td>
-<td style="text-align: left;">String</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">Name of the produced connection. Defaults to <code>kcd-&lt;release&gt;-&lt;output&gt;</code>, which two Releases of the same package would collide on when they mean to publish the same thing.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>labels</code></td>
-<td style="text-align: left;">Map</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">Labels set on the produced connection, for operators selecting connections rather than naming them.</td>
-</tr>
-<tr>
 <td style="text-align: left;"><code>displayName</code></td>
 <td style="text-align: left;">String</td>
 <td style="text-align: left;">No (Default: <code>name</code>)</td>
@@ -1621,7 +1609,7 @@ package publishes one connection per item of a list parameter.</p>
 <td style="text-align: left;"><code>priority</code></td>
 <td style="text-align: left;">Int</td>
 <td style="text-align: left;">No (Default: <code>100</code>)</td>
-<td style="text-align: left;">Ranks this connection against others of the same type. The highest wins.</td>
+<td style="text-align: left;">Ranks this connection against others of the same contract, on the <code>allowMultiple</code> path of an input. See <a href="#packageinputs">Package.inputs</a>.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>description</code></td>
@@ -1658,7 +1646,7 @@ module templates under <code>.Inputs.&lt;alias&gt;</code>.</p>
 <tr>
 <td style="text-align: left;"><code>alias</code></td>
 <td style="text-align: left;">String</td>
-<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">No (Default: <code>contract</code>)</td>
 <td style="text-align: left;">The key the input is exposed under in <code>.Inputs</code>.</td>
 </tr>
 <tr>
@@ -1686,27 +1674,24 @@ module templates under <code>.Inputs.&lt;alias&gt;</code>.</p>
 <td style="text-align: left;">Accept several matching connections instead of electing one.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>contractLookup.namespace</code></td>
+<td style="text-align: left;"><code>connectionRef.name</code> / <code>.namespace</code></td>
 <td style="text-align: left;">String</td>
 <td style="text-align: left;">No</td>
-<td style="text-align: left;">Namespace to resolve the contract in.</td>
+<td style="text-align: left;">Wire this input to one connection by name. A namespace together with <code>kind: ClusterConnection</code> is an error.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>namedConnection.name</code> / <code>.namespace</code></td>
-<td style="text-align: left;">String</td>
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">Wire this input to one connection by name.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>release.name</code> / <code>.namespace</code> / <code>.output</code></td>
+<td style="text-align: left;"><code>releaseRef.name</code> / <code>.namespace</code> / <code>.output</code></td>
 <td style="text-align: left;">String</td>
 <td style="text-align: left;">No</td>
 <td style="text-align: left;">Wire this input to a named output of a given Release.</td>
 </tr>
 </tbody>
 </table>
-<p>When several connections match and <code>allowMultiple</code> is false, the one with the highest <code>priority</code>
-wins, ties broken by descending name.</p>
+<p>Several matching connections are only accepted when <code>allowMultiple</code> is true: the highest
+<code>priority</code> then feeds <code>.Inputs.&lt;alias&gt;</code> (ties broken by descending name) and the whole ordered
+list is exposed under <code>.InputLists.&lt;alias&gt;</code>. With <code>allowMultiple</code> false, more than one candidate
+is refused rather than arbitrated, and the Release waits, reporting
+<code>Too many possible connections</code>. Candidates that are not yet <code>READY</code> count towards that number.</p>
 <hr />
 <h2 id="the-connectionref-parameter-type">The connectionRef parameter type</h2>
 <p>A <code>connectionRef</code> types a parameter (or a context variable) that carries the <strong>name</strong> of a
