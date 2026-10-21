@@ -19,7 +19,7 @@
 | `package`            | [Release.spec.package](#releasespecpackage) | - | **Required.** Defines the `Package` OCI image to deploy. |
 | `contexts`           | List([CrossNamespaceReference](#crossnamespacereference)) | `[]` | Additional contexts to merge with the defaults. If `namespace` is omitted, `Release.metadata.namespace` is used. |
 | `protected`          | Bool | `{Package.protected}` | If `true`, prevents deletion of the Release (requires KuboCD webhook). |
-| `parameters`         | Template(Map) | `null` | Deployment parameters matching `Package.parameters.schema`. <br>_Note: Only the `.Context` root element is available for templating in this section._ |
+| `parameters`         | Template(Map) | `null` | Deployment parameters matching `Package.parameters.schema`. <br>_Note: Only the `.Release`, `.Context` and `.ImageRedirects` root elements are available for templating in this section. See [The data model](./550-template-functions.md#the-data-model)._ |
 | `targetNamespace`    | String | `{Release.metadata.namespace}` | The namespace where the application workload is deployed. |
 | `createNamespace`    | Bool | `false` | If `true`, creates `targetNamespace` if it does not exist. |
 | `roles`              | List(String) | `[]` | Appended to the [`Package.roles`](./500-package.md/#roles) list. |

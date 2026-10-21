@@ -64,7 +64,7 @@ A **Package** in KuboCD is defined using a YAML manifest. Below is an example th
     - **`modules[X].name`** (Required): A unique name for the module. Here, we use `main`.
     - **`modules[X].source`** (Required): The source of the Helm chart. This example uses a Helm repository, but OCI registries, Git repositories, or local charts are also supported.
     - **`values`**: A template rendered into `values.yaml` for Helm.
-        - Uses the same templating engine as Helm.
+        - Uses Go templates, like Helm, with a fixed set of functions. See [Template functions](../reference/550-template-functions.md).
         - The data model includes a `.Parameters` object containing values provided during deployment (via the `Release` object).
         - Although strictly a string, it is written as YAML block to allow full templating flexibility.
 

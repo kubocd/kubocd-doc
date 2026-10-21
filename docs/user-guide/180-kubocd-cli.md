@@ -235,6 +235,9 @@ Examples:
 	$ kubocd render releases/podinfo1.yaml packages/podinfo-p01.yaml
 ```
 
+To render a package that calls `resolveDNS`, add the `--allowDNSLookups` flag, the counterpart of the controller option.
+See [resolveDNS](../reference/550-template-functions.md#resolvedns).
+
 **Example:**
 
 ``` { .bash .copy }

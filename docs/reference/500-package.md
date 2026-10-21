@@ -16,6 +16,8 @@ Some attributes support templating to render dynamic values. These are denoted a
 - **Template(map)**: Renders a map/object.
 - **Template(duration)**: Renders a string convertible to a duration (e.g., `5m`, `1h`).
 
+Templates are Go templates. They can only call the functions listed in [Template functions](./550-template-functions.md).
+
 ---
 
 ## Package
@@ -28,6 +30,7 @@ Some attributes support templating to render dynamic values. These are denoted a
 | `tag` | String | **Yes** | The specific tag for the OCI image. |
 | `description` | Template(String) | No | A short description of the package. Default description for the `Release`. |
 | `usage` | Template(String) | No | Usage information (e.g., access URLs) displayed after deployment. |
+| `templateHeader` | String | No | Template text placed before every template of the package and of its modules, for instance to define variables they share. |
 | `protected` | Bool | No (Default: `false`) | If `true`, prevents accidental deletion. Default for the `Release`. |
 | `schema.parameters` | Map | No | Schema to validate `Release.parameters`. Supports standard JSON/OpenAPI or [KuboCD simplified schema](../user-guide/190-alternate-schema-format.md). |
 | `schema.context` | Map | No | Schema to validate the injected `Context`. Supports standard JSON/OpenAPI or [KuboCD simplified schema](../user-guide/190-alternate-schema-format.md). |

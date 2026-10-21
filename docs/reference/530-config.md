@@ -25,7 +25,7 @@
 | `defaultPackageInterval` | Duration | `30m` | Default interval for checking OCI package updates (`OCIRepository.spec.interval`). |
 | `specPatch` | Map | `null` | Global patch applied to the `spec` section of all generated Flux `HelmRelease` resources. It is not a template. |
 | `packageRedirects` | List([packageRedirect](#packageredirect)) | `[]` | Package reference rewrites, applied to the generated `OCIRepository`. |
-| `imageRedirects` | List([imageRedirect](#imageredirect)) | `[]` | Image reference rewrites, applied by templates through the `imageRedirect` function. |
+| `imageRedirects` | List([imageRedirect](#imageredirect)) | `[]` | Image reference rewrites, applied by templates through the [`imageRedirect`](./550-template-functions.md#imageredirect) function. |
 
 ---
 
@@ -47,8 +47,8 @@ and `kubocd render` fetches the package from the redirected reference.
 ## imageRedirect
 
 Rewrites the prefix of container image references. It is not applied automatically: a template applies it to an image
-with the `imageRedirect` function. `Config` resources are taken in name order, and the first redirect whose
-`oldPrefix` matches the image applies.
+with the [`imageRedirect`](./550-template-functions.md#imageredirect) function. `Config` resources are taken in name
+order, and the first redirect whose `oldPrefix` matches the image applies.
 
 | Field | Type | Required | Description |
 | :--- | :--- | :--- | :--- |

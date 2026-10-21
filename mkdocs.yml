@@ -21,6 +21,7 @@ nav:
     - "Release": reference/510-release.md
     - "Context": reference/520-context.md
     - "Config": reference/530-config.md
+    - "Template functions": reference/550-template-functions.md
 
 theme:
 #  name: readthedocs
