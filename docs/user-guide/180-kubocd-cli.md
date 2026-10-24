@@ -255,7 +255,7 @@ Output files in the `.render` directory include:
 | `model.yaml` | The complete data model used for templating. |
 | `modules/main/helmRelease.yaml` | The `HelmRelease` that the controller writes for the module. |
 | `modules/main/values.yaml` | The values of this `HelmRelease`, patches included: the `specPatch` of the `Config` resources, of the module and of the `Release`. `spec.valuesFrom` and `spec.chart.spec.valuesFiles` are not read. |
-| `modules/main/manifests.yaml` | The output of `helm template` on the chart with these values, in the namespace and under the release name where Flux installs this `HelmRelease`. |
+| `modules/main/manifests.yaml` | The standard output of `helm template --debug` on the chart with these values, in the namespace and under the release name where Flux installs this `HelmRelease`. When helm succeeds, what it writes on its standard error, such as its debug lines, goes to the standard error of `kubocd render`. When helm fails, `kubocd render` writes no `manifests.yaml`, prints the command and both outputs of helm on its standard output, and stops with an error on its standard error, such as `failed to generate manifest: exit status 1`. |
 
 !!! tip
     It is good practice to run `kubocd render` against your manifests before applying them to the cluster.
