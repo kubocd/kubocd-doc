@@ -18,7 +18,7 @@
 | `description`        | String | `{Package.description}` | A short description of the deployment. |
 | `package`            | [Release.spec.package](#releasespecpackage) | - | **Required.** Defines the `Package` OCI image to deploy. |
 | `contexts`           | List([CrossNamespaceReference](#crossnamespacereference)) | `[]` | Additional contexts to merge with the defaults. If `namespace` is omitted, `Release.metadata.namespace` is used. |
-| `protected`          | Bool | `{Package.protected}` | If `true`, prevents deletion of the Release (requires KuboCD webhook). |
+| `protected`          | Bool | `{Package.protected}` | If `true`, prevents deletion of the Release (requires KuboCD webhook). When it is not set, the deletion is refused until the controller has written the protection of the package in the status. See [Protection](#protection). |
 | `parameters`         | Template(Map) | `null` | Deployment parameters matching `Package.parameters.schema`. <br>_Note: Only the `.Release`, `.Context` and `.ImageRedirects` root elements are available for templating in this section. See [The data model](./550-template-functions.md#the-data-model)._ |
 | `targetNamespace`    | String | `{Release.metadata.namespace}` | The namespace where the application workload is deployed. |
 | `createNamespace`    | Bool | `false` | If `true`, creates `targetNamespace` if it does not exist. |
@@ -27,6 +27,39 @@
 | `skipDefaultContext` | Bool | `false` | If `true`, ignores global and namespace-level default contexts. Only explicit contexts in `spec.contexts` are used. |
 | `modulesOverrides`   | List([Release.spec.moduleOverride](#releasespecmoduleoverride)) | `[]` | Overrides specific settings for individual modules. |
 | `debug`              | [Release.spec.debug](#releasespecdebug) | `false` | Debugging options. |
+
+---
+
+## Protection
+
+With the webhook of the `kubocd-wh` chart, the deletion of a `Release` follows `spec.protected` when it is set, and
+the protection of its package otherwise:
+
+- `spec.protected: true`: the deletion is refused with `release <name> is protected`.
+- `spec.protected: false`: the deletion is accepted.
+- `spec.protected` not set: the controller computes the protection from `Package.protected` once it has loaded the
+  package, and writes it in the status of the `Release`. `status.printProtected`, the `PRT` column of
+  `kubectl get releases`, then shows `X` for a protected `Release`, whose deletion is refused as above, and `-`
+  otherwise. While the column is empty, the deletion is refused too:
+
+    ```
+    Error from server (Forbidden): admission webhook "vrelease-v1alpha1.kb.io" denied the request: release podinfo1 may be protected by its package, and the controller has not computed its protection yet: set spec.protected to false to delete it anyway
+    ```
+
+Without the webhook, nothing refuses the deletion of a `Release`.
+
+A `Release` that has never loaded a package, for instance one that stays in `WAIT_OCI` from its creation, keeps an
+empty `PRT` column. Setting `spec.protected: false` on it is an update, which the webhook does not check. The deletion
+is then accepted, and the controller completes it without the package.
+
+A namespace stays `Terminating` while the webhook refuses the deletion of one of its `Release` resources, protected or
+with an empty `PRT` column. The `NamespaceDeletionContentFailure` condition of the namespace gives the message of the
+webhook. Setting `spec.protected: false` on each of these `Release` resources lifts their refusal. A `Context` with
+`protected: true` holds the namespace in the same way.
+
+When `spec.protected` is not set, the webhook reads the protection that the controller wrote last. After a change of
+the package, or once `spec.protected` is removed, the deletion follows the previous protection until the controller has
+loaded the package again and written the new protection in the status.
 
 ---
 

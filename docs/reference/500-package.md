@@ -31,7 +31,7 @@ Templates are Go templates. They can only call the functions listed in [Template
 | `description` | Template(String) | No | A short description of the package. Default description for the `Release`. |
 | `usage` | Template(String) | No | Usage information (e.g., access URLs) displayed after deployment. |
 | `templateHeader` | String | No | Template text placed before every template of the package and of its modules, for instance to define variables they share. |
-| `protected` | Bool | No (Default: `false`) | If `true`, prevents accidental deletion. Default for the `Release`. |
+| `protected` | Bool | No (Default: `false`) | If `true`, prevents accidental deletion. Default for the `Release`, see [Protection](./510-release.md#protection). |
 | `schema.parameters` | Map | No | Schema to validate `Release.parameters`. Supports standard JSON/OpenAPI or [KuboCD simplified schema](../user-guide/190-alternate-schema-format.md). |
 | `schema.context` | Map | No | Schema to validate the injected `Context`. Supports standard JSON/OpenAPI or [KuboCD simplified schema](../user-guide/190-alternate-schema-format.md). |
 | `modules` | List([Module](#packagemodule)) | **Yes** | The list of modules embedded in this package. |

@@ -58,7 +58,7 @@ Below is a sample package definition for the `ingress-nginx` controller.
 
 **Key Differences from the `podinfo` Package:**
 
-- **`protected: true`**: Prevents accidental deletion of the release. (Requires the KuboCD webhook to be enforced).
+- **`protected: true`**: Prevents accidental deletion of the release. (Requires the KuboCD webhook to be enforced). See [Protection](../reference/510-release.md#protection).
 - **`modules[0].name`**: The value `noname` prevents appending the module name to the Helm release and derived objects.
 - **`modules[0].timeout: 4m`**: Overrides the default timeout (`3m`) to accommodate the Helm chart deployment time.
 - **`modules[0].values`**: Pure YAML is used here instead of a templated string since no dynamic parameters are needed.

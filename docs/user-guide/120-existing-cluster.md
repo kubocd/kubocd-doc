@@ -88,7 +88,7 @@ The controller limits the size of the packages it loads. See [Controller Limits]
 
 Certain advanced **KuboCD** features, such as **Release protection**, depend on a Kubernetes **validating webhook**.
 
-The webhook checks the deletion of `Release` and `Context` resources only. Creations and updates, the removal of the finalizer of a deleted `Release` included, do not go through it, and so work while the webhook is down.
+The webhook checks the deletion of `Release` and `Context` resources only. Creations and updates, the removal of the finalizer of a deleted `Release` included, do not go through it, and so work while the webhook is down. A `Release` without `spec.protected` cannot be deleted until the controller has written the protection of its package in its status, see [Protection](../reference/510-release.md#protection).
 
 To enable these features, you must deploy the webhook component alongside the controller. This webhook requires [**cert-manager**](https://cert-manager.io/){:target="_blank"} to handle TLS certificate provisioning.
 
