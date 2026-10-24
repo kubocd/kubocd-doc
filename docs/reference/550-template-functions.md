@@ -372,6 +372,10 @@ and a category, never a rendered value. `kubocd render` follows the same rule fo
   does, and shows this reason in its status and events. A connection that no controller checked yet gives
   `Connection 'db': not checked yet` in the status of the `Release`, or
   `Connection 'db': not checked, as the connections feature gate is off` when the `connections` feature gate is off.
+- The `ClusterConnection` of an output is named `kcd-<namespace>-<release>-<output>`. When one of that name exists
+  and its `spec.parentRelease` names another `Release`, the `Release` leaves it as it is and goes to `ERROR` with
+  `output[0]: its ClusterConnection belongs to another Release`, and the controller tries again later. One without
+  `spec.parentRelease` is taken over.
 
 Some messages, as the status of a `Release` named `demo` shows them:
 
@@ -379,6 +383,7 @@ Some messages, as the status of a `Release` named `demo` shows them:
 failed to populate HelmRelease 'demo-main': specPatch of module 'main' has a field that HelmRelease does not define
 error while creating HelmRelease 'demo-main': the API server answered Invalid for spec.timeout, message withheld, as it can quote the object
 output[0]: error while creating its Connection: the API server answered Invalid for metadata.name, message withheld, as it can quote the object
+output[0]: its ClusterConnection belongs to another Release
 input#1: could not list the Connections: the API server answered Forbidden, message withheld, as it can quote the object
 condition[0]: the cel expression is not valid, message withheld, as it can quote the condition or the object
 Waiting for cond.#1: Context.kubocd.kubotal.io 'apps/cluster': the cel expression is false
