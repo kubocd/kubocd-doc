@@ -113,7 +113,7 @@ Define the `Release` resource:
 - **`spec.protected: false`**: Demonstrates overriding the package-level `protected` flag at the release level.
 - **`spec.targetNamespace: ingress-nginx`**: Installs the controller in its own dedicated namespace.
 - **`spec.createNamespace: true`**: Automatically creates the target namespace if missing.
-- **`spec.package.interval`**: Defaults to `30m`.
+- **`spec.package.interval`**: Defaults to `5m`.
 
 Apply the release:
 

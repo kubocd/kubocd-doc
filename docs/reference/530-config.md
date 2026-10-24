@@ -22,7 +22,7 @@
 | `defaultOnFailureStrategy` | String | `null` | The name of the strategy to use by default. |
 | `defaultHelmTimeout` | Duration | `2m` | Default timeout for Helm deployments (`HelmRelease.spec.timeout`). The `Config` installed by the `kubocd-ctrl` chart (`conf01`) sets `3m0s`. |
 | `defaultHelmInterval` | Duration | `30m` | Default reconciliation interval for Helm releases (`HelmRelease.spec.interval`). |
-| `defaultPackageInterval` | Duration | `30m` | Default interval for checking OCI package updates (`OCIRepository.spec.interval`). |
+| `defaultPackageInterval` | Duration | `30m` | Takes the place of a [`Release.spec.package.interval`](./510-release.md#releasespecpackage) of `0s`, the interval at which the package of the `Release` is checked for updates. A `Release` that does not set this interval gets `5m` from the API server. `kubocd render`, which reads the `Release` from a file, applies `defaultPackageInterval` to an absent interval too. |
 | `specPatch` | Map | `null` | Global patch applied to the `spec` section of all generated Flux `HelmRelease` resources. It is not a template. |
 | `packageRedirects` | List([packageRedirect](#packageredirect)) | `[]` | Package reference rewrites, applied to the generated `OCIRepository`. |
 | `imageRedirects` | List([imageRedirect](#imageredirect)) | `[]` | Image reference rewrites, applied by templates through the [`imageRedirect`](./550-template-functions.md#imageredirect) function. |

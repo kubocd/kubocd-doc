@@ -208,7 +208,7 @@ Here is the corresponding `Release` manifest:
 
 **Key Features:**
 
-- **Interval Removed**: `spec.package.interval` is omitted and will default to global settings (30m).
+- **Interval Removed**: `spec.package.interval` is omitted and defaults to `5m`.
 - **Parameter Update**: `fqdn` is replaced by `host`.
 - **`contexts` Section**: Lists contexts to merge into the template data model.
 

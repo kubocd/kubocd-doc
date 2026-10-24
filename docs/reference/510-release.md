@@ -53,7 +53,8 @@
 
 The following Flux `OCIRepository` attributes can be overridden in this section and will be passed through to the generated resource:
 
-- `interval`
+- `interval`, `5m` by default, set by the API server. A value of `0s` takes the
+  [`defaultPackageInterval`](./530-config.md#configspec) of the `Config` resources.
 - `timeout`
 - `secretRef`
 - `certSecretRef`
