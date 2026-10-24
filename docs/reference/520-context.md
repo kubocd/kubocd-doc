@@ -19,4 +19,4 @@ See [The Context Resource](../user-guide/160-the-context.md) for usage examples.
 | :--- | :--- | :--- | :--- |
 | `description` | String | `null` | A short description. |
 | `protected` | Bool | `false` | If `true`, prevents deletion (requires KuboCD webhook). |
-| `context` | Map | - | **Required.** The free-form context data structure. |
+| `context` | Map | `null` | The free-form context data structure. When it is omitted, the `Context` adds no values of its own. |
