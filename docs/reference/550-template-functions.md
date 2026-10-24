@@ -367,7 +367,11 @@ and a category, never a rendered value. `kubocd render` follows the same rule fo
   `the Contract or ClusterContract named in spec.contract is missing`, or
   `the ClusterContract named in spec.contract is missing` for a `ClusterConnection`. When the API server refuses to
   read the contract or to update the status of the connection, the message gives the reason and the fields of the
-  answer only. The `Release` whose output creates the connection copies its message into its status and events.
+  answer only. The `Release` whose output creates the connection never copies the message that the status of the
+  connection holds. When the connection is in `ERROR`, the `Release` checks it again as the connection controller
+  does, and shows this reason in its status and events. A connection that no controller checked yet gives
+  `Connection 'db': not checked yet` in the status of the `Release`, or
+  `Connection 'db': not checked, as the connections feature gate is off` when the `connections` feature gate is off.
 
 Some messages, as the status of a `Release` named `demo` shows them:
 
@@ -379,11 +383,13 @@ input#1: could not list the Connections: the API server answered Forbidden, mess
 condition[0]: the cel expression is not valid, message withheld, as it can quote the condition or the object
 Waiting for cond.#1: Context.kubocd.kubotal.io 'apps/cluster': the cel expression is false
 Connection 'db': validation error on values: (root): a property is not declared in the schema
+Connection 'db': not checked yet
 ```
 
 ## Upgrading from v0.3.x
 
-The upgrade note of the [KuboCD changelog](https://github.com/kubocd/kubocd/blob/main/CHANGELOG.md#upgrading-from-v03x):
+The upgrade note of the [KuboCD changelog](https://github.com/kubocd/kubocd/blob/main/CHANGELOG.md#upgrading-from-v03x),
+with the fixes of later versions:
 
 - Before upgrading the controller, use the v0.4.0 CLI's `kubocd dump package <manifest>` to check package parsing
   without publishing an image. It rejects a template calling a function outside the list, and a manifest with map keys
@@ -397,13 +403,12 @@ The upgrade note of the [KuboCD changelog](https://github.com/kubocd/kubocd/blob
 - A template reading `.ImageRedirector` reads `.ImageRedirects` instead. One calling `slice` with a non-integer index
   converts it with `int`.
 - The message that v0.3.x wrote in the status of a Connection or a ClusterConnection, which can name a property of its
-  values, is replaced when the connection controller of v0.4.0, which runs with the `connections` feature gate on,
-  reconciles the connection and records its status. It reconciles every connection when it starts. A refused read of the
-  contract or a refused patch of the status delays the replacement to a later reconciliation. The change of the
-  connection triggers a reconciliation of its Release, which copies the new message once its HelmReleases are ready.
-  Until then, the log of the controller at the V(1) level (the `debug` log level) can show the old message of the
-  Release, and it shows it once more in the trace of the status update that replaces it. Events already emitted keep
-  their text.
+  values, is replaced when the connection controller, which runs with the `connections` feature gate on, reconciles
+  the connection and records its status. It reconciles every connection when it starts. A refused read of the contract
+  or a refused patch of the status delays the replacement to a later reconciliation. A Release never copies this
+  message: it checks an output connection in `ERROR` again, as the connection controller does. What v0.3.x copied into
+  the status of a Release is replaced, at the latest, when the Release reconciles its outputs, once its HelmReleases
+  are ready. Events already emitted keep their text.
 
 The functions removed in v0.4.0 are:
 
