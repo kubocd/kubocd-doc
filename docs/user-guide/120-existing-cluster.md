@@ -80,6 +80,8 @@ Deploy the KuboCD controller using Helm:
 helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl --version v0.3.0
 ```
 
+The controller limits the size of the packages it loads. See [Controller Limits](./170-context-and-config.md#controller-limits) to change these limits.
+
 ---
 
 ## Enable Webhook-Based Features

@@ -298,3 +298,38 @@ Once managed by Helm, you can remove the manual config resources:
 kubectl -n kubocd delete config.kubocd.kubotal.io conf02
 kubectl -n kubocd delete config.kubocd.kubotal.io conf03
 ```
+
+---
+
+## Controller Limits
+
+The controller refuses a package that goes past its limits, and bounds the packages it keeps loaded in memory. Each
+limit is a flag of the controller, which the `controller.additionalArgs` value of the `kubocd-ctrl` chart passes:
+
+``` { .yaml }
+controller:
+  additionalArgs:
+    - --maxPackageArtifactSize=52428800
+```
+
+| Flag | Default | What it bounds |
+| :--- | :--- | :--- |
+| `--maxPackageArtifactSize` | `20971520` (20 MiB) | The bytes of the archive of a package, as source-controller serves it. |
+| `--maxPackageContentSize` | `41943040` (40 MiB) | The bytes that the files of the archive hold once extracted. |
+| `--maxPackageEntries` | `1000` | The entries of the archive: files, folders and links. The folders that a name needs count too, and a name of more than 32 levels is refused. |
+| `--maxPackageManifestSize` | `1048576` (1 MiB) | The bytes of the `original.yaml` of a package, and of its `status.yaml`, each. |
+| `--maxCachedPackages` | `100` | The packages that the controller keeps loaded in memory. Past it, the oldest one leaves, and is loaded again from its files when a `Release` needs it. |
+| `--maxCachedPackagesSize` | `4194304` (4 MiB) | The bytes of `original.yaml` and `status.yaml` that the packages kept loaded in memory come from. |
+
+The values are integers, in bytes for the sizes. A value that is not positive, or more than 1048576 entries, stops the
+controller at startup with a message.
+
+A package past one of the first four limits puts its `Release` in `ERROR`, for instance:
+
+``` { .text }
+unable to fetch artifact: the package artifact is 31457280 bytes, more than the limit of 20971520 bytes
+error while parsing package original.yaml file: the file is more than the limit of 1048576 bytes
+```
+
+The controller schedules no retry on these errors: a new package, a change of the `Release` or a restart of the
+controller reconciles it again. A fetch of a package that lasts more than 5 minutes fails, and is tried again later.
