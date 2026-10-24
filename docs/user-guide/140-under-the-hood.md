@@ -22,6 +22,10 @@ Events:
 
 All resources are created in the same namespace as the `Release` object (in this case, `default`).
 
+The `Release` waits for each of them until Flux has reconciled its current version: a `Ready` condition left from a
+previous version does not count. When Flux reports the `OCIRepository` or the `HelmRepository` not ready, the `Release`
+status gives the message of its `Ready` condition, such as `OCIRepository 'kcd-podinfo1' is not ready: ...`.
+
 ---
 
 ## The OCIRepository
