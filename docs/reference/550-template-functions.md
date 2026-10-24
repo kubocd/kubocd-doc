@@ -52,6 +52,24 @@ can be a floating point number: convert it with `int` where an integer is expect
 Each template execution works on its own copy of the data. `set`, which changes a dict, and `sortAlpha`, which sorts a
 list in place, only change this copy: no other template, and no other `Release` of the same package, sees the change.
 
+## Quotes in Release.spec.parameters
+
+Written as a map, `Release.spec.parameters` can hold an action that quotes a string:
+
+```yaml
+parameters:
+  host: '{{ printf "podinfo.%s.%s" .Context.project.subdomain .Context.ingress.domain }}'
+```
+
+The API server stores the parameters as JSON, where the quotes of the action read `\"`. When this stored text does not
+parse as a template, KuboCD parses it again with its actions as their author wrote them. This second parse needs each
+character of the actions, outside their comments, to be printable and not a backslash. A tab, a newline or a carriage
+return is accepted between the words of an action, not inside a string. Otherwise, the parse error of the stored text
+stays.
+
+The text that an action renders is inserted in the parameters without escaping, and must leave them a valid
+document: a quote or a backslash in it can break the document, or change the value it decodes to.
+
 ## Available functions
 
 Package templates and `Release.spec.parameters` get the same functions, except [`resolveDNS`](#resolvedns), which only
