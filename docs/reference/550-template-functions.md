@@ -351,10 +351,14 @@ the module, the field, or the input, the condition or the output by its position
 and a category, never a rendered value. `kubocd render` follows the same rule for the steps it runs.
 
 - A request refused by the API server gives the reason of the answer and the fields at fault, without the message of
-  the answer, which can quote the value refused. A field keeps its first two names, without index or map key, such as
-  `spec.install` for `spec.install.strategy.name`. A request without an answer gives
-  `the request to the API server failed, message withheld, as it can quote the object`. This holds for every request
-  after the rendering, the update of the `Release` status and the deletion of its connections included.
+  the answer, which can quote the value refused. A reason that Kubernetes does not define, such as one that an
+  admission webhook gives, shows as `Unknown`. A field keeps its section, `metadata`, `spec` or `status`, and a field
+  outside these sections is left out. The name that follows the section stays when `HelmRelease`, `Release`,
+  `Connection` or `ClusterConnection` declares it there, without index or map key: `spec.install.strategy.name` gives
+  `spec.install`. A name that none of them declares gives the section alone, such as `spec`. A request without an
+  answer gives `the request to the API server failed, message withheld, as it can quote the object`. This holds for
+  every request after the rendering, the update of the `Release` status and the deletion of its connections
+  included, and for the updates of the finalizer of the `Release`.
 - A refused lookup of the connections of an input names the input by its position, such as
   `input#1: could not get the Connection: ...` or `input#1: could not list the Connections: ...`.
 - A `Release` waiting for a condition names the object it checks, but quotes neither the CEL expression nor the message
