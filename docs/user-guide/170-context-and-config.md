@@ -48,7 +48,7 @@ spec:
 Attributes like `defaultContexts` and `defaultPackageInterval` are managed here. These will be detailed further in the [Reference section](../reference/530-config.md).
 
 !!! note
-    Using a Custom Resource for configuration provides immediate validation (structural errors are rejected) and allows KuboCD to watch for and instantly apply changes.
+    Using a Custom Resource for configuration provides immediate validation (structural errors are rejected) and allows KuboCD to watch for changes. Once the controller has loaded a new configuration, it reconciles every `Release` again with it. See [Several Configs](../reference/530-config.md#several-configs).
 
 ### Configuring Default Contexts
 

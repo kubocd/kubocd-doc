@@ -43,6 +43,9 @@ The controller reads every `Config` of its namespace, and combines them in name 
 - `defaultOnFailureStrategy`: when several `Config` resources set it, they must give the same value. It must name a
   strategy of `onFailureStrategies`.
 
+Once the controller has loaded a new configuration, it reconciles every `Release` again with it. A reconciliation that
+runs during the change can read the previous configuration in some steps and the new one in others.
+
 When the `Config` resources fail to load, for instance with two different `defaultOnFailureStrategy` values, the
 controller logs the error and keeps the previous configuration. At startup, it stops instead.
 [`kubocd dump config`](../user-guide/180-kubocd-cli.md#kubocd-dump-config) shows the combined configuration.
