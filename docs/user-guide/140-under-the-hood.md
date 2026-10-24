@@ -105,6 +105,13 @@ KuboCD writes into the `HelmRelease` the spec that it computes from the package,
 change of failure strategy, leaves the `HelmRelease`, as it would be absent from a new one. `spec.suspend` is the
 exception: set on the `HelmRelease`, by `flux suspend` for instance, it stays when the computed spec does not set it.
 
+While the `Release` waits for its HelmReleases, in `WAIT_HREL`, its status gives the state of one that is not ready,
+such as `HelmRelease main: Deploying...`. When Flux has set the `Ready` condition of that `HelmRelease` to `False` for
+its current version, the status gives the message of its `Released` condition instead, when it has one, which
+describes its last Helm action, such as a failed upgrade. While `Ready` is `Unknown`, for instance before an upgrade,
+or left from a previous version, the status stays `Deploying...`, and no event of the `Release` repeats the message of
+the previous action.
+
 If the release is stuck in `WAIT_HREL`, inspect this resource:
 
 ``` { .bash .copy }
