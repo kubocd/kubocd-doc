@@ -100,6 +100,11 @@ podinfo1-main   7m29s   True    Helm install succeeded for release default/kcd-p
 !!! note
     One `HelmRelease` is created per module in the package.
 
+KuboCD writes into the `HelmRelease` the spec that it computes from the package, the `Config` resources and the
+`Release`. A field that no longer comes from any of them, such as a field removed from a `specPatch` or left by a
+change of failure strategy, leaves the `HelmRelease`, as it would be absent from a new one. `spec.suspend` is the
+exception: set on the `HelmRelease`, by `flux suspend` for instance, it stays when the computed spec does not set it.
+
 If the release is stuck in `WAIT_HREL`, inspect this resource:
 
 ``` { .bash .copy }

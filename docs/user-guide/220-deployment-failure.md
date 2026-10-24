@@ -92,6 +92,10 @@ Strategies can be applied or overridden at multiple levels:
 2. **Package Level**: Override per module using `package.module[X].onFailureStrategy` and `timeout`.
 3. **Release Level**: Override per module using `moduleOverrides`.
 
+A change of strategy removes from the existing `HelmRelease` the fields that only the previous strategy set, such as
+`remediation` when a module goes from `reinstallOnFailure` to `updateOnFailure`. See
+[The HelmRelease](./140-under-the-hood.md#the-helmrelease).
+
 **Example: Overriding at Release Level**
 
 ```yaml
