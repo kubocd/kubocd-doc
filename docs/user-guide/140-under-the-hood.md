@@ -153,6 +153,11 @@ The `HelmRelease` resides in the same namespace as the `Release`.
 
 Its name usually follows the pattern: `<Release name>-<ModuleName>`.
 
+A `HelmRelease` of that name that the `Release` does not control, created by hand, by another `Release` or by a
+deleted `Release` of the same name, is left as it is. For an enabled module, the `Release` goes to `ERROR` with
+`HelmRelease 'podinfo1-main' exists and is not controlled by this Release`, and tries again later. For a disabled
+module, such a `HelmRelease` stays in place, without error.
+
 The corresponding Helm deployment (stored as a Kubernetes Secret) also follows this naming convention:
 
 ```
