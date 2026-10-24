@@ -253,8 +253,9 @@ Output files in the `.render` directory include:
 | `context.yaml` | The full resolved context. |
 | `parameters.yaml` | The final parameters. |
 | `model.yaml` | The complete data model used for templating. |
-| `modules/main/values.yaml` | Templated Helm values. |
-| `modules/main/manifests.yaml` | `helm template` output. |
+| `modules/main/helmRelease.yaml` | The `HelmRelease` that the controller writes for the module. |
+| `modules/main/values.yaml` | The values of this `HelmRelease`, patches included: the `specPatch` of the `Config` resources, of the module and of the `Release`. `spec.valuesFrom` and `spec.chart.spec.valuesFiles` are not read. |
+| `modules/main/manifests.yaml` | The output of `helm template` on the chart with these values, in the namespace and under the release name where Flux installs this `HelmRelease`. |
 
 !!! tip
     It is good practice to run `kubocd render` against your manifests before applying them to the cluster.
