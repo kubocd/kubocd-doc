@@ -254,6 +254,8 @@ An application's effective context is often the result of aggregating multiple c
 
 For instance, you might create a project-level context to share variables across all applications in a specific project, which is then merged with the global cluster context.
 
+The examples below merge the contexts that a `Release` lists. A `Context` can also merge other contexts, its `parents`. See [Parents](../reference/520-context.md#parents).
+
 ### Example 1: merging Contexts
 
 Create a project namespace:
