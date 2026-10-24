@@ -59,12 +59,12 @@ package templates get.
 
 ### Sprig functions
 
-These 46 functions come from [Sprig](https://masterminds.github.io/sprig/) v3.3.0 and behave as documented there:
+These 45 functions come from [Sprig](https://masterminds.github.io/sprig/) v3.3.0 and behave as documented there:
 
 | Group | Functions |
 | :--- | :--- |
 | Strings | `indent`, `lower`, `nindent`, `nospace`, `quote`, `regexReplaceAll`, `replace`, `split`, `splitList`, `title`, `trim`, `trimAll`, `trimPrefix`, `trimSuffix`, `trunc`, `upper` |
-| Lists | `append`, `compact`, `concat`, `first`, `has`, `join`, `last`, `list`, `prepend`, `sortAlpha`, `uniq`, `until` |
+| Lists | `append`, `compact`, `concat`, `first`, `has`, `join`, `last`, `list`, `prepend`, `sortAlpha`, `uniq` |
 | Dictionaries | `dict`, `dig`, `get`, `hasKey`, `omit`, `set` |
 | Logic, defaults and types | `coalesce`, `default`, `empty`, `kindIs`, `ternary` |
 | Conversions and math | `div`, `divf`, `float64`, `int`, `min`, `mulf` |
@@ -72,8 +72,8 @@ These 46 functions come from [Sprig](https://masterminds.github.io/sprig/) v3.3.
 
 ### KuboCD functions
 
-KuboCD defines these functions. `fail`, `fromJson`, `keys`, `toJson` and `urlParse` take the place of the Sprig
-functions of the same name, and behave as described here.
+KuboCD defines these functions. `fail`, `fromJson`, `keys`, `toJson`, `until` and `urlParse` take the place of the
+Sprig functions of the same name, and behave as described here.
 
 | Function | Description |
 | :--- | :--- |
@@ -85,6 +85,7 @@ functions of the same name, and behave as described here.
 | [`required`](#required) | Fails the rendering when a value is missing. |
 | `toJson` | Serializes a value to JSON. On error, the result holds the error text. |
 | `toYaml` | Serializes a value to YAML, without the trailing newline. On error, the result holds the error text. |
+| `until` | Returns the list of the integers from 0 up to a count, the count excluded, as the Sprig function does: `until 3` gives `[0 1 2]` and `until -3` gives `[0 -1 -2]`. It builds at most 10000 items either way. A larger count fails the rendering with `until: the count is beyond the limit of 10000`. See [Limits](#limits). |
 | `urlParse` | Parses a URL into a dict of its parts, as the Sprig function does. An invalid URL fails with `urlParse: invalid URL`, without the URL. |
 | [`resolveDNS`](#resolvedns) | Package templates only, disabled by default. Returns the first IP address of a host name. |
 
@@ -220,6 +221,16 @@ With this `Config`, the example above renders `repository: registry.internal:500
 
 A package can also take the address from its data instead, see [Upgrading from v0.3.x](#upgrading-from-v03x).
 
+## Limits
+
+Each execution of a template, such as the `values` of a module or `Release.spec.parameters`, renders at most 4 MiB
+(4194304 bytes) of text. Past that, the rendering fails with `the rendered text is larger than 4194304 bytes`.
+[`until`](#kubocd-functions) builds at most 10000 items, and fails past that with
+`until: the count is beyond the limit of 10000`.
+
+The controller schedules no retry on these errors, as the same data fails the same way: the `Release` stays in
+`ERROR` until a change of what it reads reconciles it again. `kubocd render` fails the same way.
+
 ## Environment variables in manifests
 
 A `${...}` sequence in a package or `Release` manifest stays as written. Neither `kubocd package` nor the controller,
@@ -270,9 +281,9 @@ Where an error shows up:
   status. The value that `Release.spec.parameters` gives to the parameter is a connection name, never rendered a second
   time.
 - The other errors happen while rendering: `fail`, `required`, `resolveDNS` disabled, a function or an action that
-  fails on the data, a rendered text that is not valid YAML, or a rendered map with two keys that are the same once
-  converted to strings, or with a key that cannot be converted, such as `null`. They show up in the `Release` status,
-  its events and the controller log, and in the output of `kubocd render`.
+  fails on the data, a [limit](#limits) reached, a rendered text that is not valid YAML, or a rendered map with two
+  keys that are the same once converted to strings, or with a key that cannot be converted, such as `null`. They show
+  up in the `Release` status, its events and the controller log, and in the output of `kubocd render`.
 - The errors of the steps that use the rendered values follow the same rule. See
   [After the rendering](#after-the-rendering).
 
@@ -301,6 +312,8 @@ error on rendering: module 'main': could not render 'values' template: line 1, c
 error on rendering: module 'main': could not render 'values' template: the rendered text is not valid YAML (line 4)
 error on rendering: module 'main': could not render 'values' template: the rendered text has a map whose keys are the same once converted to strings, such as 1 and "1", or true and "true"
 error on rendering: module 'main': could not render 'values' template: the rendered text has a map key that cannot be converted to a string, such as null
+error on rendering: module 'main': could not render 'values' template: the rendered text is larger than 4194304 bytes
+error on rendering: module 'main': could not render 'values' template: line 2, column 13: error calling until: until: the count is beyond the limit of 10000
 could not validate parameters: parameters schema validation error: (root): a property is not declared in the schema
 ```
 
