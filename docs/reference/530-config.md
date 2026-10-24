@@ -29,6 +29,26 @@
 
 ---
 
+## Several Configs
+
+The controller reads every `Config` of its namespace, and combines them in name order:
+
+- `clusterRoles`: the roles of every `Config`.
+- `defaultContexts`, `defaultNamespaceContexts`, `packageRedirects` and `imageRedirects`: the lists of every `Config`,
+  one after the other. The first redirect that matches applies.
+- `onFailureStrategies`: the strategies of every `Config`. A strategy replaces an earlier one of the same name.
+- `defaultHelmTimeout`, `defaultHelmInterval`, `defaultPackageInterval` and `specPatch`: the value of the last `Config`
+  that sets one. A `Config` without `specPatch` leaves the `specPatch` of an earlier one in effect, and the patches of
+  several `Config` resources are not merged.
+- `defaultOnFailureStrategy`: when several `Config` resources set it, they must give the same value. It must name a
+  strategy of `onFailureStrategies`.
+
+When the `Config` resources fail to load, for instance with two different `defaultOnFailureStrategy` values, the
+controller logs the error and keeps the previous configuration. At startup, it stops instead.
+[`kubocd dump config`](../user-guide/180-kubocd-cli.md#kubocd-dump-config) shows the combined configuration.
+
+---
+
 ## packageRedirect
 
 Rewrites the prefix of package references, for instance to pull the packages from a mirror without changing the

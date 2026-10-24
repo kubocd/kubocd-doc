@@ -80,7 +80,7 @@ kubectl apply -f configs/conf02.yaml
 !!! note "Merging Configurations"
     KuboCD allows breaking configuration across multiple resources. All `Config` resources in the controller's namespace (`kubocd`) are merged to form the global configuration.
     
-    Resources are processed in **alphabetic order**, with later values overriding earlier ones.
+    Resources are processed in **alphabetic order**. [Several Configs](../reference/530-config.md#several-configs) explains how KuboCD combines each field.
 
 !!! tip
     Use [`kubocd dump config`](./180-kubocd-cli.md/#kubocd-dump-config) to view the final merged configuration.
