@@ -562,7 +562,13 @@ project02   podinfo-main    nginx   podinfo.prj02.ingress.kubodoc.local   10.96.
 
 ## Modifying Contexts
 
-Any change to a context resource is automatically propagated to all associated `Release` objects. However, actual updates (Helm upgrades) only occur for deployments that are genuinely affected by the change.
+Any change to a context resource is automatically propagated to the `Release` objects that use it:
+
+- The `Release` objects that name it in `spec.contexts`.
+- Every `Release`, when the `Config` resources make it a global [default context](./170-context-and-config.md#default-context).
+- Every `Release` of its namespace, when the `Config` resources make its name a [namespace default context](./170-context-and-config.md#namespaced-default-contexts).
+
+However, actual updates (Helm upgrades) only occur for deployments that are genuinely affected by the change.
 
 For example, modify the `project01` context:
 
