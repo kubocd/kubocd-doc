@@ -1,0 +1,2075 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../530-config/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Template functions - KuboCD</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/styles/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#template-functions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="KuboCD" class="md-header__button md-logo" aria-label="KuboCD" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            KuboCD
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Template functions
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/kubocd/kubocd" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="KuboCD" class="md-nav__button md-logo" aria-label="KuboCD" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    KuboCD
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/kubocd/kubocd" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/110-kind/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation: Kind
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/120-existing-cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation: Existing Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/130-a-first-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A first deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/140-under-the-hood/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Under the hood - Components
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/150-ingress-controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ingress controller setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/160-the-context/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Context resource
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/170-context-and-config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Context and configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/180-kubocd-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The kuboCD CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/190-alternate-schema-format/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KuboCD schema format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/200-redis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    More features (Redis)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/210-cert-manager/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cert-manager setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/220-deployment-failure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment failure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../500-package/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../510-release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../520-context/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Context
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../530-config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Config
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Template functions
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Template functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#where-the-rules-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where the rules stop
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-data-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The data model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quotes-in-releasespecparameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quotes in Release.spec.parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#available-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Available functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sprig-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprig functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubocd-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        KuboCD functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#go-texttemplate-built-ins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Go text/template built-ins
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        required
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imageredirect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        imageRedirect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolvedns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resolveDNS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables-in-manifests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment variables in manifests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#after-the-rendering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After the rendering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrading-from-v03x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrading from v0.3.x
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#where-the-rules-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where the rules stop
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-data-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The data model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quotes-in-releasespecparameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quotes in Release.spec.parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#available-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Available functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sprig-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprig functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubocd-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        KuboCD functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#go-texttemplate-built-ins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Go text/template built-ins
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        required
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imageredirect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        imageRedirect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolvedns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resolveDNS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables-in-manifests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment variables in manifests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#after-the-rendering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After the rendering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrading-from-v03x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upgrading from v0.3.x
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="template-functions">Template functions</h1>
+<p>Package templates (see <a href="../500-package/#templating">Templating</a>) and <code>Release.spec.parameters</code> are Go templates.
+Starting with v0.4.0, they can call a fixed list of functions, and nothing else.</p>
+<h2 id="the-rules">The rules</h2>
+<ol>
+<li>A template only reads the data passed to it: maps, lists, strings, numbers and booleans. It reads no file, makes no
+   network call, reads no environment variable and queries nothing in the cluster. The only exception is
+   <a href="#resolvedns"><code>resolveDNS</code></a>, in package templates, when the platform operator allows it.</li>
+<li>A manifest is read as written. Neither the CLI nor the controller replaces a <code>${...}</code> sequence in a package or
+   <code>Release</code> manifest, when packaging or when loading. See
+   <a href="#environment-variables-in-manifests">Environment variables in manifests</a>.</li>
+<li>For a given KuboCD version, the same data renders the same text, character for character: no random value, no
+   clock, no order that changes. The only exception is <code>resolveDNS</code> when allowed, whose result also depends on the DNS
+   answers. A map with two keys that are the same once converted to strings, such as <code>1</code> and <code>"1"</code>, is an error, in a
+   manifest as in a rendered text.</li>
+<li>A template execution changes neither its data nor the data seen by another execution, of the same <code>Release</code> or of
+   another one.</li>
+<li>A render error says where and why, without quoting the data or the rendered text, in the <code>Release</code> status, its
+   events and the controller log. The messages of the KuboCD functions, and those written with <code>fail</code> and <code>required</code>,
+   are kept as written. The errors of the steps that use the rendered values, from building the HelmReleases to the
+   requests sent to the API server, follow the same rule. See <a href="#errors">Errors</a>.</li>
+</ol>
+<h3 id="where-the-rules-stop">Where the rules stop</h3>
+<p>These rules apply to the templates KuboCD renders. The values they produce go to the Helm charts of the package, whose
+own templates follow the rules of Helm and use its functions. Flux renders the charts in the cluster, and
+<code>kubocd render</code> runs <code>helm template</code> on them after the KuboCD rendering. The <code>Release</code> status and events show the
+messages of its HelmReleases as Flux and Helm write them.</p>
+<h2 id="the-data-model">The data model</h2>
+<p>Package templates get every root element below. <code>Release.spec.parameters</code> gets some of them.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Root element</th>
+<th style="text-align: left;">Content</th>
+<th style="text-align: left;">In <code>Release.spec.parameters</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>.Release</code></td>
+<td style="text-align: left;">The <code>Release</code> object.</td>
+<td style="text-align: left;">Yes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>.Context</code></td>
+<td style="text-align: left;">The merged context. See <a href="../../user-guide/160-the-context/">The Context Resource</a>.</td>
+<td style="text-align: left;">Yes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>.Parameters</code></td>
+<td style="text-align: left;">The release parameters, merged with the package defaults.</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>.ImageRedirects</code></td>
+<td style="text-align: left;">The image redirects of the <code>Config</code> resources, read by <a href="#imageredirect"><code>imageRedirect</code></a>.</td>
+<td style="text-align: left;">Yes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>.Inputs</code></td>
+<td style="text-align: left;">For each input of the package, by alias: the values of the connection it resolves to.</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>.InputLists</code></td>
+<td style="text-align: left;">For each input allowing several connections, by alias: the values of every ready matching connection, highest <code>priority</code> first.</td>
+<td style="text-align: left;">No</td>
+</tr>
+</tbody>
+</table>
+<p><code>.Inputs</code> and <code>.InputLists</code> belong to the EXPERIMENTAL connections feature. They are not set yet when the <code>inputs</code> of a
+package are rendered.</p>
+<p>The data is plain data: maps, lists, strings, numbers and booleans. A number read from a manifest, such as a parameter,
+can be a floating point number: convert it with <code>int</code> where an integer is expected, as with
+<a href="#go-texttemplate-built-ins"><code>slice</code></a>.</p>
+<p>Each template execution works on its own copy of the data. <code>set</code>, which changes a dict, and <code>sortAlpha</code>, which sorts a
+list in place, only change this copy: no other template, and no other <code>Release</code> of the same package, sees the change.</p>
+<h2 id="quotes-in-releasespecparameters">Quotes in Release.spec.parameters</h2>
+<p>Written as a map, <code>Release.spec.parameters</code> can hold an action that quotes a string:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">parameters</span><span class="p">:</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="s">'{{</span><span class="nv"> </span><span class="s">printf</span><span class="nv"> </span><span class="s">"podinfo.%s.%s"</span><span class="nv"> </span><span class="s">.Context.project.subdomain</span><span class="nv"> </span><span class="s">.Context.ingress.domain</span><span class="nv"> </span><span class="s">}}'</span>
+</span></code></pre></div>
+<p>The API server stores the parameters as JSON, where the quotes of the action read <code>\"</code>. When this stored text does not
+parse as a template, KuboCD parses it again with its actions as their author wrote them. This second parse needs each
+character of the actions, outside their comments, to be printable and not a backslash. A tab, a newline or a carriage
+return is accepted between the words of an action, not inside a string. Otherwise, the parse error of the stored text
+stays.</p>
+<p>The text that an action renders is inserted in the parameters without escaping, and must leave them a valid
+document: a quote or a backslash in it can break the document, or change the value it decodes to.</p>
+<h2 id="available-functions">Available functions</h2>
+<p>Package templates and <code>Release.spec.parameters</code> get the same functions, except <a href="#resolvedns"><code>resolveDNS</code></a>, which only
+package templates get.</p>
+<h3 id="sprig-functions">Sprig functions</h3>
+<p>These 45 functions come from <a href="https://masterminds.github.io/sprig/">Sprig</a> v3.3.0 and behave as documented there,
+subject to the <a href="#limits">limits</a> below:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Group</th>
+<th style="text-align: left;">Functions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Strings</td>
+<td style="text-align: left;"><code>indent</code>, <code>lower</code>, <code>nindent</code>, <code>nospace</code>, <code>quote</code>, <code>regexReplaceAll</code>, <code>replace</code>, <code>split</code>, <code>splitList</code>, <code>title</code>, <code>trim</code>, <code>trimAll</code>, <code>trimPrefix</code>, <code>trimSuffix</code>, <code>trunc</code>, <code>upper</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Lists</td>
+<td style="text-align: left;"><code>append</code>, <code>compact</code>, <code>concat</code>, <code>first</code>, <code>has</code>, <code>join</code>, <code>last</code>, <code>list</code>, <code>prepend</code>, <code>sortAlpha</code>, <code>uniq</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Dictionaries</td>
+<td style="text-align: left;"><code>dict</code>, <code>dig</code>, <code>get</code>, <code>hasKey</code>, <code>omit</code>, <code>set</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Logic, defaults and types</td>
+<td style="text-align: left;"><code>coalesce</code>, <code>default</code>, <code>empty</code>, <code>kindIs</code>, <code>ternary</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Conversions and math</td>
+<td style="text-align: left;"><code>div</code>, <code>divf</code>, <code>float64</code>, <code>int</code>, <code>min</code>, <code>mulf</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Encoding</td>
+<td style="text-align: left;"><code>sha256sum</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="kubocd-functions">KuboCD functions</h3>
+<p>KuboCD defines these functions. <code>fail</code>, <code>fromJson</code>, <code>keys</code>, <code>toJson</code>, <code>until</code> and <code>urlParse</code> take the place of the
+Sprig functions of the same name, and behave as described here.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><a href="#fail"><code>fail</code></a></td>
+<td style="text-align: left;">Fails the rendering with a message.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>fromJson</code></td>
+<td style="text-align: left;">Parses a JSON string into a map. On error, the map holds the error text under <code>Error</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>fromYaml</code></td>
+<td style="text-align: left;">Parses a YAML string into a map. On error, the map holds the error text under <code>Error</code>. For a map key that cannot be converted to a string, such as <code>null</code>, this text is <code>fromYaml: the document has a map key that cannot be converted to a string, such as null</code>. A document holding a map with two keys that are the same once converted to strings, such as <code>1</code> and <code>"1"</code>, fails the rendering instead.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#imageredirect"><code>imageRedirect</code></a></td>
+<td style="text-align: left;">Applies the image redirects of the <code>Config</code> resources to an image reference.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#keys"><code>keys</code></a></td>
+<td style="text-align: left;">Returns the keys of one or more dicts, sorted. A key present in several dicts appears once per dict.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#required"><code>required</code></a></td>
+<td style="text-align: left;">Fails the rendering when a value is missing.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>toJson</code></td>
+<td style="text-align: left;">Serializes a value to JSON. On error, the result holds the error text.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>toYaml</code></td>
+<td style="text-align: left;">Serializes a value to YAML, without the trailing newline. On error, the result holds the error text.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>until</code></td>
+<td style="text-align: left;">Returns the list of the integers from 0 up to a count, the count excluded, as the Sprig function does: <code>until 3</code> gives <code>[0 1 2]</code> and <code>until -3</code> gives <code>[0 -1 -2]</code>. It builds at most 10000 items either way. A larger count fails the rendering with <code>until: the count is beyond the limit of 10000</code>. See <a href="#limits">Limits</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>urlParse</code></td>
+<td style="text-align: left;">Parses a URL into a dict of its parts, as the Sprig function does. An invalid URL fails with <code>urlParse: invalid URL</code>, without the URL.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#resolvedns"><code>resolveDNS</code></a></td>
+<td style="text-align: left;">Package templates only, disabled by default. Returns the first IP address of a host name.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="go-texttemplate-built-ins">Go text/template built-ins</h3>
+<p>These are part of Go templates and always available: <code>and</code>, <code>call</code>, <code>eq</code>, <code>ge</code>, <code>gt</code>, <code>html</code>, <code>index</code>, <code>js</code>, <code>le</code>,
+<code>len</code>, <code>lt</code>, <code>ne</code>, <code>not</code>, <code>or</code>, <code>print</code>, <code>printf</code>, <code>println</code>, <code>slice</code> and <code>urlquery</code>, plus the actions <code>if</code>, <code>else</code>,
+<code>range</code>, <code>with</code>, <code>define</code>, <code>template</code>, <code>block</code>, <code>break</code>, <code>continue</code> and <code>end</code>. See the
+<a href="https://pkg.go.dev/text/template">text/template documentation</a>.</p>
+<ul>
+<li><code>printf</code> is <code>fmt.Sprintf</code>, except that it rejects the <code>%p</code> verb, which prints a memory address that changes from one
+  rendering to the next, and a result whose size bound exceeds 4 MiB. The rendering fails with an error ending in
+  <code>printf: the %p verb is not allowed</code> or <code>printf: the result can exceed 4194304 bytes</code>. See <a href="#limits">Limits</a>.</li>
+<li>
+<p><code>slice</code> takes integer indexes only. Convert a number from the data with <code>int</code>:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">zones</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">slice .Parameters.zones 0 (int .Parameters.replicas) | toJson</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+</span></code></pre></div>
+</li>
+</ul>
+<h3 id="keys">keys</h3>
+<p><code>keys</code> returns the keys sorted. Pass the list through <code>toJson</code> to write it as YAML:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="no">labelNames: {{ keys .Parameters.labels | toJson }}</span>
+</span></code></pre></div>
+<p>With the labels <code>tier</code>, <code>app</code> and <code>team</code>, this renders <code>labelNames: ["app","team","tier"]</code>. Without <code>toJson</code>, the list
+prints as <code>[app team tier]</code>, which YAML reads as a list holding the single string <code>app team tier</code>.</p>
+<h3 id="fail">fail</h3>
+<p><code>fail MESSAGE</code> stops the rendering with <code>MESSAGE</code>, for instance to reject a combination of parameters:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="no">{{- if and .Parameters.externalDatabase .Parameters.embeddedDatabase }}</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="no">{{- fail "set 'externalDatabase' or 'embeddedDatabase', not both" }}</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="no">{{- end }}</span>
+</span></code></pre></div>
+<p>With both parameters set, the rendering fails with an error ending in
+<code>line 2, column 5: error calling fail: set 'externalDatabase' or 'embeddedDatabase', not both</code>.</p>
+<h3 id="required">required</h3>
+<p><code>required MESSAGE VALUE</code> returns <code>VALUE</code>, or fails the rendering with <code>MESSAGE</code> when <code>VALUE</code> is missing or an empty
+string.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="no">auth:</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="no">adminPassword: {{ required "parameter 'adminPassword' is required" .Parameters.adminPassword | quote }}</span>
+</span></code></pre></div>
+<p>Without <code>adminPassword</code>, the rendering fails with an error ending in
+<code>line 2, column 21: error calling required: parameter 'adminPassword' is required</code>.</p>
+<h3 id="imageredirect">imageRedirect</h3>
+<p><code>imageRedirect IMAGE ROOT</code> applies the image redirects defined in the <code>Config</code> resources to <code>IMAGE</code>, and returns its
+parts. <code>ROOT</code> is the root of the data model: <code>.</code> at the top level of a template, <code>$</code> inside a <code>range</code> or a <code>with</code>.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="no">image:</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="no">{{- $image := imageRedirect "quay.io/jetstack/cert-manager-controller:v1.17.0" . }}</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="no">repository: {{ $image.repository }}</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="no">tag: {{ $image.tag }}</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="no">{{- with $image.imagePullPolicy }}</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="no">pullPolicy: {{ . }}</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="no">{{- end }}</span>
+</span></code></pre></div>
+<p>The result is a map:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Key</th>
+<th style="text-align: left;">Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>url</code></td>
+<td style="text-align: left;">The image reference after redirection.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>repository</code></td>
+<td style="text-align: left;"><code>url</code> without the tag.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>tag</code></td>
+<td style="text-align: left;">The tag, <code>latest</code> if there is none.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>registry</code></td>
+<td style="text-align: left;">The first part of <code>repository</code> (the registry host).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>baseRepository</code></td>
+<td style="text-align: left;"><code>repository</code> without the registry.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>imagePullPolicy</code></td>
+<td style="text-align: left;">The pull policy of the matching redirect, or an empty string.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>imagePullSecrets</code></td>
+<td style="text-align: left;">The pull secrets of the matching redirect, or <code>null</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>The redirects come from <code>Config.spec.imageRedirects</code>, described in <a href="../530-config/#imageredirect">imageRedirect</a>.
+<code>Config</code> resources are taken in name order, and the first redirect whose <code>oldPrefix</code> matches the image applies:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubocd.kubotal.io/v1alpha1</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Config</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conf01</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubocd</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="nt">imageRedirects</span><span class="p">:</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">oldPrefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">      </span><span class="nt">newPrefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.internal:5000/quay/</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">      </span><span class="nt">imagePullSecrets</span><span class="p">:</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">internal-registry</span>
+</span></code></pre></div>
+<p>With this <code>Config</code>, the example above renders <code>repository: registry.internal:5000/quay/jetstack/cert-manager-controller</code>.</p>
+<h3 id="resolvedns">resolveDNS</h3>
+<p><code>resolveDNS HOST</code> returns the first IP address of <code>HOST</code>, resolved from the controller pod, or from the machine running
+<code>kubocd render</code>.</p>
+<ul>
+<li>Package templates only. In <code>Release.spec.parameters</code>, it does not exist, even when allowed:
+  <code>function "resolveDNS" not defined</code>.</li>
+<li>
+<p>Disabled by default. <code>kubocd package</code> accepts a package calling it, but rendering the package fails, in the <code>Release</code>
+  status as in <code>kubocd render</code>, with an error ending in:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>error calling resolveDNS: resolveDNS is disabled by platform policy
+</span></code></pre></div>
+</li>
+<li>
+<p>The platform operator allows it for every package of the cluster, with the <code>controller.allowDNSLookups</code> value of the
+  <code>kubocd-ctrl</code> Helm chart, which sets the <code>--allowDNSLookups</code> option of the controller:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">controller</span><span class="p">:</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">allowDNSLookups</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span></code></pre></div>
+<p><code>kubocd render</code> takes the same <code>--allowDNSLookups</code> flag.</p>
+</li>
+<li>
+<p>Once allowed, the result also depends on the DNS answers: the same data can render another address after a DNS
+  change. When a name has several addresses, the first one returned by the resolver is used, which can be an IPv6
+  address.</p>
+</li>
+</ul>
+<p>A package can also take the address from its data instead, see <a href="#upgrading-from-v03x">Upgrading from v0.3.x</a>.</p>
+<h2 id="limits">Limits</h2>
+<p>Each execution of a template, such as the <code>values</code> of a module or <code>Release.spec.parameters</code>, renders at most 4 MiB
+(4194304 bytes) of text. Past that, the rendering fails with <code>the rendered text is larger than 4194304 bytes</code>.
+<a href="#kubocd-functions"><code>until</code></a> builds at most 10000 items, and fails past that with
+<code>until: the count is beyond the limit of 10000</code>.</p>
+<p>Function results also have a 4 MiB limit, even when the final rendered text is smaller:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Refusal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>indent</code></td>
+<td style="text-align: left;"><code>indent: the result is larger than 4194304 bytes</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>nindent</code></td>
+<td style="text-align: left;"><code>nindent: the result is larger than 4194304 bytes</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>replace</code></td>
+<td style="text-align: left;"><code>replace: the result is larger than 4194304 bytes</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>join</code></td>
+<td style="text-align: left;"><code>join: the result can exceed 4194304 bytes</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>printf</code></td>
+<td style="text-align: left;"><code>printf: the result can exceed 4194304 bytes</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>regexReplaceAll</code></td>
+<td style="text-align: left;"><code>regexReplaceAll: the result can exceed 4194304 bytes</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>indent</code>, <code>nindent</code> and <code>replace</code> check the result size before constructing it. Negative indentation fails with
+<code>indent: the indentation must not be negative</code> or <code>nindent: the indentation must not be negative</code>.</p>
+<p><code>join</code>, <code>printf</code> and <code>regexReplaceAll</code> refuse a result whose size bound exceeds the limit. These conservative bounds
+can also refuse a smaller result. Non-string <code>join</code> items and regex capture replacements can be over-counted.
+For <code>printf</code>, this includes quoted or hexadecimal strings (<code>%q</code>, <code>%x</code>, <code>%X</code>, and quoted strings in <code>%#v</code>), containers,
+numeric formatting (including precision) and invalid-format diagnostics. Plain <code>%s</code> and <code>%v</code> strings are counted
+exactly.</p>
+<p>The controller schedules no retry on these errors, as the same data fails the same way: the <code>Release</code> stays in
+<code>ERROR</code> until a change of what it reads reconciles it again. <code>kubocd render</code> fails the same way.</p>
+<h2 id="environment-variables-in-manifests">Environment variables in manifests</h2>
+<p>A <code>${...}</code> sequence in a package or <code>Release</code> manifest stays as written. Neither <code>kubocd package</code> nor the controller,
+nor any other command reading a manifest, replaces it with an environment variable. A CI pipeline that needs
+substitutions runs them before <code>kubocd package</code>, for instance with <code>envsubst</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>envsubst<span class="w"> </span><span class="s1">'${BUCKET}'</span><span class="w"> </span>&lt;<span class="w"> </span>package.tmpl.yaml<span class="w"> </span>&gt;<span class="w"> </span>package.yaml
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>kubocd<span class="w"> </span>package<span class="w"> </span>package.yaml
+</span></code></pre></div>
+<h2 id="errors">Errors</h2>
+<p>Where an error shows up:</p>
+<ul>
+<li>
+<p><code>kubocd package</code> parses the templates of the package, without running them, and fails on a function outside the
+  list, naming the module and the field:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ERROR: module 'main': could not parse 'values' template: template: :2: function "now" not defined
+</span></code></pre></div>
+<p>The <code>templateHeader</code> of the package is placed before each of its templates. An error there names it:
+<code>in templateHeader: template: :1: function "now" not defined</code>. A <code>templateHeader</code> without a final newline, such as
+one written with <code>|-</code>, shares its last line with the first line of each template, and a parse error on that line
+names both places:
+<code>in templateHeader or on the first line of the template: template: :2: function "now" not defined</code>.</p>
+</li>
+<li>
+<p>A manifest holding a map with two keys that are the same once converted to strings, or a map key that cannot be
+  converted to a string, such as <code>null</code>, is rejected when the CLI or the controller reads it, with a message that names
+  neither the keys nor the values. <code>kubocd package</code> gives:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ERROR: the YAML document has a map whose keys are the same once converted to strings, such as 1 and "1", or true and "true"
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>ERROR: the YAML document has a map key that cannot be converted to a string, such as null
+</span></code></pre></div>
+</li>
+<li>
+<p>The controller parses a package when it loads it. A package built with an older CLI, calling a function outside the
+  list, puts the <code>Release</code> in error:
+  <code>error while loading package from image: module 'main': could not parse 'values' template: ...</code>. A package whose
+  manifest has such map keys puts it in error too:
+  <code>error while parsing package original.yaml file: the YAML document has a map whose keys are the same ...</code>.</p>
+</li>
+<li><code>Release.spec.parameters</code> is parsed when the <code>Release</code> is reconciled. The <code>Release</code> goes to <code>ERROR</code> with
+  <code>could not create template from parameters: template: :1: function "now" not defined</code>.</li>
+<li>The default of a <code>connectionRef</code> parameter (EXPERIMENTAL connections feature) is a template that <code>kubocd package</code>
+  does not parse. It is parsed and rendered for each <code>Release</code> that does not set the parameter, with the functions and
+  the data of <code>Release.spec.parameters</code> and without the <code>templateHeader</code>, so an error there shows up in the <code>Release</code>
+  status. The value that <code>Release.spec.parameters</code> gives to the parameter is a connection name, never rendered a second
+  time.</li>
+<li>The other errors happen while rendering: <code>fail</code>, <code>required</code>, <code>resolveDNS</code> disabled, a function or an action that
+  fails on the data, a <a href="#limits">limit</a> reached, a rendered text that is not valid YAML, or a rendered map with two
+  keys that are the same once converted to strings, or with a key that cannot be converted, such as <code>null</code>. They show
+  up in the <code>Release</code> status, its events and the controller log, and in the output of <code>kubocd render</code>.</li>
+<li>The errors of the steps that use the rendered values follow the same rule. See
+  <a href="#after-the-rendering">After the rendering</a>.</li>
+</ul>
+<p>What a message holds:</p>
+<ul>
+<li>The template, the place and the reason. A parse error keeps the message of Go text/template, which gives the line
+  and can only quote the template. This line counts from the first line of the <code>templateHeader</code>, when the package has
+  one. An execution error gives the line and the column of the failing action, counted from the start of the field, or
+  from the start of the <code>templateHeader</code> when the action is there, which the message then names:
+  <code>in templateHeader, line 1, column 14</code>. A rendered text that is not valid YAML is located by its line in this text,
+  which begins with the output of the <code>templateHeader</code>.</li>
+<li>Never the data, nor the rendered text. The messages of Go text/template and of the Sprig functions, which can print
+  the value at fault, give way to a category, such as <code>error calling regexReplaceAll</code> or
+  <code>range over a value that is not a list or a map</code>, followed by <code>message withheld, as it can quote the data</code>.</li>
+<li>The messages of the KuboCD functions, and those written with <code>fail</code> and <code>required</code>, as written. Write the messages of
+  <code>fail</code> and <code>required</code> without secrets.</li>
+<li>For a schema validation error on the parameters or the context, the path of the value, made of the properties the
+  schema declares and of list indexes. The path stops before a property the schema does not declare, whose name can
+  come from the data.</li>
+</ul>
+<p>Some messages, as the <code>Release</code> status shows them:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>error on rendering: module 'main': could not render 'values' template: line 2, column 21: error calling required: parameter 'adminPassword' is required
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>error on rendering: module 'main': could not render 'values' template: line 1, column 21: range over a value that is not a list or a map, message withheld, as it can quote the data
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>error on rendering: module 'main': could not render 'values' template: the rendered text is not valid YAML (line 4)
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>error on rendering: module 'main': could not render 'values' template: the rendered text has a map whose keys are the same once converted to strings, such as 1 and "1", or true and "true"
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>error on rendering: module 'main': could not render 'values' template: the rendered text has a map key that cannot be converted to a string, such as null
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>error on rendering: module 'main': could not render 'values' template: the rendered text is larger than 4194304 bytes
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>error on rendering: module 'main': could not render 'values' template: line 2, column 13: error calling until: until: the count is beyond the limit of 10000
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>could not validate parameters: parameters schema validation error: (root): a property is not declared in the schema
+</span></code></pre></div>
+<p>With a <code>templateHeader</code>, as in this excerpt of a package:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">templateHeader</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="no">{{- $host := required "parameter 'host' is required" .Parameters.host }}</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nt">modules</span><span class="p">:</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">      </span><span class="no">ingress:</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">        </span><span class="no">host: {{ $host }}</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">        </span><span class="no">port: {{ required "parameter 'port' is required" .Parameters.port }}</span>
+</span></code></pre></div>
+<ul>
+<li>Without <code>host</code>, the <code>templateHeader</code> fails in the first template rendered, here <code>roles</code>, which the package does not
+  set:
+  <code>could not render 'roles' template: in templateHeader, line 1, column 14: error calling required: parameter 'host' is required</code>.</li>
+<li>Without <code>port</code>, the error is on line 3 of <code>values</code>, the line of <code>port</code>:
+  <code>module 'main': could not render 'values' template: line 3, column 12: error calling required: parameter 'port' is required</code>.</li>
+</ul>
+<p>A <code>templateHeader</code> without a final newline shares its last line with the first line of each template. An execution
+error on that line names the <code>templateHeader</code> when the failing action is in it. Otherwise, the message gives line 1,
+with a column counted from the start of the template.</p>
+<p><code>kubocd render</code> writes the data model to <code>model.yaml</code> before rendering the package, which helps to reproduce an error.</p>
+<h3 id="after-the-rendering">After the rendering</h3>
+<p>The values that the templates of a <code>Release</code> render then go through more steps: the controller looks up the input
+connections, builds the HelmReleases, checks the conditions, creates and updates the connections of the outputs, and
+sends the requests these steps need to the API server. Their errors follow the rule of the render errors: they name
+the module, the field, or the input, the condition or the output by its position, such as <code>input#1</code> or <code>output[0]</code>,
+and a category, never a rendered value. <code>kubocd render</code> follows the same rule for the steps it runs.</p>
+<ul>
+<li>A request refused by the API server gives the reason of the answer and the fields at fault, without the message of
+  the answer, which can quote the value refused. A reason that Kubernetes does not define, such as one that an
+  admission webhook gives, shows as <code>Unknown</code>. A field keeps its section, <code>metadata</code>, <code>spec</code> or <code>status</code>, and a field
+  outside these sections is left out. The name that follows the section stays when <code>HelmRelease</code>, <code>Release</code>,
+  <code>Connection</code> or <code>ClusterConnection</code> declares it there, without index or map key: <code>spec.install.strategy.name</code> gives
+  <code>spec.install</code>. A name that none of them declares gives the section alone, such as <code>spec</code>. A request without an
+  answer gives <code>the request to the API server failed, message withheld, as it can quote the object</code>. This holds for
+  every request after the rendering, the update of the <code>Release</code> status and the deletion of its connections
+  included, and for the updates of the finalizer of the <code>Release</code>.</li>
+<li>A refused lookup of the connections of an input names the input by its position, such as
+  <code>input#1: could not get the Connection: ...</code> or <code>input#1: could not list the Connections: ...</code>.</li>
+<li>A <code>Release</code> waiting for a condition names the object it checks, but quotes neither the CEL expression nor the message
+  of the CEL evaluation, which can quote the object. A <code>Release</code> waiting for a connection or a role names it, the
+  connections of its outputs included.</li>
+<li>Conditions accept only core <code>Secret</code> and <code>ConfigMap</code> objects (case-insensitive kinds) in <code>Release.spec.targetNamespace</code>,
+  which defaults to <code>Release.metadata.namespace</code>. Other kinds, API groups or namespaces fail at render time with
+  <code>condition[0]: only core Secret and ConfigMap conditions in the Release target namespace are allowed</code> (zero-based
+  index), even with <code>kubocd render --skipConditions</code>. The controller adds <code>error on rendering:</code> in the Release status
+  and its <code>Warning ConditionError</code> event, and schedules no condition retry.</li>
+<li>A forbidden condition read gives
+  <code>condition read forbidden: grant get access to the condition kind in the Release target namespace</code>, and the
+  controller retries it. <code>kubocd render</code> uses the caller's permissions.</li>
+<li>Each condition's CEL evaluation defaults to 1000000 cost units and 1s. The controller and <code>kubocd render</code> accept
+  <code>--conditionCelCostLimit</code> and <code>--conditionCelTimeout</code>. With the <code>kubocd-ctrl</code> chart, set them in
+  <code>controller.additionalArgs</code>. A value of <code>0</code> disables the corresponding limit, while caller cancellation and
+  deadlines still apply. Negative values are refused. Exceeding a limit gives <code>condition CEL cost limit exceeded</code>
+  or <code>condition CEL evaluation deadline exceeded</code>, with no scheduled condition retry. The evaluation deadline is
+  cooperative and excludes API reads, parsing and type-checking.</li>
+<li>The values of a <code>Connection</code> or a <code>ClusterConnection</code> are checked against its contract by the rule of the
+  parameters: the path of the value and a category, such as
+  <code>validation error on values: (root): a property is not declared in the schema</code>. Values that do not decode give
+  <code>unable to parse connection values: they are not a map with distinct keys</code>, and a missing contract gives
+  <code>the Contract or ClusterContract named in spec.contract is missing</code>, or
+  <code>the ClusterContract named in spec.contract is missing</code> for a <code>ClusterConnection</code>. When the API server refuses to
+  read the contract or to update the status of the connection, the message gives the reason and the fields of the
+  answer only. The <code>Release</code> whose output creates the connection never copies the message that the status of the
+  connection holds. When the connection is in <code>ERROR</code>, the <code>Release</code> checks it again as the connection controller
+  does, and shows this reason in its status and events. A connection that no controller checked yet gives
+  <code>Connection 'db': not checked yet</code> in the status of the <code>Release</code>, or
+  <code>Connection 'db': not checked, as the connections feature gate is off</code> when the <code>connections</code> feature gate is off.</li>
+<li>The <code>ClusterConnection</code> of an output is named <code>kcd-&lt;namespace&gt;-&lt;release&gt;-&lt;output&gt;</code>. When one of that name exists
+  and its <code>spec.parentRelease</code> names another <code>Release</code>, the <code>Release</code> leaves it as it is and goes to <code>ERROR</code> with
+  <code>output[0]: its ClusterConnection belongs to another Release</code>, and the controller tries again later. One without
+  <code>spec.parentRelease</code> is taken over.</li>
+</ul>
+<p>Some messages, as the status of a <code>Release</code> named <code>demo</code> with target namespace <code>apps</code> shows them:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>failed to populate HelmRelease 'demo-main': specPatch of module 'main' has a field that HelmRelease does not define
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>error while creating HelmRelease 'demo-main': the API server answered Invalid for spec.timeout, message withheld, as it can quote the object
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>output[0]: error while creating its Connection: the API server answered Invalid for metadata.name, message withheld, as it can quote the object
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>output[0]: its ClusterConnection belongs to another Release
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>input#1: could not list the Connections: the API server answered Forbidden, message withheld, as it can quote the object
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>condition[0]: the cel expression is not valid, message withheld, as it can quote the condition or the object
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>error on rendering: condition[0]: only core Secret and ConfigMap conditions in the Release target namespace are allowed
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>condition[0]: condition read forbidden: grant get access to the condition kind in the Release target namespace
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>condition[0]: condition CEL cost limit exceeded
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>condition[0]: condition CEL evaluation deadline exceeded
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>Waiting for cond.#1: ConfigMap 'apps/settings': the cel expression is false
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>Connection 'db': validation error on values: (root): a property is not declared in the schema
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>Connection 'db': not checked yet
+</span></code></pre></div>
+<h2 id="upgrading-from-v03x">Upgrading from v0.3.x</h2>
+<p>The upgrade note of the <a href="https://github.com/kubocd/kubocd/blob/main/CHANGELOG.md#upgrading-from-v03x">KuboCD changelog</a>,
+with the fixes of later versions:</p>
+<ul>
+<li>Before upgrading the controller, use the v0.4.0 CLI's <code>kubocd dump package &lt;manifest&gt;</code> to check package parsing
+  without publishing an image. It rejects a template calling a function outside the list, and a manifest with map keys
+  that are the same once converted to strings. This check does not execute templates or compile templated
+  <code>connectionRef</code> defaults. Also test representative Releases with <code>kubocd render</code>. Upgrade consuming controllers before
+  publishing packages that rely on the new literal <code>${...}</code> behaviour. Once the controller is upgraded, a Release whose
+  package fails stays in error, its HelmReleases are left as they are, and the Releases depending on its roles wait.</li>
+<li>A package calling <code>resolveDNS</code> needs <code>controller.allowDNSLookups: true</code>, or the address written in its parameters or
+  its context.</li>
+<li>A manifest relying on <code>${VAR}</code> substitution is prepared by the CI before <code>kubocd package</code>.</li>
+<li>A template reading <code>.ImageRedirector</code> reads <code>.ImageRedirects</code> instead. One calling <code>slice</code> with a non-integer index
+  converts it with <code>int</code>.</li>
+<li>The message that v0.3.x wrote in the status of a Connection or a ClusterConnection, which can name a property of its
+  values, is replaced when the connection controller, which runs with the <code>connections</code> feature gate on, reconciles
+  the connection and records its status. It reconciles every connection when it starts. A refused read of the contract
+  or a refused patch of the status delays the replacement to a later reconciliation. A Release never copies this
+  message: it checks an output connection in <code>ERROR</code> again, as the connection controller does. What v0.3.x copied into
+  the status of a Release is replaced, at the latest, when the Release reconciles its outputs, once its HelmReleases
+  are ready. Events already emitted keep their text.</li>
+</ul>
+<p>The functions removed in v0.4.0 are:</p>
+<ul>
+<li>the KuboCD functions <code>readFile</code>, <code>toToml</code>, <code>fromYamlArray</code> and <code>fromJsonArray</code>,</li>
+<li>the <code>include</code>, <code>tpl</code> and <code>lookup</code> placeholders, which returned placeholder values,</li>
+<li>every Sprig function that is neither in the <a href="#sprig-functions">list</a> nor replaced by a
+  <a href="#kubocd-functions">KuboCD function</a> or a <a href="#go-texttemplate-built-ins">built-in</a> of the same name, among them
+  <code>getHostByName</code>, <code>now</code>, <code>date</code>, <code>randAlphaNum</code>, <code>uuidv4</code>, <code>genCA</code>, <code>b64enc</code> and <code>contains</code>.</li>
+</ul>
+<p><code>env</code> and <code>expandenv</code> were already unavailable in v0.3.x.</p>
+<p>Up to v0.3.x, the CLI and the controller replaced <code>${NAME}</code>, where <code>NAME</code> is made of letters, digits and <code>_</code>, with the
+environment variable <code>NAME</code> when they read a manifest, and failed when it was unset or empty. Other forms, such as
+<code>${NAME:-x}</code> or <code>${NAME#s3://}</code>, already stayed as written.</p>
+<p>A package calling <code>resolveDNS</code> to get an address can take it from its data instead. For example, replace:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">metallb.universe.tf/loadBalancerIPs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">resolveDNS .Context.ingress.host</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+</span></code></pre></div>
+<p>with an address set in the context, such as <code>ingress.vip: 10.0.0.10</code>:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">metallb.universe.tf/loadBalancerIPs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">.Context.ingress.vip</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+</span></code></pre></div>
+<p><code>.ImageRedirector</code> was an object of the controller. <code>.ImageRedirects</code> is a plain list, and calls to <code>imageRedirect</code> are
+unchanged.</p>
+<p>The list only grows on request: a package that needs another function, whose result depends on its arguments only, can
+ask for it.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../530-config/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Config">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Config
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.footer"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
