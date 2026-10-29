@@ -63,7 +63,15 @@ and `kubocd render` fetches the package from the redirected reference.
 | :--- | :--- | :--- | :--- |
 | `oldPrefix` | String | **Yes** | A package whose `<repository>:<tag>` starts with this value is redirected. |
 | `newPrefix` | String | **Yes** | Replaces `oldPrefix`. If empty, the reference is kept and only the settings below apply. |
-| `interval`, `timeout`, `provider`, `secretRef`, `certSecretRef`, `proxySecretRef`, `verify`, `serviceAccountName`, `insecure`, `suspend`, `ignore` | - | No | Set on the generated `OCIRepository` in place of the same fields of [Release.spec.package](./510-release.md#releasespecpackage). A field left empty here is left empty in the `OCIRepository`. |
+| `interval`, `timeout`, `provider`, `secretRef`, `certSecretRef`, `proxySecretRef`, `verify`, `serviceAccountName`, `insecure`, `suspend`, `ignore` | - | No | Set on the generated `OCIRepository` in place of the same fields of [Release.spec.package](./510-release.md#releasespecpackage), with the verification exception below. |
+
+When the redirect omits `verify`, the `OCIRepository` keeps the Release's `verify`. The mirror must have compatible
+signatures. With `--allowRedirectVerifyDrop=true`, an omitted `verify` removes verification instead. The controller
+and `kubocd render` accept this flag. Set it in `controller.additionalArgs` with the `kubocd-ctrl` chart.
+
+A redirect that needs credentials must define its own `secretRef`, `certSecretRef` and `proxySecretRef` as needed.
+These fields are not inherited from the Release. Omitting one leaves it empty in the `OCIRepository`.
+The verification exception does not change the other redirect settings.
 
 ---
 
