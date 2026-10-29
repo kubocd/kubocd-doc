@@ -6,9 +6,9 @@ Creates a KuboCD package from a manifest and stores it in an OCI image repositor
 
 See [A First Deployment / Package Build](130-a-first-deployment.md/#package-build) for usage examples.
 
-```text
-Assemble a KuboCD Package from a manifest to an OCI image
+Help excerpt (`kubocd package --help`):
 
+```text
 Usage:
   kubocd package <Package manifest> [flags]
 
@@ -24,10 +24,19 @@ Examples:
 	$ kubocd package podinfo-p01.yaml
 
 Flags:
-  -h, --help                   help for package
-  -r, --ociRepoPrefix string   OCI repository prefix (e.g., 'quay.io/org/packages'). Also definable via OCI_REPO_PREFIX env var.
-  -p, --plainHTTP              Use plain HTTP instead of HTTPS when pushing image
-  -w, --workDir string         Working directory. Defaults to $HOME/.kubocd
+      --allowExternalLinks           Allow Git and local charts to read files and file:// dependencies outside their source root; special files remain refused.
+      --allowInsecureCredentials     Allow OCI authentication over HTTP, including token services and redirects. Disabled by default; anonymous HTTP token flows remain supported. Does not select HTTP, disable certificate checks, or relax Git protections.
+      --disableArchiveLimits         Disable CLI archive resource limits; path checks and archive validation remain enabled.
+  -h, --help                         help for package
+      --logLevel string              Log level (default "INFO")
+      --maxArchiveContentSize int    Maximum logical content bytes per archive, including skipped and duplicate entries. (default 41943040)
+      --maxArchiveEntries int        Maximum entries per archive, including implicit parent directories. (default 1000)
+      --maxArchiveListingSize int    Maximum bytes per archive listing, including newlines. (default 1048576)
+      --maxArchiveMetadataSize int   Maximum bytes per archive metadata file read or decoded. (default 1048576)
+      --maxArchiveStreamSize int     Maximum decompressed bytes per archive, including headers, skipped entries and padding. (default 47087616)
+  -r, --ociRepoPrefix string         OCI repository prefix (i.e 'quay.io/your-organization/packages'). Can also be specified with OCI_REPO_PREFIX environment variable
+  -p, --plainHTTP                    Use plain HTTP instead of HTTPS when pushing image; authentication over HTTP requires --allowInsecureCredentials
+  -w, --workDir string               Working directory. Default to $HOME/.kubocd
 ```
 
 ---
@@ -36,9 +45,9 @@ Flags:
 
 Displays the contents of a KuboCD package.
 
-```text
-Dump KuboCD Package
+Help excerpt (`kubocd dump package --help`):
 
+```text
 Usage:
   kubocd dump package <package.yaml|oci://repo:version> [flags]
 
@@ -56,14 +65,22 @@ Examples:
 	$ kubocd dump package podinfo-p01.yaml --charts
 
 Flags:
-  -a, --anonymous       Connect anonymously to the registry.
-  -c, --charts          Unpack charts in output directory.
-  -h, --help            help for package.
-  -i, --insecure        Use insecure connection (HTTP).
-  -o, --output string   Output dump directory (default "./.dump").
+      --allowExternalLinks           Allow Git and local charts to read files and file:// dependencies outside their source root; special files remain refused.
+      --allowInsecureCredentials     Allow OCI authentication over HTTP, including token services and redirects. Disabled by default; anonymous HTTP token flows remain supported. Does not select HTTP, disable certificate checks, or relax Git protections.
+  -a, --anonymous                    Connect anonymously to the registry. To check 'public' image status
+  -c, --charts                       unpack charts in output directory
+      --disableArchiveLimits         Disable CLI archive resource limits; path checks and archive validation remain enabled.
+  -h, --help                         help for package
+  -i, --insecure                     Use HTTP instead of HTTPS; authentication over HTTP requires --allowInsecureCredentials
+      --maxArchiveContentSize int    Maximum logical content bytes per archive, including skipped and duplicate entries. (default 41943040)
+      --maxArchiveEntries int        Maximum entries per archive, including implicit parent directories. (default 1000)
+      --maxArchiveListingSize int    Maximum bytes per archive listing, including newlines. (default 1048576)
+      --maxArchiveMetadataSize int   Maximum bytes per archive metadata file read or decoded. (default 1048576)
+      --maxArchiveStreamSize int     Maximum decompressed bytes per archive, including headers, skipped entries and padding. (default 47087616)
+  -o, --output string                Output directory; an empty value prints to stdout (requires --charts=false) (default "./.dump")
 
 Global Flags:
-  -w, --workDir string   Working directory. Defaults to $HOME/.kubocd.
+  -w, --workDir string   working directory. Default to $HOME/.kubocd
 ```
 
 **Example:**
@@ -221,9 +238,9 @@ defaultHelmInterval: 30m0s
 
 Previews all resources that will be deployed by a `Release`. Ideally used to validate a `Package` or `Release` before deployment.
 
-```text
-Render a KuboCD release
+Help excerpt (`kubocd render --help`):
 
+```text
 Usage:
   kubocd render <Release manifest> [<package manifest>] [flags]
 
@@ -233,6 +250,29 @@ Examples:
 
 	Preview a Release using an alternate package manifest.
 	$ kubocd render releases/podinfo1.yaml packages/podinfo-p01.yaml
+
+Flags:
+      --allowDNSLookups                Let the package templates resolve host names with resolveDNS, as the controller option of the same name
+      --allowExternalLinks             Allow Git and local charts to read files and file:// dependencies outside their source root; special files remain refused.
+      --allowInsecureCredentials       Allow OCI authentication over HTTP, including token services and redirects. Disabled by default; anonymous HTTP token flows remain supported. Does not select HTTP, disable certificate checks, or relax Git protections.
+      --allowRedirectVerifyDrop        Allow a matching packageRedirect without verify to remove Release signature verification.
+      --allowReleaseInsecureSource     Allow Release package sources to use insecure HTTP without a matching packageRedirect.
+      --conditionCelCostLimit int      Maximum CEL cost per condition evaluation; 0 disables the cost limit, negative values are refused. (default 1000000)
+      --conditionCelTimeout duration   Timeout per condition CEL evaluation; 0 disables this timeout (caller cancellation/deadlines still apply); negative values are refused. (default 1s)
+      --debug                          Enable debug logging
+      --disableArchiveLimits           Disable CLI archive resource limits; path checks and archive validation remain enabled.
+  -h, --help                           help for render
+      --kubocdNamespace string         The namespace where the kubocd controller is installed in (To fetch configs resources) (default "kubocd")
+      --maxArchiveContentSize int      Maximum logical content bytes per archive, including skipped and duplicate entries. (default 41943040)
+      --maxArchiveEntries int          Maximum entries per archive, including implicit parent directories. (default 1000)
+      --maxArchiveListingSize int      Maximum bytes per archive listing, including newlines. (default 1048576)
+      --maxArchiveMetadataSize int     Maximum bytes per archive metadata file read or decoded. (default 1048576)
+      --maxArchiveStreamSize int       Maximum decompressed bytes per archive, including headers, skipped entries and padding. (default 47087616)
+  -n, --namespace string               Value to set if release.metadata.namespace is empty (default "default")
+  -o, --output string                  Output directory; an empty value prints top-level dumps to stdout and leaves charts/, modules/ and connection append files in the current directory (default "./.render")
+  -s, --skipConditions                 Skip condition evaluation; core Secret/ConfigMap and Release target namespace restrictions still apply
+      --trace                          Enable trace logging
+  -w, --workDir string                 working directory. Default to $HOME/.kubocd
 ```
 
 To render a package that calls `resolveDNS`, add the `--allowDNSLookups` flag, the counterpart of the controller option.
