@@ -84,7 +84,8 @@ loaded the package again and written the new protection in the status.
 
 ### Forwarded Properties
 
-The following Flux `OCIRepository` attributes can be overridden in this section and will be passed through to the generated resource:
+The following Flux `OCIRepository` attributes can be set in this section. They are passed to the generated resource
+subject to the source policy below and any matching [packageRedirect](./530-config.md#packageredirect):
 
 - `interval`, `5m` by default, set by the API server. A value of `0s` takes the
   [`defaultPackageInterval`](./530-config.md#configspec) of the `Config` resources.
@@ -97,6 +98,12 @@ The following Flux `OCIRepository` attributes can be overridden in this section 
 - `serviceAccountName`
 - `insecure`
 - `suspend`
+
+A Release with `insecure: true` and no matching `packageRedirect` is refused with
+`Release.spec.package.insecure is not allowed without a matching packageRedirect`. The controller schedules no retry
+on this refusal. Use TLS, configure a matching redirect, or set `--allowReleaseInsecureSource=true` in the controller
+and `kubocd render` to allow direct HTTP sources. With the `kubocd-ctrl` chart, set the flag in
+`controller.additionalArgs`. A matching redirect uses its own `insecure` setting, regardless of the Release's value.
 
 See [Flux OCIRepositorySpec](https://fluxcd.io/flux/components/source/api/v1/#source.toolkit.fluxcd.io/v1.OCIRepositorySpec){:target="_blank"} for details.
 
