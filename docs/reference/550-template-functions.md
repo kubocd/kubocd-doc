@@ -77,7 +77,8 @@ package templates get.
 
 ### Sprig functions
 
-These 45 functions come from [Sprig](https://masterminds.github.io/sprig/) v3.3.0 and behave as documented there:
+These 45 functions come from [Sprig](https://masterminds.github.io/sprig/) v3.3.0 and behave as documented there,
+subject to the [limits](#limits) below:
 
 | Group | Functions |
 | :--- | :--- |
@@ -115,7 +116,8 @@ These are part of Go templates and always available: `and`, `call`, `eq`, `ge`, 
 [text/template documentation](https://pkg.go.dev/text/template).
 
 - `printf` is `fmt.Sprintf`, except that it rejects the `%p` verb, which prints a memory address that changes from one
-  rendering to the next. The rendering fails with an error ending in `printf: the %p verb is not allowed`.
+  rendering to the next, and a result whose size bound exceeds 4 MiB. The rendering fails with an error ending in
+  `printf: the %p verb is not allowed` or `printf: the result can exceed 4194304 bytes`. See [Limits](#limits).
 - `slice` takes integer indexes only. Convert a number from the data with `int`:
 
     ```yaml
@@ -245,6 +247,26 @@ Each execution of a template, such as the `values` of a module or `Release.spec.
 (4194304 bytes) of text. Past that, the rendering fails with `the rendered text is larger than 4194304 bytes`.
 [`until`](#kubocd-functions) builds at most 10000 items, and fails past that with
 `until: the count is beyond the limit of 10000`.
+
+Function results also have a 4 MiB limit, even when the final rendered text is smaller:
+
+| Function | Refusal |
+| :--- | :--- |
+| `indent` | `indent: the result is larger than 4194304 bytes` |
+| `nindent` | `nindent: the result is larger than 4194304 bytes` |
+| `replace` | `replace: the result is larger than 4194304 bytes` |
+| `join` | `join: the result can exceed 4194304 bytes` |
+| `printf` | `printf: the result can exceed 4194304 bytes` |
+| `regexReplaceAll` | `regexReplaceAll: the result can exceed 4194304 bytes` |
+
+`indent`, `nindent` and `replace` check the result size before constructing it. Negative indentation fails with
+`indent: the indentation must not be negative` or `nindent: the indentation must not be negative`.
+
+`join`, `printf` and `regexReplaceAll` refuse a result whose size bound exceeds the limit. These conservative bounds
+can also refuse a smaller result. Non-string `join` items and regex capture replacements can be over-counted.
+For `printf`, this includes quoted or hexadecimal strings (`%q`, `%x`, `%X`, and quoted strings in `%#v`), containers,
+numeric formatting (including precision) and invalid-format diagnostics. Plain `%s` and `%v` strings are counted
+exactly.
 
 The controller schedules no retry on these errors, as the same data fails the same way: the `Release` stays in
 `ERROR` until a change of what it reads reconciles it again. `kubocd render` fails the same way.
