@@ -404,6 +404,20 @@ and a category, never a rendered value. `kubocd render` follows the same rule fo
 - A `Release` waiting for a condition names the object it checks, but quotes neither the CEL expression nor the message
   of the CEL evaluation, which can quote the object. A `Release` waiting for a connection or a role names it, the
   connections of its outputs included.
+- Conditions accept only core `Secret` and `ConfigMap` objects (case-insensitive kinds) in `Release.spec.targetNamespace`,
+  which defaults to `Release.metadata.namespace`. Other kinds, API groups or namespaces fail at render time with
+  `condition[0]: only core Secret and ConfigMap conditions in the Release target namespace are allowed` (zero-based
+  index), even with `kubocd render --skipConditions`. The controller adds `error on rendering: ` in the Release status
+  and its `Warning ConditionError` event, and schedules no condition retry.
+- A forbidden condition read gives
+  `condition read forbidden: grant get access to the condition kind in the Release target namespace`, and the
+  controller retries it. `kubocd render` uses the caller's permissions.
+- Each condition's CEL evaluation defaults to 1000000 cost units and 1s. The controller and `kubocd render` accept
+  `--conditionCelCostLimit` and `--conditionCelTimeout`. With the `kubocd-ctrl` chart, set them in
+  `controller.additionalArgs`. A value of `0` disables the corresponding limit, while caller cancellation and
+  deadlines still apply. Negative values are refused. Exceeding a limit gives `condition CEL cost limit exceeded`
+  or `condition CEL evaluation deadline exceeded`, with no scheduled condition retry. The evaluation deadline is
+  cooperative and excludes API reads, parsing and type-checking.
 - The values of a `Connection` or a `ClusterConnection` are checked against its contract by the rule of the
   parameters: the path of the value and a category, such as
   `validation error on values: (root): a property is not declared in the schema`. Values that do not decode give
@@ -421,7 +435,7 @@ and a category, never a rendered value. `kubocd render` follows the same rule fo
   `output[0]: its ClusterConnection belongs to another Release`, and the controller tries again later. One without
   `spec.parentRelease` is taken over.
 
-Some messages, as the status of a `Release` named `demo` shows them:
+Some messages, as the status of a `Release` named `demo` with target namespace `apps` shows them:
 
 ```
 failed to populate HelmRelease 'demo-main': specPatch of module 'main' has a field that HelmRelease does not define
@@ -430,7 +444,11 @@ output[0]: error while creating its Connection: the API server answered Invalid 
 output[0]: its ClusterConnection belongs to another Release
 input#1: could not list the Connections: the API server answered Forbidden, message withheld, as it can quote the object
 condition[0]: the cel expression is not valid, message withheld, as it can quote the condition or the object
-Waiting for cond.#1: Context.kubocd.kubotal.io 'apps/cluster': the cel expression is false
+error on rendering: condition[0]: only core Secret and ConfigMap conditions in the Release target namespace are allowed
+condition[0]: condition read forbidden: grant get access to the condition kind in the Release target namespace
+condition[0]: condition CEL cost limit exceeded
+condition[0]: condition CEL evaluation deadline exceeded
+Waiting for cond.#1: ConfigMap 'apps/settings': the cel expression is false
 Connection 'db': validation error on values: (root): a property is not declared in the schema
 Connection 'db': not checked yet
 ```
