@@ -1016,6 +1016,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#without" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        without
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#keys" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1274,6 +1285,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#without" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        without
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#keys" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1507,7 +1529,7 @@ document: a quote or a backslash in it can break the document, or change the val
 <p>Package templates and <code>Release.spec.parameters</code> get the same functions, except <a href="#resolvedns"><code>resolveDNS</code></a>, which only
 package templates get.</p>
 <h3 id="sprig-functions">Sprig functions</h3>
-<p>These 45 functions come from <a href="https://masterminds.github.io/sprig/">Sprig</a> v3.3.0 and behave as documented there,
+<p>These 69 functions come from <a href="https://masterminds.github.io/sprig/">Sprig</a> v3.3.0 and behave as documented there,
 subject to the <a href="#limits">limits</a> below:</p>
 <table>
 <thead>
@@ -1519,7 +1541,7 @@ subject to the <a href="#limits">limits</a> below:</p>
 <tbody>
 <tr>
 <td style="text-align: left;">Strings</td>
-<td style="text-align: left;"><code>indent</code>, <code>lower</code>, <code>nindent</code>, <code>nospace</code>, <code>quote</code>, <code>regexReplaceAll</code>, <code>replace</code>, <code>split</code>, <code>splitList</code>, <code>title</code>, <code>trim</code>, <code>trimAll</code>, <code>trimPrefix</code>, <code>trimSuffix</code>, <code>trunc</code>, <code>upper</code></td>
+<td style="text-align: left;"><code>camelcase</code>, <code>contains</code>, <code>hasPrefix</code>, <code>hasSuffix</code>, <code>indent</code>, <code>kebabcase</code>, <code>lower</code>, <code>nindent</code>, <code>nospace</code>, <code>quote</code>, <code>regexMatch</code>, <code>regexReplaceAll</code>, <code>replace</code>, <code>snakecase</code>, <code>split</code>, <code>splitList</code>, <code>splitn</code>, <code>substr</code>, <code>title</code>, <code>trim</code>, <code>trimAll</code>, <code>trimPrefix</code>, <code>trimSuffix</code>, <code>trunc</code>, <code>upper</code></td>
 </tr>
 <tr>
 <td style="text-align: left;">Lists</td>
@@ -1531,21 +1553,25 @@ subject to the <a href="#limits">limits</a> below:</p>
 </tr>
 <tr>
 <td style="text-align: left;">Logic, defaults and types</td>
-<td style="text-align: left;"><code>coalesce</code>, <code>default</code>, <code>empty</code>, <code>kindIs</code>, <code>ternary</code></td>
+<td style="text-align: left;"><code>all</code>, <code>any</code>, <code>coalesce</code>, <code>deepEqual</code>, <code>default</code>, <code>empty</code>, <code>kindIs</code>, <code>kindOf</code>, <code>ternary</code></td>
 </tr>
 <tr>
 <td style="text-align: left;">Conversions and math</td>
-<td style="text-align: left;"><code>div</code>, <code>divf</code>, <code>float64</code>, <code>int</code>, <code>min</code>, <code>mulf</code></td>
+<td style="text-align: left;"><code>add</code>, <code>add1</code>, <code>atoi</code>, <code>div</code>, <code>divf</code>, <code>float64</code>, <code>int</code>, <code>int64</code>, <code>max</code>, <code>min</code>, <code>mod</code>, <code>mul</code>, <code>mulf</code>, <code>semverCompare</code>, <code>sub</code></td>
 </tr>
 <tr>
 <td style="text-align: left;">Encoding</td>
-<td style="text-align: left;"><code>sha256sum</code></td>
+<td style="text-align: left;"><code>b64dec</code>, <code>b64enc</code>, <code>sha256sum</code></td>
 </tr>
 </tbody>
 </table>
+<p>Since v0.4.3, templates can call <code>contains</code>, <code>hasPrefix</code>, <code>hasSuffix</code>, <code>b64enc</code>, <code>b64dec</code>, <code>substr</code>, <code>splitn</code>, <code>add</code>,
+<code>add1</code>, <code>sub</code>, <code>mul</code>, <code>max</code>, <code>mod</code>, <code>atoi</code>, <code>int64</code>, <code>all</code>, <code>any</code>, <code>kindOf</code>, <code>deepEqual</code>, <code>regexMatch</code>, <code>semverCompare</code>,
+<code>snakecase</code>, <code>kebabcase</code> and <code>camelcase</code> again. Removed by v0.4.0, their result depends on their arguments only and
+they do not modify them.</p>
 <h3 id="kubocd-functions">KuboCD functions</h3>
-<p>KuboCD defines these functions. <code>fail</code>, <code>fromJson</code>, <code>keys</code>, <code>toJson</code>, <code>until</code> and <code>urlParse</code> take the place of the
-Sprig functions of the same name, and behave as described here.</p>
+<p>KuboCD defines these functions. <code>fail</code>, <code>fromJson</code>, <code>keys</code>, <code>repeat</code>, <code>seq</code>, <code>toJson</code>, <code>until</code>, <code>untilStep</code>, <code>urlParse</code>
+and <code>without</code> take the place of the Sprig functions of the same name, and behave as described here.</p>
 <table>
 <thead>
 <tr>
@@ -1575,8 +1601,16 @@ Sprig functions of the same name, and behave as described here.</p>
 <td style="text-align: left;">Returns the keys of one or more dicts, sorted. A key present in several dicts appears once per dict.</td>
 </tr>
 <tr>
+<td style="text-align: left;"><code>repeat</code></td>
+<td style="text-align: left;">Since v0.4.3, repeats a string a given number of times: <code>repeat 3 "ab"</code> gives <code>ababab</code>. A negative count fails with <code>repeat: the count must not be negative</code>. The result is checked before allocation and must not exceed 4 MiB. See <a href="#limits">Limits</a>.</td>
+</tr>
+<tr>
 <td style="text-align: left;"><a href="#required"><code>required</code></a></td>
 <td style="text-align: left;">Fails the rendering when a value is missing.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>seq</code></td>
+<td style="text-align: left;">Since v0.4.3, returns space-separated numbers. <code>seq END</code> starts at 1, <code>seq START END</code> chooses a step of 1 or -1, and <code>seq START STEP END</code> uses the supplied step. The end is included when reached. For example, <code>seq 1 2 5</code> gives <code>1 3 5</code>. A zero step or a step in the wrong direction gives an empty string, as do calls with other than 1, 2 or 3 arguments. When start equals end, a positive step gives that number and a negative step gives an empty string, as in Sprig. At most 10000 numbers are built. See <a href="#limits">Limits</a>.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>toJson</code></td>
@@ -1591,8 +1625,16 @@ Sprig functions of the same name, and behave as described here.</p>
 <td style="text-align: left;">Returns the list of the integers from 0 up to a count, the count excluded, as the Sprig function does: <code>until 3</code> gives <code>[0 1 2]</code> and <code>until -3</code> gives <code>[0 -1 -2]</code>. It builds at most 10000 items either way. A larger count fails the rendering with <code>until: the count is beyond the limit of 10000</code>. See <a href="#limits">Limits</a>.</td>
 </tr>
 <tr>
+<td style="text-align: left;"><code>untilStep</code></td>
+<td style="text-align: left;">Since v0.4.3, returns a list from a start towards a stop, excluding the stop: <code>untilStep 1 7 2</code> gives <code>[1 3 5]</code>. A negative step descends. A zero step or a step in the wrong direction gives an empty list. At most 10000 items are built. See <a href="#limits">Limits</a>.</td>
+</tr>
+<tr>
 <td style="text-align: left;"><code>urlParse</code></td>
 <td style="text-align: left;">Parses a URL into a dict of its parts, as the Sprig function does. An invalid URL fails with <code>urlParse: invalid URL</code>, without the URL.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="#without"><code>without</code></a></td>
+<td style="text-align: left;">Since v0.4.3, returns a new list with matching items removed. All input items and arguments to omit must be strings, numbers, booleans or null. Maps and lists are refused.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><a href="#resolvedns"><code>resolveDNS</code></a></td>
@@ -1615,42 +1657,52 @@ Sprig functions of the same name, and behave as described here.</p>
 </span></code></pre></div>
 </li>
 </ul>
+<h3 id="without">without</h3>
+<p><code>without LIST ITEM...</code> returns a new list with every matching item removed. It does not modify its arguments.
+Every item in <code>LIST</code> and every argument to omit must be a string, number, boolean or null. A map or nested list is
+refused, even when it would be omitted, with
+<code>without: the list items must be strings, numbers, booleans or null</code>.
+Items match when they have the same type and value: the integer <code>1</code> does not match the floating-point number <code>1.0</code>.</p>
+<p>For an Airflow OIDC scope, remove <code>openid</code> and append <code>offline_access</code>:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">append (without (splitList " " (.Context.oidc.scope | default "openid profile email groups")) "openid") "offline_access" | join " " | quote</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+</span></code></pre></div>
+<p>With no scope set, this renders <code>scope: "profile email groups offline_access"</code>.</p>
 <h3 id="keys">keys</h3>
 <p><code>keys</code> returns the keys sorted. Pass the list through <code>toJson</code> to write it as YAML:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="no">labelNames: {{ keys .Parameters.labels | toJson }}</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="no">labelNames: {{ keys .Parameters.labels | toJson }}</span>
 </span></code></pre></div>
 <p>With the labels <code>tier</code>, <code>app</code> and <code>team</code>, this renders <code>labelNames: ["app","team","tier"]</code>. Without <code>toJson</code>, the list
 prints as <code>[app team tier]</code>, which YAML reads as a list holding the single string <code>app team tier</code>.</p>
 <h3 id="fail">fail</h3>
 <p><code>fail MESSAGE</code> stops the rendering with <code>MESSAGE</code>, for instance to reject a combination of parameters:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="no">{{- if and .Parameters.externalDatabase .Parameters.embeddedDatabase }}</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="no">{{- fail "set 'externalDatabase' or 'embeddedDatabase', not both" }}</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="no">{{- end }}</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="no">{{- if and .Parameters.externalDatabase .Parameters.embeddedDatabase }}</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="no">{{- fail "set 'externalDatabase' or 'embeddedDatabase', not both" }}</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="no">{{- end }}</span>
 </span></code></pre></div>
 <p>With both parameters set, the rendering fails with an error ending in
 <code>line 2, column 5: error calling fail: set 'externalDatabase' or 'embeddedDatabase', not both</code>.</p>
 <h3 id="required">required</h3>
 <p><code>required MESSAGE VALUE</code> returns <code>VALUE</code>, or fails the rendering with <code>MESSAGE</code> when <code>VALUE</code> is missing or an empty
 string.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="no">auth:</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="no">adminPassword: {{ required "parameter 'adminPassword' is required" .Parameters.adminPassword | quote }}</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="no">auth:</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="no">adminPassword: {{ required "parameter 'adminPassword' is required" .Parameters.adminPassword | quote }}</span>
 </span></code></pre></div>
 <p>Without <code>adminPassword</code>, the rendering fails with an error ending in
 <code>line 2, column 21: error calling required: parameter 'adminPassword' is required</code>.</p>
 <h3 id="imageredirect">imageRedirect</h3>
 <p><code>imageRedirect IMAGE ROOT</code> applies the image redirects defined in the <code>Config</code> resources to <code>IMAGE</code>, and returns its
 parts. <code>ROOT</code> is the root of the data model: <code>.</code> at the top level of a template, <code>$</code> inside a <code>range</code> or a <code>with</code>.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="no">image:</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="no">{{- $image := imageRedirect "quay.io/jetstack/cert-manager-controller:v1.17.0" . }}</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="no">repository: {{ $image.repository }}</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="no">tag: {{ $image.tag }}</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="no">{{- with $image.imagePullPolicy }}</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="no">pullPolicy: {{ . }}</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="no">{{- end }}</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="no">image:</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="no">{{- $image := imageRedirect "quay.io/jetstack/cert-manager-controller:v1.17.0" . }}</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="no">repository: {{ $image.repository }}</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="no">tag: {{ $image.tag }}</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="no">{{- with $image.imagePullPolicy }}</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="no">pullPolicy: {{ . }}</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="no">{{- end }}</span>
 </span></code></pre></div>
 <p>The result is a map:</p>
 <table>
@@ -1693,17 +1745,17 @@ parts. <code>ROOT</code> is the root of the data model: <code>.</code> at the to
 </table>
 <p>The redirects come from <code>Config.spec.imageRedirects</code>, described in <a href="../530-config/#imageredirect">imageRedirect</a>.
 <code>Config</code> resources are taken in name order, and the first redirect whose <code>oldPrefix</code> matches the image applies:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubocd.kubotal.io/v1alpha1</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Config</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nt">metadata</span><span class="p">:</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conf01</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubocd</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nt">spec</span><span class="p">:</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="nt">imageRedirects</span><span class="p">:</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">oldPrefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">      </span><span class="nt">newPrefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.internal:5000/quay/</span>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">      </span><span class="nt">imagePullSecrets</span><span class="p">:</span>
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">internal-registry</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubocd.kubotal.io/v1alpha1</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Config</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conf01</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubocd</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="nt">imageRedirects</span><span class="p">:</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">oldPrefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">      </span><span class="nt">newPrefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.internal:5000/quay/</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">      </span><span class="nt">imagePullSecrets</span><span class="p">:</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">internal-registry</span>
 </span></code></pre></div>
 <p>With this <code>Config</code>, the example above renders <code>repository: registry.internal:5000/quay/jetstack/cert-manager-controller</code>.</p>
 <h3 id="resolvedns">resolveDNS</h3>
@@ -1715,14 +1767,14 @@ parts. <code>ROOT</code> is the root of the data model: <code>.</code> at the to
 <li>
 <p>Disabled by default. <code>kubocd package</code> accepts a package calling it, but rendering the package fails, in the <code>Release</code>
   status as in <code>kubocd render</code>, with an error ending in:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>error calling resolveDNS: resolveDNS is disabled by platform policy
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>error calling resolveDNS: resolveDNS is disabled by platform policy
 </span></code></pre></div>
 </li>
 <li>
 <p>The platform operator allows it for every package of the cluster, with the <code>controller.allowDNSLookups</code> value of the
   <code>kubocd-ctrl</code> Helm chart, which sets the <code>--allowDNSLookups</code> option of the controller:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">controller</span><span class="p">:</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">allowDNSLookups</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">controller</span><span class="p">:</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">allowDNSLookups</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span></code></pre></div>
 <p><code>kubocd render</code> takes the same <code>--allowDNSLookups</code> flag.</p>
 </li>
@@ -1736,8 +1788,9 @@ parts. <code>ROOT</code> is the root of the data model: <code>.</code> at the to
 <h2 id="limits">Limits</h2>
 <p>Each execution of a template, such as the <code>values</code> of a module or <code>Release.spec.parameters</code>, renders at most 4 MiB
 (4194304 bytes) of text. Past that, the rendering fails with <code>the rendered text is larger than 4194304 bytes</code>.
-<a href="#kubocd-functions"><code>until</code></a> builds at most 10000 items, and fails past that with
-<code>until: the count is beyond the limit of 10000</code>.</p>
+<code>until</code>, <code>untilStep</code> and <code>seq</code> each build at most 10000 numbers. The count is checked before allocation, including
+at integer extremes. A larger count fails with <code>until: the count is beyond the limit of 10000</code>,
+<code>untilStep: the count is beyond the limit of 10000</code> or <code>seq: the count is beyond the limit of 10000</code>.</p>
 <p>Function results also have a 4 MiB limit, even when the final rendered text is smaller:</p>
 <table>
 <thead>
@@ -1771,23 +1824,30 @@ parts. <code>ROOT</code> is the root of the data model: <code>.</code> at the to
 <td style="text-align: left;"><code>regexReplaceAll</code></td>
 <td style="text-align: left;"><code>regexReplaceAll: the result can exceed 4194304 bytes</code></td>
 </tr>
+<tr>
+<td style="text-align: left;"><code>repeat</code></td>
+<td style="text-align: left;"><code>repeat: the result is larger than 4194304 bytes</code></td>
+</tr>
 </tbody>
 </table>
-<p><code>indent</code>, <code>nindent</code> and <code>replace</code> check the result size before constructing it. Negative indentation fails with
-<code>indent: the indentation must not be negative</code> or <code>nindent: the indentation must not be negative</code>.</p>
+<p><code>indent</code>, <code>nindent</code>, <code>replace</code> and <code>repeat</code> check the result size before constructing it. Negative indentation fails
+with <code>indent: the indentation must not be negative</code> or <code>nindent: the indentation must not be negative</code>.
+A negative repeat count fails with <code>repeat: the count must not be negative</code>, even for an empty string.</p>
 <p><code>join</code>, <code>printf</code> and <code>regexReplaceAll</code> refuse a result whose size bound exceeds the limit. These conservative bounds
 can also refuse a smaller result. Non-string <code>join</code> items and regex capture replacements can be over-counted.
 For <code>printf</code>, this includes quoted or hexadecimal strings (<code>%q</code>, <code>%x</code>, <code>%X</code>, and quoted strings in <code>%#v</code>), containers,
 numeric formatting (including precision) and invalid-format diagnostics. Plain <code>%s</code> and <code>%v</code> strings are counted
 exactly.</p>
+<p><code>without</code> checks every input item and every argument to omit before constructing the result. Non-scalar items fail
+with <code>without: the list items must be strings, numbers, booleans or null</code>.</p>
 <p>The controller schedules no retry on these errors, as the same data fails the same way: the <code>Release</code> stays in
 <code>ERROR</code> until a change of what it reads reconciles it again. <code>kubocd render</code> fails the same way.</p>
 <h2 id="environment-variables-in-manifests">Environment variables in manifests</h2>
 <p>A <code>${...}</code> sequence in a package or <code>Release</code> manifest stays as written. Neither <code>kubocd package</code> nor the controller,
 nor any other command reading a manifest, replaces it with an environment variable. A CI pipeline that needs
 substitutions runs them before <code>kubocd package</code>, for instance with <code>envsubst</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>envsubst<span class="w"> </span><span class="s1">'${BUCKET}'</span><span class="w"> </span>&lt;<span class="w"> </span>package.tmpl.yaml<span class="w"> </span>&gt;<span class="w"> </span>package.yaml
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>kubocd<span class="w"> </span>package<span class="w"> </span>package.yaml
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>envsubst<span class="w"> </span><span class="s1">'${BUCKET}'</span><span class="w"> </span>&lt;<span class="w"> </span>package.tmpl.yaml<span class="w"> </span>&gt;<span class="w"> </span>package.yaml
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>kubocd<span class="w"> </span>package<span class="w"> </span>package.yaml
 </span></code></pre></div>
 <h2 id="errors">Errors</h2>
 <p>Where an error shows up:</p>
@@ -1795,7 +1855,7 @@ substitutions runs them before <code>kubocd package</code>, for instance with <c
 <li>
 <p><code>kubocd package</code> parses the templates of the package, without running them, and fails on a function outside the
   list, naming the module and the field:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ERROR: module 'main': could not parse 'values' template: template: :2: function "now" not defined
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ERROR: module 'main': could not parse 'values' template: template: :2: function "now" not defined
 </span></code></pre></div>
 <p>The <code>templateHeader</code> of the package is placed before each of its templates. An error there names it:
 <code>in templateHeader: template: :1: function "now" not defined</code>. A <code>templateHeader</code> without a final newline, such as
@@ -1807,8 +1867,8 @@ names both places:
 <p>A manifest holding a map with two keys that are the same once converted to strings, or a map key that cannot be
   converted to a string, such as <code>null</code>, is rejected when the CLI or the controller reads it, with a message that names
   neither the keys nor the values. <code>kubocd package</code> gives:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ERROR: the YAML document has a map whose keys are the same once converted to strings, such as 1 and "1", or true and "true"
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>ERROR: the YAML document has a map key that cannot be converted to a string, such as null
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ERROR: the YAML document has a map whose keys are the same once converted to strings, such as 1 and "1", or true and "true"
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>ERROR: the YAML document has a map key that cannot be converted to a string, such as null
 </span></code></pre></div>
 </li>
 <li>
@@ -1850,24 +1910,24 @@ names both places:
   come from the data.</li>
 </ul>
 <p>Some messages, as the <code>Release</code> status shows them:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>error on rendering: module 'main': could not render 'values' template: line 2, column 21: error calling required: parameter 'adminPassword' is required
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>error on rendering: module 'main': could not render 'values' template: line 1, column 21: range over a value that is not a list or a map, message withheld, as it can quote the data
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>error on rendering: module 'main': could not render 'values' template: the rendered text is not valid YAML (line 4)
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>error on rendering: module 'main': could not render 'values' template: the rendered text has a map whose keys are the same once converted to strings, such as 1 and "1", or true and "true"
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>error on rendering: module 'main': could not render 'values' template: the rendered text has a map key that cannot be converted to a string, such as null
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>error on rendering: module 'main': could not render 'values' template: the rendered text is larger than 4194304 bytes
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>error on rendering: module 'main': could not render 'values' template: line 2, column 13: error calling until: until: the count is beyond the limit of 10000
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>could not validate parameters: parameters schema validation error: (root): a property is not declared in the schema
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>error on rendering: module 'main': could not render 'values' template: line 2, column 21: error calling required: parameter 'adminPassword' is required
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>error on rendering: module 'main': could not render 'values' template: line 1, column 21: range over a value that is not a list or a map, message withheld, as it can quote the data
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>error on rendering: module 'main': could not render 'values' template: the rendered text is not valid YAML (line 4)
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>error on rendering: module 'main': could not render 'values' template: the rendered text has a map whose keys are the same once converted to strings, such as 1 and "1", or true and "true"
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>error on rendering: module 'main': could not render 'values' template: the rendered text has a map key that cannot be converted to a string, such as null
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>error on rendering: module 'main': could not render 'values' template: the rendered text is larger than 4194304 bytes
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>error on rendering: module 'main': could not render 'values' template: line 2, column 13: error calling until: until: the count is beyond the limit of 10000
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>could not validate parameters: parameters schema validation error: (root): a property is not declared in the schema
 </span></code></pre></div>
 <p>With a <code>templateHeader</code>, as in this excerpt of a package:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">templateHeader</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="no">{{- $host := required "parameter 'host' is required" .Parameters.host }}</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nt">modules</span><span class="p">:</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">      </span><span class="no">ingress:</span>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">        </span><span class="no">host: {{ $host }}</span>
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">        </span><span class="no">port: {{ required "parameter 'port' is required" .Parameters.port }}</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">templateHeader</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="no">{{- $host := required "parameter 'host' is required" .Parameters.host }}</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="nt">modules</span><span class="p">:</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">      </span><span class="no">ingress:</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">        </span><span class="no">host: {{ $host }}</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">        </span><span class="no">port: {{ required "parameter 'port' is required" .Parameters.port }}</span>
 </span></code></pre></div>
 <ul>
 <li>Without <code>host</code>, the <code>templateHeader</code> fails in the first template rendered, here <code>roles</code>, which the package does not
@@ -1933,19 +1993,19 @@ and a category, never a rendered value. <code>kubocd render</code> follows the s
   <code>spec.parentRelease</code> is taken over.</li>
 </ul>
 <p>Some messages, as the status of a <code>Release</code> named <code>demo</code> with target namespace <code>apps</code> shows them:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>failed to populate HelmRelease 'demo-main': specPatch of module 'main' has a field that HelmRelease does not define
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>error while creating HelmRelease 'demo-main': the API server answered Invalid for spec.timeout, message withheld, as it can quote the object
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>output[0]: error while creating its Connection: the API server answered Invalid for metadata.name, message withheld, as it can quote the object
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>output[0]: its ClusterConnection belongs to another Release
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>input#1: could not list the Connections: the API server answered Forbidden, message withheld, as it can quote the object
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>condition[0]: the cel expression is not valid, message withheld, as it can quote the condition or the object
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>error on rendering: condition[0]: only core Secret and ConfigMap conditions in the Release target namespace are allowed
-</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>condition[0]: condition read forbidden: grant get access to the condition kind in the Release target namespace
-</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>condition[0]: condition CEL cost limit exceeded
-</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>condition[0]: condition CEL evaluation deadline exceeded
-</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>Waiting for cond.#1: ConfigMap 'apps/settings': the cel expression is false
-</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>Connection 'db': validation error on values: (root): a property is not declared in the schema
-</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>Connection 'db': not checked yet
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>failed to populate HelmRelease 'demo-main': specPatch of module 'main' has a field that HelmRelease does not define
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>error while creating HelmRelease 'demo-main': the API server answered Invalid for spec.timeout, message withheld, as it can quote the object
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>output[0]: error while creating its Connection: the API server answered Invalid for metadata.name, message withheld, as it can quote the object
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>output[0]: its ClusterConnection belongs to another Release
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>input#1: could not list the Connections: the API server answered Forbidden, message withheld, as it can quote the object
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>condition[0]: the cel expression is not valid, message withheld, as it can quote the condition or the object
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>error on rendering: condition[0]: only core Secret and ConfigMap conditions in the Release target namespace are allowed
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>condition[0]: condition read forbidden: grant get access to the condition kind in the Release target namespace
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>condition[0]: condition CEL cost limit exceeded
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>condition[0]: condition CEL evaluation deadline exceeded
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>Waiting for cond.#1: ConfigMap 'apps/settings': the cel expression is false
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>Connection 'db': validation error on values: (root): a property is not declared in the schema
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>Connection 'db': not checked yet
 </span></code></pre></div>
 <h2 id="upgrading-from-v03x">Upgrading from v0.3.x</h2>
 <p>The upgrade note of the <a href="https://github.com/kubocd/kubocd/blob/main/CHANGELOG.md#upgrading-from-v03x">KuboCD changelog</a>,
@@ -1970,23 +2030,29 @@ with the fixes of later versions:</p>
   the status of a Release is replaced, at the latest, when the Release reconciles its outputs, once its HelmReleases
   are ready. Events already emitted keep their text.</li>
 </ul>
-<p>The functions removed in v0.4.0 are:</p>
+<p>The functions removed in v0.4.0 that remain unavailable in v0.4.3 are:</p>
 <ul>
 <li>the KuboCD functions <code>readFile</code>, <code>toToml</code>, <code>fromYamlArray</code> and <code>fromJsonArray</code>,</li>
 <li>the <code>include</code>, <code>tpl</code> and <code>lookup</code> placeholders, which returned placeholder values,</li>
 <li>every Sprig function that is neither in the <a href="#sprig-functions">list</a> nor replaced by a
   <a href="#kubocd-functions">KuboCD function</a> or a <a href="#go-texttemplate-built-ins">built-in</a> of the same name, among them
-  <code>getHostByName</code>, <code>now</code>, <code>date</code>, <code>randAlphaNum</code>, <code>uuidv4</code>, <code>genCA</code>, <code>b64enc</code> and <code>contains</code>.</li>
+  <code>getHostByName</code>, <code>now</code>, <code>date</code>, <code>randAlphaNum</code>, <code>uuidv4</code> and <code>genCA</code>.</li>
 </ul>
+<p>v0.4.3 restores the 24 functions named in <a href="#sprig-functions">Sprig functions</a> above and adds bounded versions of
+<code>repeat</code>, <code>untilStep</code> and <code>seq</code>, plus <code>without</code> restricted to scalar items. A package using these additions needs
+v0.4.3 or later in both the CLI and the controller. Test it with <code>kubocd render</code> before publishing.</p>
+<p><code>toString</code> remains unavailable. The existing size checker cannot safely bound cyclic values or arbitrary <code>error</code>
+and <code>fmt.Stringer</code> methods before formatting. <code>merge</code>, <code>mergeOverwrite</code>, all <code>must</code> variants, <code>unset</code>, <code>pick</code>,
+<code>pluck</code>, <code>rest</code>, <code>initial</code>, <code>reverse</code>, <code>chunk</code>, <code>toStrings</code>, <code>values</code> and <code>semver</code> also remain unavailable.</p>
 <p><code>env</code> and <code>expandenv</code> were already unavailable in v0.3.x.</p>
 <p>Up to v0.3.x, the CLI and the controller replaced <code>${NAME}</code>, where <code>NAME</code> is made of letters, digits and <code>_</code>, with the
 environment variable <code>NAME</code> when they read a manifest, and failed when it was unset or empty. Other forms, such as
 <code>${NAME:-x}</code> or <code>${NAME#s3://}</code>, already stayed as written.</p>
 <p>A package calling <code>resolveDNS</code> to get an address can take it from its data instead. For example, replace:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">metallb.universe.tf/loadBalancerIPs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">resolveDNS .Context.ingress.host</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">metallb.universe.tf/loadBalancerIPs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">resolveDNS .Context.ingress.host</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 </span></code></pre></div>
 <p>with an address set in the context, such as <code>ingress.vip: 10.0.0.10</code>:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">metallb.universe.tf/loadBalancerIPs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">.Context.ingress.vip</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nt">metallb.universe.tf/loadBalancerIPs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">.Context.ingress.vip</span><span class="w"> </span><span class="p p-Indicator">}}</span>
 </span></code></pre></div>
 <p><code>.ImageRedirector</code> was an object of the controller. <code>.ImageRedirects</code> is a plain list, and calls to <code>imageRedirect</code> are
 unchanged.</p>

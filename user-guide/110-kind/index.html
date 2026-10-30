@@ -1283,7 +1283,7 @@ For a lighter setup, you can install only the components required by KuboCD:<br 
 <hr />
 <h2 id="install-kubocd">Install KuboCD</h2>
 <p>Deploy KuboCD using Helm:</p>
-<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-ctrl<span class="w"> </span>--create-namespace<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-ctrl<span class="w"> </span>--version<span class="w"> </span>v0.4.2
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>helm<span class="w"> </span>-n<span class="w"> </span>kubocd<span class="w"> </span>install<span class="w"> </span>kubocd-ctrl<span class="w"> </span>--create-namespace<span class="w"> </span>oci://quay.io/kubocd/charts/kubocd-ctrl<span class="w"> </span>--version<span class="w"> </span>v0.4.3
 </span></code></pre></div>
 <p>The controller limits the size of the packages it loads. See <a href="../170-context-and-config/#controller-limits">Controller Limits</a> to change these limits.</p>
 <hr />
@@ -1293,7 +1293,7 @@ For a lighter setup, you can install only the components required by KuboCD:<br 
 <p>Enabling this webhook requires <a href="https://cert-manager.io/" target="_blank"><strong>cert-manager</strong></a> for TLS certificate management. We will cover how to package and install cert-manager using KuboCD in a later section. Once cert-manager is available, you can proceed to deploy the KuboCD webhook.</p>
 <hr />
 <h2 id="install-the-kubocd-cli">Install the KuboCD CLI</h2>
-<p>Download the KuboCD CLI from the <a href="https://github.com/kubocd/kubocd/releases/tag/v0.4.2" target="_blank">GitHub releases page</a>.</p>
+<p>Download the KuboCD CLI from the <a href="https://github.com/kubocd/kubocd/releases/tag/v0.4.3" target="_blank">GitHub releases page</a>.</p>
 <p>Rename the binary to <code>kubocd</code>, make it executable, and move it to a directory in your system <code>$PATH</code>:</p>
 <div class="language-bash copy highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Replace &lt;binary-name&gt; with the actual downloaded filename</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>mv<span class="w"> </span>&lt;binary-name&gt;<span class="w"> </span>kubocd
