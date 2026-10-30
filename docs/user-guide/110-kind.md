@@ -147,7 +147,7 @@ source-controller-6ff87cb475-hnmxv         1/1     Running   0          14m
 Deploy KuboCD using Helm:
 
 ```{ .bash .copy }
-helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl --version v0.4.2
+helm -n kubocd install kubocd-ctrl --create-namespace oci://quay.io/kubocd/charts/kubocd-ctrl --version v0.4.3
 ```
 
 The controller limits the size of the packages it loads. See [Controller Limits](./170-context-and-config.md#controller-limits) to change these limits.
@@ -166,7 +166,7 @@ Enabling this webhook requires [**cert-manager**](https://cert-manager.io/){:tar
 
 ## Install the KuboCD CLI
 
-Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.4.2){:target="_blank"}.
+Download the KuboCD CLI from the [GitHub releases page](https://github.com/kubocd/kubocd/releases/tag/v0.4.3){:target="_blank"}.
 
 Rename the binary to `kubocd`, make it executable, and move it to a directory in your system `$PATH`:
 

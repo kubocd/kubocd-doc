@@ -77,22 +77,27 @@ package templates get.
 
 ### Sprig functions
 
-These 45 functions come from [Sprig](https://masterminds.github.io/sprig/) v3.3.0 and behave as documented there,
+These 69 functions come from [Sprig](https://masterminds.github.io/sprig/) v3.3.0 and behave as documented there,
 subject to the [limits](#limits) below:
 
 | Group | Functions |
 | :--- | :--- |
-| Strings | `indent`, `lower`, `nindent`, `nospace`, `quote`, `regexReplaceAll`, `replace`, `split`, `splitList`, `title`, `trim`, `trimAll`, `trimPrefix`, `trimSuffix`, `trunc`, `upper` |
+| Strings | `camelcase`, `contains`, `hasPrefix`, `hasSuffix`, `indent`, `kebabcase`, `lower`, `nindent`, `nospace`, `quote`, `regexMatch`, `regexReplaceAll`, `replace`, `snakecase`, `split`, `splitList`, `splitn`, `substr`, `title`, `trim`, `trimAll`, `trimPrefix`, `trimSuffix`, `trunc`, `upper` |
 | Lists | `append`, `compact`, `concat`, `first`, `has`, `join`, `last`, `list`, `prepend`, `sortAlpha`, `uniq` |
 | Dictionaries | `dict`, `dig`, `get`, `hasKey`, `omit`, `set` |
-| Logic, defaults and types | `coalesce`, `default`, `empty`, `kindIs`, `ternary` |
-| Conversions and math | `div`, `divf`, `float64`, `int`, `min`, `mulf` |
-| Encoding | `sha256sum` |
+| Logic, defaults and types | `all`, `any`, `coalesce`, `deepEqual`, `default`, `empty`, `kindIs`, `kindOf`, `ternary` |
+| Conversions and math | `add`, `add1`, `atoi`, `div`, `divf`, `float64`, `int`, `int64`, `max`, `min`, `mod`, `mul`, `mulf`, `semverCompare`, `sub` |
+| Encoding | `b64dec`, `b64enc`, `sha256sum` |
+
+Since v0.4.3, templates can call `contains`, `hasPrefix`, `hasSuffix`, `b64enc`, `b64dec`, `substr`, `splitn`, `add`,
+`add1`, `sub`, `mul`, `max`, `mod`, `atoi`, `int64`, `all`, `any`, `kindOf`, `deepEqual`, `regexMatch`, `semverCompare`,
+`snakecase`, `kebabcase` and `camelcase` again. Removed by v0.4.0, their result depends on their arguments only and
+they do not modify them.
 
 ### KuboCD functions
 
-KuboCD defines these functions. `fail`, `fromJson`, `keys`, `toJson`, `until` and `urlParse` take the place of the
-Sprig functions of the same name, and behave as described here.
+KuboCD defines these functions. `fail`, `fromJson`, `keys`, `repeat`, `seq`, `toJson`, `until`, `untilStep`, `urlParse`
+and `without` take the place of the Sprig functions of the same name, and behave as described here.
 
 | Function | Description |
 | :--- | :--- |
@@ -101,11 +106,15 @@ Sprig functions of the same name, and behave as described here.
 | `fromYaml` | Parses a YAML string into a map. On error, the map holds the error text under `Error`. For a map key that cannot be converted to a string, such as `null`, this text is `fromYaml: the document has a map key that cannot be converted to a string, such as null`. A document holding a map with two keys that are the same once converted to strings, such as `1` and `"1"`, fails the rendering instead. |
 | [`imageRedirect`](#imageredirect) | Applies the image redirects of the `Config` resources to an image reference. |
 | [`keys`](#keys) | Returns the keys of one or more dicts, sorted. A key present in several dicts appears once per dict. |
+| `repeat` | Since v0.4.3, repeats a string a given number of times: `repeat 3 "ab"` gives `ababab`. A negative count fails with `repeat: the count must not be negative`. The result is checked before allocation and must not exceed 4 MiB. See [Limits](#limits). |
 | [`required`](#required) | Fails the rendering when a value is missing. |
+| `seq` | Since v0.4.3, returns space-separated numbers. `seq END` starts at 1, `seq START END` chooses a step of 1 or -1, and `seq START STEP END` uses the supplied step. The end is included when reached. For example, `seq 1 2 5` gives `1 3 5`. A zero step or a step in the wrong direction gives an empty string, as do calls with other than 1, 2 or 3 arguments. When start equals end, a positive step gives that number and a negative step gives an empty string, as in Sprig. At most 10000 numbers are built. See [Limits](#limits). |
 | `toJson` | Serializes a value to JSON. On error, the result holds the error text. |
 | `toYaml` | Serializes a value to YAML, without the trailing newline. On error, the result holds the error text. |
 | `until` | Returns the list of the integers from 0 up to a count, the count excluded, as the Sprig function does: `until 3` gives `[0 1 2]` and `until -3` gives `[0 -1 -2]`. It builds at most 10000 items either way. A larger count fails the rendering with `until: the count is beyond the limit of 10000`. See [Limits](#limits). |
+| `untilStep` | Since v0.4.3, returns a list from a start towards a stop, excluding the stop: `untilStep 1 7 2` gives `[1 3 5]`. A negative step descends. A zero step or a step in the wrong direction gives an empty list. At most 10000 items are built. See [Limits](#limits). |
 | `urlParse` | Parses a URL into a dict of its parts, as the Sprig function does. An invalid URL fails with `urlParse: invalid URL`, without the URL. |
+| [`without`](#without) | Since v0.4.3, returns a new list with matching items removed. All input items and arguments to omit must be strings, numbers, booleans or null. Maps and lists are refused. |
 | [`resolveDNS`](#resolvedns) | Package templates only, disabled by default. Returns the first IP address of a host name. |
 
 ### Go text/template built-ins
@@ -123,6 +132,22 @@ These are part of Go templates and always available: `and`, `call`, `eq`, `ge`, 
     ```yaml
     zones: {{ slice .Parameters.zones 0 (int .Parameters.replicas) | toJson }}
     ```
+
+### without
+
+`without LIST ITEM...` returns a new list with every matching item removed. It does not modify its arguments.
+Every item in `LIST` and every argument to omit must be a string, number, boolean or null. A map or nested list is
+refused, even when it would be omitted, with
+`without: the list items must be strings, numbers, booleans or null`.
+Items match when they have the same type and value: the integer `1` does not match the floating-point number `1.0`.
+
+For an Airflow OIDC scope, remove `openid` and append `offline_access`:
+
+```yaml
+scope: {{ append (without (splitList " " (.Context.oidc.scope | default "openid profile email groups")) "openid") "offline_access" | join " " | quote }}
+```
+
+With no scope set, this renders `scope: "profile email groups offline_access"`.
 
 ### keys
 
@@ -245,8 +270,9 @@ A package can also take the address from its data instead, see [Upgrading from v
 
 Each execution of a template, such as the `values` of a module or `Release.spec.parameters`, renders at most 4 MiB
 (4194304 bytes) of text. Past that, the rendering fails with `the rendered text is larger than 4194304 bytes`.
-[`until`](#kubocd-functions) builds at most 10000 items, and fails past that with
-`until: the count is beyond the limit of 10000`.
+`until`, `untilStep` and `seq` each build at most 10000 numbers. The count is checked before allocation, including
+at integer extremes. A larger count fails with `until: the count is beyond the limit of 10000`,
+`untilStep: the count is beyond the limit of 10000` or `seq: the count is beyond the limit of 10000`.
 
 Function results also have a 4 MiB limit, even when the final rendered text is smaller:
 
@@ -258,15 +284,20 @@ Function results also have a 4 MiB limit, even when the final rendered text is s
 | `join` | `join: the result can exceed 4194304 bytes` |
 | `printf` | `printf: the result can exceed 4194304 bytes` |
 | `regexReplaceAll` | `regexReplaceAll: the result can exceed 4194304 bytes` |
+| `repeat` | `repeat: the result is larger than 4194304 bytes` |
 
-`indent`, `nindent` and `replace` check the result size before constructing it. Negative indentation fails with
-`indent: the indentation must not be negative` or `nindent: the indentation must not be negative`.
+`indent`, `nindent`, `replace` and `repeat` check the result size before constructing it. Negative indentation fails
+with `indent: the indentation must not be negative` or `nindent: the indentation must not be negative`.
+A negative repeat count fails with `repeat: the count must not be negative`, even for an empty string.
 
 `join`, `printf` and `regexReplaceAll` refuse a result whose size bound exceeds the limit. These conservative bounds
 can also refuse a smaller result. Non-string `join` items and regex capture replacements can be over-counted.
 For `printf`, this includes quoted or hexadecimal strings (`%q`, `%x`, `%X`, and quoted strings in `%#v`), containers,
 numeric formatting (including precision) and invalid-format diagnostics. Plain `%s` and `%v` strings are counted
 exactly.
+
+`without` checks every input item and every argument to omit before constructing the result. Non-scalar items fail
+with `without: the list items must be strings, numbers, booleans or null`.
 
 The controller schedules no retry on these errors, as the same data fails the same way: the `Release` stays in
 `ERROR` until a change of what it reads reconciles it again. `kubocd render` fails the same way.
@@ -477,13 +508,21 @@ with the fixes of later versions:
   the status of a Release is replaced, at the latest, when the Release reconciles its outputs, once its HelmReleases
   are ready. Events already emitted keep their text.
 
-The functions removed in v0.4.0 are:
+The functions removed in v0.4.0 that remain unavailable in v0.4.3 are:
 
 - the KuboCD functions `readFile`, `toToml`, `fromYamlArray` and `fromJsonArray`,
 - the `include`, `tpl` and `lookup` placeholders, which returned placeholder values,
 - every Sprig function that is neither in the [list](#sprig-functions) nor replaced by a
   [KuboCD function](#kubocd-functions) or a [built-in](#go-texttemplate-built-ins) of the same name, among them
-  `getHostByName`, `now`, `date`, `randAlphaNum`, `uuidv4`, `genCA`, `b64enc` and `contains`.
+  `getHostByName`, `now`, `date`, `randAlphaNum`, `uuidv4` and `genCA`.
+
+v0.4.3 restores the 24 functions named in [Sprig functions](#sprig-functions) above and adds bounded versions of
+`repeat`, `untilStep` and `seq`, plus `without` restricted to scalar items. A package using these additions needs
+v0.4.3 or later in both the CLI and the controller. Test it with `kubocd render` before publishing.
+
+`toString` remains unavailable. The existing size checker cannot safely bound cyclic values or arbitrary `error`
+and `fmt.Stringer` methods before formatting. `merge`, `mergeOverwrite`, all `must` variants, `unset`, `pick`,
+`pluck`, `rest`, `initial`, `reverse`, `chunk`, `toStrings`, `values` and `semver` also remain unavailable.
 
 `env` and `expandenv` were already unavailable in v0.3.x.
 

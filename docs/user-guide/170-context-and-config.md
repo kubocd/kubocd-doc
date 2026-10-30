@@ -279,7 +279,7 @@ Example `values1-ctrl.yaml`:
 Upgrade the deployment:
 
 ``` { .bash .copy }
-helm -n kubocd upgrade kubocd-ctrl oci://quay.io/kubocd/charts/kubocd-ctrl:v0.4.2 --values helm-values/values1-ctrl.yaml
+helm -n kubocd upgrade kubocd-ctrl oci://quay.io/kubocd/charts/kubocd-ctrl:v0.4.3 --values helm-values/values1-ctrl.yaml
 ```
 
 !!! warning "Adoption Error"
